@@ -9,6 +9,9 @@ class qa_custom_user_detail_process
 {
     public function init_page()
     {
+        if (qa_opt('site_theme') !== 'q2a-material-lite') {
+            return;
+        }
         $page = qa_request_part(0);
         $action = qa_request_part(2);
         if ($page !== 'user' || !empty($action)) {
@@ -57,9 +60,25 @@ class qa_custom_user_detail_process
             $userhtml = qa_html($handle);
         }
 
-        qa_set_template('user-profile');
+        qa_set_template('user');
         $qa_content = include CUSTOM_USER_DETAIL_DIR.'/user-profile.php';
         
-        return $qa_content;
+        if (is_array($qa_content)) {
+            if (QA_DEBUG_PERFORMANCE)
+                $qa_usage->mark('view');
+
+            qa_output_content($qa_content);
+
+            if (QA_DEBUG_PERFORMANCE)
+                $qa_usage->mark('theme');
+
+            if (qa_do_content_stats($qa_content) && QA_DEBUG_PERFORMANCE)
+                $qa_usage->mark('stats');
+
+            if (QA_DEBUG_PERFORMANCE)
+                $qa_usage->output();
+        }
+
+        qa_db_disconnect();
     }
 }
