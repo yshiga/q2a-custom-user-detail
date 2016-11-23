@@ -24,3 +24,5 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 
 // process
 qa_register_plugin_module('process', 'qa-custom-user-detail-process.php', 'qa_custom_user_detail_process', 'Custom User Detail Process');
+// layer
+qa_register_plugin_layer('qa-custom-user-detail-layer.php','Custom User Detail Layer');
