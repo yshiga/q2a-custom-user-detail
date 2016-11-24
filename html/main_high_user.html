@@ -1,0 +1,47 @@
+  <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col user">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--4-col mdl-typography mdl-typography--text-center"><img src="^site_url?qa=image&amp;qa_blobid=^blobid&amp;qa_size=150"/>
+        ^buttons
+      </div>
+      <div class="mdl-cell mdl-cell--8-col">
+        <div class="mdl-typography--headline">^handle</div>
+        <ul>
+          <li><span class="mdl-typography--font-bold">活動場所</span>:^location</li>
+          <li><span class="mdl-typography--font-bold">飼育群数</span>:^groups</li>
+          <li><span class="mdl-typography--font-bold">ニホンミツバチ飼育歴</span>:^years</li>
+          <li><span class="mdl-typography--font-bold">使用している巣箱</span>:^hivetype</li>
+        </ul>
+        <p class="mdl-typography--subhead mdl-color-text--primary"><i class="fa fa-trophy"></i><span class="mdl-typography--font-bold"> ^pointsポイント</span>（^ranking位）</p>
+        <p>
+          ^about
+        </p>
+      </div>
+    </div>
+    <!--END mdl-grid-->
+  </div>
+  <!--END user-->
+  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar mdl-color--white margin--16px margin--bottom-0">
+      <a class="mdl-tabs__tab is-active" href="#activity">活動履歴</a>
+      <a class="mdl-tabs__tab" href="#asks">質問</a>
+      <a class="mdl-tabs__tab" href="#answers">回答</a>
+      <a class="mdl-tabs__tab" href="#blgs">飼育日誌</a>
+    </div>
+    <div class="mdl-tabs__panel is-active" id="activity">
+      <div class="mdl-grid">
+        ^activities
+      </div>
+    </div>
+    <div class="mdl-tabs__panel" id="asks">
+      <h3>DUBUG:質問一覧</h3>
+      ^asks
+    </div>
+    <div class="mdl-tabs__panel" id="answers">
+      <h3>DUBUG:回答一覧</h3>
+      ^answers
+    </div>
+    <div class="mdl-tabs__panel" id="blgs">
+      <h3>DUBUG:ブログ一覧</h3>
+      ^blogs
+    </div>
+  </div>
