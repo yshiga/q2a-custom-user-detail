@@ -33,7 +33,6 @@ class cud_theme_main
     
     private static function output_user($theme_obj) {
         $raw = $theme_obj->content['raw'];
-        print_r($theme_obj->content['q_list']);
         $path = CUSTOM_USER_DETAIL_DIR . '/html/main_high_user.html';
         $html = file_get_contents($path);
         $buttons = '';
@@ -47,7 +46,10 @@ class cud_theme_main
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
         $buttons = self::create_buttons($raw['account']['userid']);
-        $activities = self::create_activities_list($content['activities']);
+        $activities = self::create_q_list($content['q_list']['activities']);
+        $asks = self::sample_item_list();
+        $answers = self::sample_item_list();
+        $blogs = self::sample_item_list();
         return array(
             '^site_url' => qa_opt('site_url'),
             '^blobid' => $raw['account']['avatarblobid'],
@@ -61,9 +63,9 @@ class cud_theme_main
             '^ranking' => $raw['rank'],
             '^buttons' => $buttons,
             '^activities' => $activities,
-            '^asks' => $activities,
-            '^answers' => $activities,
-            '^blogs' => $activities,
+            '^asks' => $asks,
+            '^answers' => $answers,
+            '^blogs' => $blogs,
         );
     }
     
@@ -75,6 +77,15 @@ class cud_theme_main
             $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect">フォローする</a><a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect">メッセージ送信</a>';
         }
         return $buttons;
+    }
+    
+    private static function create_q_list($q_items)
+    {
+        $html = '';
+        foreach ($q_items as $q_item) {
+            $html .= self::q_list_item($q_item); 
+        }
+        return $html;
     }
     
     static function q_list_item($q_item)
@@ -93,6 +104,8 @@ class cud_theme_main
         $html .= '</div> <!-- END mdl-card -->'.PHP_EOL;
         $html .= '</div> <!-- END qa-q-list-item -->'.PHP_EOL;
         $html .= '</section>'.PHP_EOL;
+        
+        return $html;
     }
     
     private static function q_item_main($q_item)
@@ -104,7 +117,7 @@ class cud_theme_main
         $html .= self::post_tags($q_item, 'qa-q-item');
         $html .= '</div><!-- END qa-q-item-tags-view -->'.PHP_EOL;
         $html .= self::post_avatar_meta($q_item, 'qa-q-item');
-        $html .= self::q_item_buttons($q_item);
+        // $html .= self::q_item_buttons($q_item);
         $html .= '</div>'.PHP_EOL;
         
         return $html;
@@ -128,11 +141,17 @@ class cud_theme_main
         return $html;
     }
     
-    static function q_item_title($theme_obj, $q_item)
+    static function q_item_title($q_item)
     {
         $search = '/.*>(.*)<.*/';
         $replace = '$1';
         $q_item_title = preg_replace($search, $replace, $q_item['title']);
+        
+        $len = mb_strlen($q_item_title, 'UTF-8');
+        if ($len > 60) {
+            $q_item_title = mb_substr($q_item_title, 0, 60 - 1, 'UTF-8') . '…';
+        }
+        
         $html = self::get_thumbnail($q_item['raw']['postid']) ? '<div class="mdl-card__title">' : '<div class="mdl-card__title no-thumbnail">';
         $html .= '<h1 class="mdl-card__title-text qa-q-item-title">'.PHP_EOL;
         $html .= '<a href="'.$q_item['url'].'">'.$q_item_title.'</a>'.PHP_EOL;
@@ -152,6 +171,227 @@ class cud_theme_main
         return $html;
     }
     
+    public static function post_tags($post, $class)
+    {
+        $html = '';
+        if (!empty($post['q_tags'])) {
+            $html = '<div class="'.$class.'-tags">'.PHP_EOL;
+            $html .= self::post_tag_list($post, $class);
+            $html .= '</div>'.PHP_EOL;
+        }
+        
+        return $html;
+    }
+    
+    public static function post_tag_list($post, $class)
+    {
+        $html = '<ul class="'.$class.'-tag-list">'.PHP_EOL;
+        foreach ($post['q_tags'] as $taghtml) {
+            $html .= self::post_tag_item($taghtml, $class);
+        }
+        $html .= '</ul>'.PHP_EOL;
+        
+        return $html;
+    }
+
+    public static function post_tag_item($taghtml, $class)
+    {
+        return '<li class="'.$class.'-tag-item">'.$taghtml.'</li>'.PHP_EOL;
+    }
+    
+    public static function post_avatar_meta($post, $class,$post_meta_show = true, $avatarprefix = null, $metaprefix = null, $metaseparator = '<br/>')
+    {
+        $html = '';
+        //コメントリストの場合はflex-styleで囲む
+        $c_item_class = ($class === "qa-c-item") ? 'flex-style' :  '' ;
+        //アバター画像がある時だけタグ生成
+        if (isset($post['avatar'])) {
+            $html = '<span class="'.$class.'-avatar-meta '.$c_item_class.'">'.PHP_EOL;
+        }
+
+        $html .= self::avatar($post, $class, $avatarprefix);
+
+        if($post_meta_show) {
+            $html .= self::post_meta($post, $class, $metaprefix, $metaseparator);
+        }
+        
+
+        //アバター画像がある時だけタグ生成
+        if (isset($post['avatar'])) {
+            $html .= '</span>'.PHP_EOL;
+        }
+        
+        return $html;
+    }
+    
+    public static function avatar($item, $class, $prefix=null)
+    {
+        $html = '';
+        if (isset($item['avatar'])) {
+            if (isset($prefix)) {
+                $html = $prefix.PHP_EOL;
+            }
+            //アバターのサイズを取得して$qa_size[]に格納
+            preg_match('/qa_size=([0-9][0-9])/is', $item['avatar'], $qa_size);
+            //アバター画像を丸の中に収めるようにサイズを小さく
+            $img_width_height = $qa_size[1]*0.7;
+            $html .= '<div class="'.$class.'-avatar" style="background:url(./?qa=image&qa_blobid='.$item['raw']['avatarblobid'].'&qa_size='.$qa_size[1].') no-repeat center center;height: '.$img_width_height.'px;width: '.$img_width_height.'px;display:inline-block;border-radius: 50%;background-color: #757575;margin-right:6px;">'.PHP_EOL;
+
+            $html .= '</div>'.PHP_EOL;
+        }
+        
+        return $html;
+    }
+    
+    private static function a_count($post)
+    {
+        return self::output_split(@$post['answers'], 'qa-a-count', 'div', 'div',
+        @$post['answer_selected'] ? 'qa-a-count-selected' : (@$post['answers_raw'] ? null : 'qa-a-count-zero'));
+    }
+    
+    private static function post_meta($post, $class, $prefix=null, $separator='<br/>')
+    {
+        $html = '<span class="'.$class.'-meta">'.PHP_EOL;
+
+        if (isset($prefix))
+            $html .= $prefix;
+
+        $order = explode('^', @$post['meta_order']);
+
+        foreach ($order as $element) {
+            switch ($element) {
+                case 'what':
+                    $html .= self::post_meta_what($post, $class);
+                    break;
+
+                case 'when':
+                    $html .= self::post_meta_when($post, $class);
+                    break;
+
+                case 'where':
+                    $html .= self::post_meta_where($post, $class);
+                    break;
+
+                case 'who':
+                    $html .= self::post_meta_who($post, $class);
+                    break;
+            }
+        }
+
+        $html .= self::post_meta_flags($post, $class);
+
+        if (!empty($post['what_2'])) {
+            $html .= $separator;
+
+            foreach ($order as $element) {
+                switch ($element) {
+                    case 'what':
+                        $html .= '<span class="'.$class.'-what">'.$post['what_2'].'</span>';
+                        break;
+
+                    case 'when':
+                        $html .= self::output_split(@$post['when_2'], $class.'-when');
+                        break;
+
+                    case 'who':
+                        $html .= self::output_split(@$post['who_2'], $class.'-who');
+                        break;
+                }
+            }
+        }
+
+        $html .= '</span>'.PHP_EOL;
+        
+        return $html;
+    }
+    
+    private static function post_meta_when($post, $class)
+    {
+        $html = '<span class="qa-q-item-when-what">'.PHP_EOL;
+
+        $html .= self::output_split(@$post['when'], $class.'-when','span');
+        
+        return $html;
+    }
+    
+    private static function post_meta_what($post, $class)
+    {
+        $html = '';
+        if (isset($post['what'])) {
+            $classes = $class.'-what';
+            if (@$post['what_your']) {
+                $classes .= ' '.$class.'-what-your';
+            }
+
+            if (isset($post['what_url'])) {
+                $html .= '<a href="'.$post['what_url'].'" class="'.$classes.'">'.$post['what'].'</a>'.PHP_EOL;
+            } else {
+                $html .= '<span class="'.$classes.'">に'.$post['what'].'</span>'.PHP_EOL;
+            }
+        }
+        $html .= '</span>'.PHP_EOL;
+        
+        return $html;
+    }
+    
+    private static function post_meta_where($post, $class)
+    {
+        return '';
+    }
+    
+    private static function post_meta_who($post, $class)
+    {
+        $html = '';
+        if (isset($post['who'])) {
+            $html .= '<span class="'.$class.'-who">';
+
+            if (strlen(@$post['who']['prefix'])) {
+                $html .= '<span class="'.$class.'-who-pad">'.$post['who']['prefix'].'</span>';
+            }
+
+            if (isset($post['who']['data'])) {
+                $html .= '<span class="'.$class.'-who-data">'.$post['who']['data'].'</span>';
+            }
+
+            if (isset($post['who']['title'])) {
+                $html .= '<span class="'.$class.'-who-title">'.$post['who']['title'].'</span>';
+            }
+
+            if (isset($post['who']['points'])) {
+                $post['who']['points']['prefix'] = '('.$post['who']['points']['prefix'];
+                $post['who']['points']['suffix'] .= ')';
+                $html .= self::output_split($post['who']['points'], $class.'-who-points');
+            }
+
+            if (strlen(@$post['who']['suffix'])) {
+                $html .= '<span class="'.$class.'-who-pad">'.$post['who']['suffix'].'</span>';
+            }
+
+            $html .= '</span>';
+        }
+        
+        return $html;
+    }
+
+    private static function post_meta_flags($post, $class)
+    {
+        return self::output_split(@$post['flags'], $class.'-flags');
+    }
+    
+    private static function output_split($parts, $class, $outertag='span', $innertag='span', $extraclass=null)
+    {
+        if (empty($parts) && strtolower($outertag) != 'td')
+            return;
+
+        $html = '<'.$outertag.' class="'.$class.(isset($extraclass) ? (' '.$extraclass) : '').'">';
+        $html .= (strlen(@$parts['prefix']) ? ('<'.$innertag.' class="'.$class.'-pad">'.$parts['prefix'].'</'.$innertag.'>') : '').
+            (strlen(@$parts['data']) ? ('<'.$innertag.' class="'.$class.'-data">'.$parts['data'].'</'.$innertag.'>') : '').
+            (strlen(@$parts['suffix']) ? ('<'.$innertag.' class="'.$class.'-pad">'.$parts['suffix'].'</'.$innertag.'>') : '');
+        $html .= '</'.$outertag.'>';
+        
+        return $html;
+    }
+    
     private static function q_item_thumbnail($q_item)
     {
         $thumbnail = self::get_thumbnail($q_item['raw']['postid']);
@@ -162,7 +402,7 @@ class cud_theme_main
             // $search = '/.*>(.*)<.*/';
             // $replace = '$1';
             // $q_item_title = preg_replace($search, $replace, $q_item['title']);
-            $html = '<a href="'.$q_item['url'].'" >'.PHP_EOL,
+            $html = '<a href="'.$q_item['url'].'" >'.PHP_EOL;
             $html .= '<div style="background:url('.$thumbnail.') center / cover;" class="mdl-card__title qa-q-item-title thumbnail">'.PHP_EOL;
             $html .= '</div>'.PHP_EOL;
             $html .= '</a>'.PHP_EOL;
