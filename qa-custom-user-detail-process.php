@@ -38,30 +38,9 @@ class qa_custom_user_detail_process
 
         qa_check_page_clicks();
         //    Determine the identify of the user
-
-        $handle = qa_request_part(1);
-
-        if (!strlen($handle)) {
-            $handle = qa_get_logged_in_handle();
-            qa_redirect(!empty($handle) ? 'user/'.$handle : 'users');
-        }
-
-        //    Get the HTML to display for the handle, and if we're using external users, determine the userid
-
-        if (QA_FINAL_EXTERNAL_USERS) {
-            $userid = qa_handle_to_userid($handle);
-            if (!isset($userid))
-                return include QA_INCLUDE_DIR.'qa-page-not-found.php';
-
-            $usershtml = qa_get_users_html(array($userid), false, qa_path_to_root(), true);
-            $userhtml = @$usershtml[$userid];
-
-        } else {
-            $userhtml = qa_html($handle);
-        }
-
+        
         qa_set_template('user');
-        $qa_content = include CUSTOM_USER_DETAIL_DIR.'/user-profile.php';
+        $qa_content = include CUSTOM_USER_DETAIL_DIR.'/user-detail.php';
         
         if (is_array($qa_content)) {
             if (QA_DEBUG_PERFORMANCE)
