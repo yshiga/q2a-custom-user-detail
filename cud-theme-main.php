@@ -33,7 +33,7 @@ class cud_theme_main
     
     private static function output_user($theme_obj) {
         $raw = $theme_obj->content['raw'];
-        $path = CUSTOM_USER_DETAIL_DIR . '/html/main_high_user.html';
+        $path = CUD_DIR . '/html/main_high_user.html';
         $html = file_get_contents($path);
         $buttons = '';
         $params = self::create_params($theme_obj->content);
@@ -81,6 +81,7 @@ class cud_theme_main
     
     private static function create_q_list($q_items)
     {
+        print_r($q_items);
         $html = '';
         foreach ($q_items as $q_item) {
             $html .= self::q_list_item($q_item); 
@@ -185,18 +186,21 @@ class cud_theme_main
     
     public static function post_tag_list($post, $class)
     {
-        $html = '<ul class="'.$class.'-tag-list">'.PHP_EOL;
+        $html = '<div class="'.$class.'-tag-list">'.PHP_EOL;
         foreach ($post['q_tags'] as $taghtml) {
+            $search = '/(<a.*class=")(.*)(".*>)(.*?)(<\/a>)/';
+            $replace = '$1$2 mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised$3$4$5';
+            $taghtml = preg_replace($search, $replace, $taghtml);
             $html .= self::post_tag_item($taghtml, $class);
         }
-        $html .= '</ul>'.PHP_EOL;
+        $html .= '</div>'.PHP_EOL;
         
         return $html;
     }
 
     public static function post_tag_item($taghtml, $class)
     {
-        return '<li class="'.$class.'-tag-item">'.$taghtml.'</li>'.PHP_EOL;
+        return '<span class="'.$class.'-tag-item">'.$taghtml.'</span>'.PHP_EOL;
     }
     
     public static function post_avatar_meta($post, $class,$post_meta_show = true, $avatarprefix = null, $metaprefix = null, $metaseparator = '<br/>')

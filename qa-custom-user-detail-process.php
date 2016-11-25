@@ -15,7 +15,7 @@ class qa_custom_user_detail_process
             return;
         }
         
-        if (qa_opt('site_theme') !== 'q2a-material-lite') {
+        if (qa_opt('site_theme') !== CUD_TARGET_THEME_NAME) {
             return;
         }
         require_once QA_INCLUDE_DIR.'app/cookies.php';
