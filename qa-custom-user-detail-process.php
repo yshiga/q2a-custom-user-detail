@@ -9,15 +9,15 @@ class qa_custom_user_detail_process
 {
     public function init_page()
     {
-        if (qa_opt('site_theme') !== 'q2a-material-lite') {
-            return;
-        }
         $page = qa_request_part(0);
         $action = qa_request_part(2);
         if ($page !== 'user' || !empty($action)) {
             return;
         }
-
+        
+        if (qa_opt('site_theme') !== 'q2a-material-lite') {
+            return;
+        }
         require_once QA_INCLUDE_DIR.'app/cookies.php';
         require_once QA_INCLUDE_DIR.'app/format.php';
         require_once QA_INCLUDE_DIR.'app/users.php';
@@ -40,7 +40,7 @@ class qa_custom_user_detail_process
         //    Determine the identify of the user
         
         qa_set_template('user');
-        $qa_content = include CUSTOM_USER_DETAIL_DIR.'/user-detail.php';
+        $qa_content = include CUD_DIR.'/user-detail.php';
         
         if (is_array($qa_content)) {
             if (QA_DEBUG_PERFORMANCE)
