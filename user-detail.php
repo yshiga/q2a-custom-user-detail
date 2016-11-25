@@ -47,6 +47,7 @@
         qa_db_user_recent_c_qs_selectspec($loginuserid, $identifier),
         qa_db_user_recent_edit_qs_selectspec($loginuserid, $identifier)
     );
+    // TODO:$selectspec['columns']['content']='^posts.content';
     //	Get information on user references
     
     $activities = qa_any_sort_and_dedupe(array_merge($activities, $answerqs, $commentqs, $editqs));
@@ -75,6 +76,7 @@
     $htmldefaults['whoview'] = false;
     $htmldefaults['voteview'] = false;
     $htmldefaults['avatarsize'] = 0;
+    $htmldefaults['contentview'] = true;
 
     foreach ($activities as $question) {
         $qa_content['q_list']['activities'][] = qa_any_to_q_html_fields($question, $loginuserid, qa_cookie_get(),
