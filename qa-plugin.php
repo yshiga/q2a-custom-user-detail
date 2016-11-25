@@ -19,8 +19,9 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 }
 
 //Define global constants
-@define( 'CUSTOM_USER_DETAIL_DIR', dirname( __FILE__ ) );
-@define( 'CUSTOM_USER_DETAIL_FOLDER', basename( dirname( __FILE__ ) ) );
+@define( 'CUD_DIR', dirname( __FILE__ ) );
+@define( 'CUD_FOLDER', basename( dirname( __FILE__ ) ) );
+@define( 'CUD_TARGET_THEME_NAME', 'q2a-material-lite');
 
 // process
 qa_register_plugin_module('process', 'qa-custom-user-detail-process.php', 'qa_custom_user_detail_process', 'Custom User Detail Process');
