@@ -57,7 +57,8 @@
     $qa_content['raw']['rank'] = $userrank;
     
     $qa_content['q_list']['activities'] = include CUD_DIR.'/user-activities.php';
-    $qa_content['q_list']['questions'] = include CUD_DIR.'/user-quesitions.php';
+    $qa_content['q_list']['questions'] = include CUD_DIR.'/user-questions.php';
+    $qa_content['q_list']['answers'] = include CUD_DIR.'/user-answers.php';
     
     
     return $qa_content;

@@ -47,8 +47,8 @@ class cud_theme_main
         $points = $points ? number_format($points) : 0;
         $buttons = self::create_buttons($raw['account']['userid']);
         $activities = self::create_q_list($content['q_list']['activities']);
-        $asks = self::sample_item_list();
-        $answers = self::sample_item_list();
+        $asks = self::create_q_list($content['q_list']['questions']);
+        $answers = self::create_q_list($content['q_list']['answers']);
         $blogs = self::sample_item_list();
         return array(
             '^site_url' => qa_opt('site_url'),
@@ -81,7 +81,7 @@ class cud_theme_main
     
     private static function create_q_list($q_items)
     {
-        print_r($q_items);
+        // print_r($q_items);
         $html = '';
         foreach ($q_items as $q_item) {
             $html .= self::q_list_item($q_item); 
@@ -161,10 +161,10 @@ class cud_theme_main
         $html .= '</h1>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
 
-        $search = '/.*="(.*)".*/';
-        $replace = '$1';
-        $q_item_content = preg_replace($search, $replace, $q_item['title']);
-        $q_item_content = mb_strimwidth($q_item_content, 0, 170, "...", "utf-8");
+        $blockwordspreg = qa_get_block_words_preg();
+        $text = qa_viewer_text($q_item['raw']['content'], 'html', array('blockwordspreg' => $blockwordspreg));
+        $q_item_content = preg_replace($search, $replace, $text);
+        $q_item_content = mb_strimwidth($q_item_content, 0, 150, "...", "utf-8");
         $html .= '<div class="qa-item-content">'.PHP_EOL;
         $html .= $q_item_content.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
