@@ -59,6 +59,6 @@
     $qa_content['q_list']['activities'] = include CUD_DIR.'/user-activities.php';
     $qa_content['q_list']['questions'] = include CUD_DIR.'/user-questions.php';
     $qa_content['q_list']['answers'] = include CUD_DIR.'/user-answers.php';
-    
+    $qa_content['q_list']['blogs'] = include CUD_DIR.'/user-blogs.php';
     
     return $qa_content;
