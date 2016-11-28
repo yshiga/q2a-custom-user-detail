@@ -14,14 +14,14 @@
     $usershtml = qa_userids_handles_html($questions, false);
     
     $values = array();
-	$htmldefaults = qa_post_html_defaults('Q');
-	$htmldefaults['whoview'] = false;
-	$htmldefaults['avatarsize'] = 0;
+    $htmldefaults = qa_post_html_defaults('Q');
+    $htmldefaults['whoview'] = false;
+    $htmldefaults['avatarsize'] = 0;
     $htmldefaults['contentview'] = true;
 
     foreach ($questions as $question) {
-        $values[] = qa_any_to_q_html_fields($question, $loginuserid, qa_cookie_get(),
-            $usershtml, null, array('voteview' => false) + qa_post_html_options($question, $htmldefaults));
+		$values[] = qa_post_html_fields($question, $loginuserid, qa_cookie_get(),
+			$usershtml, null, qa_post_html_options($question, $htmldefaults));
     }
     
     return $values;
