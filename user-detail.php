@@ -40,21 +40,7 @@
                 unset($userfields[$index]); // don't pay attention to user fields we're not allowed to view
         }
     }
-    // アクティビティ
-    list($activities, $answerqs, $commentqs, $editqs) = qa_db_select_with_pending(
-        qa_db_user_recent_qs_selectspec($loginuserid, $identifier, qa_opt_if_loaded('page_size_activity')),
-        qa_db_user_recent_a_qs_selectspec($loginuserid, $identifier),
-        qa_db_user_recent_c_qs_selectspec($loginuserid, $identifier),
-        qa_db_user_recent_edit_qs_selectspec($loginuserid, $identifier)
-    );
-    // TODO:$selectspec['columns']['content']='^posts.content';
     //	Get information on user references
-    
-    $activities = qa_any_sort_and_dedupe(array_merge($activities, $answerqs, $commentqs, $editqs));
-    $activities = array_slice($activities, 0, qa_opt('page_size_activity'));
-    $usershtml = qa_userids_handles_html(qa_any_get_userids_handles($activities), false);
-    
-    
     $errors = array();
     
     $qa_content = qa_content_prepare(true);
@@ -70,17 +56,8 @@
     $qa_content['raw']['points'] = $userpoints;
     $qa_content['raw']['rank'] = $userrank;
     
-    $qa_content['q_list']['activities'] = array();
+    $qa_content['q_list']['activities'] = include CUD_DIR.'/user-activities.php';
+    $qa_content['q_list']['questions'] = include CUD_DIR.'/user-quesitions.php';
     
-    $htmldefaults = qa_post_html_defaults('Q');
-    $htmldefaults['whoview'] = false;
-    $htmldefaults['voteview'] = false;
-    $htmldefaults['avatarsize'] = 0;
-    $htmldefaults['contentview'] = true;
-
-    foreach ($activities as $question) {
-        $qa_content['q_list']['activities'][] = qa_any_to_q_html_fields($question, $loginuserid, qa_cookie_get(),
-            $usershtml, null, array('voteview' => false) + qa_post_html_options($question, $htmldefaults));
-    }
     
     return $qa_content;
