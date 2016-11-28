@@ -46,10 +46,10 @@ class cud_theme_main
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
         $buttons = self::create_buttons($raw['account']['userid']);
-        $activities = self::create_q_list($content['q_list']['activities']);
-        $asks = self::create_q_list($content['q_list']['questions']);
-        $answers = self::create_q_list($content['q_list']['answers']);
-        $blogs = self::sample_item_list();
+        $activities = self::create_q_list($content['q_list']['activities'], '活動履歴');
+        $asks = self::create_q_list($content['q_list']['questions'], '質問');
+        $answers = self::create_q_list($content['q_list']['answers'], '回答');
+        $blogs = self::create_q_list($content['q_list']['blogs'], '飼育日誌');
         return array(
             '^site_url' => qa_opt('site_url'),
             '^blobid' => $raw['account']['avatarblobid'],
@@ -79,12 +79,20 @@ class cud_theme_main
         return $buttons;
     }
     
-    private static function create_q_list($q_items)
+    private static function create_q_list($q_items, $type)
     {
         // print_r($q_items);
         $html = '';
-        foreach ($q_items as $q_item) {
-            $html .= self::q_list_item($q_item); 
+        if (count($q_items) > 0) {
+            foreach ($q_items as $q_item) {
+                $html .= self::q_list_item($q_item); 
+            }
+        } else {
+            $html = '<section><div class="qa-a-list-item"><div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">';
+            $html .= '<div class="mdl-card__supporting-text">';
+            $html .= '<div class="qa-q-item-main">';
+            $html .= qa_lang_html_sub('profile/no_posts_by_x', $type);
+            $html .= "</div></div></div></div></section>";
         }
         return $html;
     }
@@ -146,8 +154,11 @@ class cud_theme_main
     {
         $search = '/.*>(.*)<.*/';
         $replace = '$1';
-        $q_item_title = preg_replace($search, $replace, $q_item['title']);
-        
+        if (isset($q_item['title'])) {
+            $q_item_title = preg_replace($search, $replace, $q_item['title']);
+        } else {
+            $q_item_title = '';
+        }
         $len = mb_strlen($q_item_title, 'UTF-8');
         if ($len > 60) {
             $q_item_title = mb_substr($q_item_title, 0, 60 - 1, 'UTF-8') . '…';
@@ -162,7 +173,11 @@ class cud_theme_main
         $html .= '</div>'.PHP_EOL;
 
         $blockwordspreg = qa_get_block_words_preg();
-        $text = qa_viewer_text($q_item['raw']['content'], 'html', array('blockwordspreg' => $blockwordspreg));
+        if (isset($q_item['raw']['content'])) {
+            $text = qa_viewer_text($q_item['raw']['content'], 'html', array('blockwordspreg' => $blockwordspreg));
+        } else {
+            $text = '';
+        }
         $q_item_content = preg_replace($search, $replace, $text);
         $q_item_content = mb_strimwidth($q_item_content, 0, 150, "...", "utf-8");
         $html .= '<div class="qa-item-content">'.PHP_EOL;
