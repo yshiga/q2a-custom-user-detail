@@ -94,6 +94,7 @@ class cud_theme_main
             $html .= qa_lang_html_sub('profile/no_posts_by_x', $type);
             $html .= "</div></div></div></div></section>";
         }
+        $html .= '<div class="ias-spinner" style="align:center;"><span class="mdl-spinner mdl-js-spinner is-active" style="height:20px;width:20px;"></span></div>';
         return $html;
     }
     
