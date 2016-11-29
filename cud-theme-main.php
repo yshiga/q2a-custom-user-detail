@@ -2,6 +2,8 @@
 
 class cud_theme_main
 {
+    protected $context = array();
+    
     public static function main($theme_obj)
     {
         $content = $theme_obj->content;
@@ -14,7 +16,7 @@ class cud_theme_main
 
         $theme_obj->widgets('main', 'top');
 
-        self::output_user($theme_obj);
+        self::output_user_detail($theme_obj);
 
         $theme_obj->widgets('main', 'high');
 
@@ -31,9 +33,8 @@ class cud_theme_main
         $theme_obj->output('</div> <!-- END mdl-layout__content -->', '');
     }
     
-    private static function output_user($theme_obj) {
-        $raw = $theme_obj->content['raw'];
-        $path = CUD_DIR . '/html/main_high_user.html';
+    private static function output_user_detail($theme_obj) {
+        $path = CUD_DIR . '/html/main_user_detail.html';
         $html = file_get_contents($path);
         $buttons = '';
         $params = self::create_params($theme_obj->content);
@@ -46,10 +47,6 @@ class cud_theme_main
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
         $buttons = self::create_buttons($raw['account']['userid']);
-        $activities = self::create_q_list($content['q_list']['activities'], '活動履歴');
-        $asks = self::create_q_list($content['q_list']['questions'], '質問');
-        $answers = self::create_q_list($content['q_list']['answers'], '回答');
-        $blogs = self::create_q_list($content['q_list']['blogs'], '飼育日誌');
         return array(
             '^site_url' => qa_opt('site_url'),
             '^blobid' => $raw['account']['avatarblobid'],
@@ -62,10 +59,6 @@ class cud_theme_main
             '^points' => $points,
             '^ranking' => $raw['rank'],
             '^buttons' => $buttons,
-            '^activities' => $activities,
-            '^asks' => $asks,
-            '^answers' => $answers,
-            '^blogs' => $blogs,
         );
     }
     
@@ -412,6 +405,73 @@ class cud_theme_main
         return $html;
     }
     
+    static function page_links($page_links)
+    {
+        $html = '';
+        if (!empty($page_links)) {
+            $html .= '<div class="qa-page-links">'.PHP_EOL;
+            $html .= self::page_links_list(@$page_links['items']);
+            $html .= self::page_links_clear();
+            $html .= '</div>';
+        }
+        return $html;
+    }
+
+    static function page_links_list($page_items)
+    {
+        $html = '';
+        if (!empty($page_items)) {
+            $html .= '<nav class="qa-page-links-list">';
+            $index = 0;
+            foreach ($page_items as $page_link) {
+                // self::set_context('page_index', $index++);
+                $html .= self::page_link_content($page_link);
+                if ($page_link['ellipsis']) {
+                    $html .= self::page_links_item(array('type' => 'ellipsis'));
+                }
+            }
+            // self::clear_context('page_index');
+            $html .= '</nav>';
+        }
+        return $html;
+    }
+
+    static function page_links_item($page_link)
+    {
+        return self::page_link_content($page_link);
+    }
+
+    static function page_link_content($page_link)
+    {
+        $label = @$page_link['label'];
+        $url = @$page_link['url'];
+        $html = '';
+        switch ($page_link['type']) {
+            case 'this':
+                $html .= '<a class="qa-page-selected is-activemdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised  mdl-button--colored mdl-color-text--white">'.$label.'</a>'.PHP_EOL;
+                break;
+            case 'prev':
+                $html .= '<a href="'.$url.'" class="qa-page-prev mdl-js-ripple-effect mdl-button mdl-js-button"><i class="material-icons">chevron_left</i></a>'.PHP_EOL;
+                break;
+            case 'next':
+                $html .= '<a href="'.$url.'" class="qa-page-next mdl-js-ripple-effect mdl-button mdl-js-button"><i class="material-icons">chevron_right</i></a>'.PHP_EOL;
+                break;
+            case 'ellipsis':
+                $html .= '<span class="qa-page-ellipsis">...</span>'.PHP_EOL;
+                break;
+            default:
+                $html .= '<a href="'.$url.'" class="qa-page-link mdl-js-ripple-effect mdl-button mdl-js-button">'.$label.'</a>'.PHP_EOL;
+                break;
+        }
+        return $html;
+    }
+    
+    static function page_links_clear()
+    {
+        return '<div class="qa-page-links-clear"></div>';
+    }
+    
+    
     private static function q_item_thumbnail($q_item)
     {
         $thumbnail = self::get_thumbnail($q_item['raw']['postid']);
@@ -439,6 +499,61 @@ class cud_theme_main
         } else {
             return '';
         }
+    }
+    
+    private static function get_activities($content)
+    {
+        if (!isset($content['q_list']['activities'])) {
+            $html = '';
+        } else {
+            $html = self::create_q_list($content['q_list']['activities'], '活動履歴');
+            if (isset($content['page_links_activities'])) {
+                $html .= self::page_links($content['page_links_activities']);
+            }
+        }
+        return $html;
+    }
+    
+    private static function get_questions($content)
+    {
+        if (!isset($content['q_list']['questions'])) {
+            $html = '';
+        } else {
+            $html = self::create_q_list($content['q_list']['questions'], '質問');
+            if (isset($content['page_links_questions'])) {
+                $html .= self::page_links($content['page_links_questions']);
+            }
+        }
+        return $html;
+        
+    }
+    
+    private static function get_answers($content)
+    {
+        if (!isset($content['q_list']['answers'])) {
+            $html = '';
+        } else {
+            $html = self::create_q_list($content['q_list']['answers'], '回答');
+            if (isset($content['page_links_answers'])) {
+                $html .= self::page_links($content['page_links_answers']);
+            }
+        }
+        return $html;
+        
+    }
+    
+    private static function get_blogs($content)
+    {
+        if (!isset($content['q_list']['blogs'])) {
+            $html = '';
+        } else {
+            $html = self::create_q_list($content['q_list']['blogs'], '飼育日誌');
+            if (isset($content['page_links_blogs'])) {
+                $html .= self::page_links($content['page_links_blogs']);
+            }
+        }
+        return $html;
+        
     }
     
     private static function sample_item_list()
