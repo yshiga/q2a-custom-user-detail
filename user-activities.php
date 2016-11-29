@@ -5,7 +5,7 @@
     }
     
     // アクティビティ
-    $activities_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, qa_opt_if_loaded('page_size_activity'));
+    $activities_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, 100);
     $answers_sel = qa_db_user_recent_a_qs_selectspec($loginuserid, $identifier);
     $comments_sel = qa_db_user_recent_c_qs_selectspec($loginuserid, $identifier);
     $edit_sel = qa_db_user_recent_edit_qs_selectspec($loginuserid, $identifier);
