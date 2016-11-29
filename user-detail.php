@@ -10,6 +10,7 @@
     require_once QA_INCLUDE_DIR.'app/updates.php';
     
     $handle = qa_request_part(1);
+    $action = qa_request_part(2);
     $start = qa_get_start();
     $pagesize = qa_opt('page_size_qs');
     if (!strlen($handle)) {
@@ -57,14 +58,22 @@
     $qa_content['raw']['points'] = $userpoints;
     $qa_content['raw']['rank'] = $userrank;
     
-    $qa_content['q_list']['activities'] = include CUD_DIR.'/user-activities.php';
-    $qa_content['q_list']['questions'] = include CUD_DIR.'/user-questions.php';
-    $qa_content['q_list']['answers'] = include CUD_DIR.'/user-answers.php';
-    $qa_content['q_list']['blogs'] = include CUD_DIR.'/user-blogs.php';
-    
-    $count = $activitiescount;
-    if (isset($activitiescount) && isset($pagesize)) {
-        $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), null);
+    if(empty($action) || $action == 'activities') {
+        $qa_content['q_list']['activities'] = include CUD_DIR.'/user-activities.php';
+        if (isset($activitiescount) && isset($pagesize)) {
+            $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), null);
+        } else {
+            $qa_content['page_links_activities'] = array();
+        }
+    }
+    if(empty($action) || $action === 'questions') {
+        $qa_content['q_list']['questions'] = include CUD_DIR.'/user-questions.php';
+    }
+    if(empty($action) || $action === 'answers') {
+        $qa_content['q_list']['answers'] = include CUD_DIR.'/user-answers.php';
+    }
+    if(empty($action) || $action === 'blogs') {
+        $qa_content['q_list']['blogs'] = include CUD_DIR.'/user-blogs.php';
     }
     
     return $qa_content;
