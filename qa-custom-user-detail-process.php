@@ -11,7 +11,13 @@ class qa_custom_user_detail_process
     {
         $page = qa_request_part(0);
         $action = qa_request_part(2);
-        if ($page !== 'user' || !empty($action)) {
+        $allow_actions = array(
+            'activities',
+            'questions',
+            'answers',
+            'blogs',
+        );
+        if ($page !== 'user' || (!empty($action) && !in_array($action, $allow_actions))) {
             return;
         }
         
