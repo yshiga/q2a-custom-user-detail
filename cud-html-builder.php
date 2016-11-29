@@ -26,7 +26,7 @@ class cud_html_builder
         $html .= '  <a class="mdl-tabs__tab is-active" href="#activities">'.qa_lang_html('cud_lang/activities').'</a>'.PHP_EOL;
         $html .= '  <a class="mdl-tabs__tab" href="#questions">'.qa_lang_html('cud_lang/questions').'</a>'.PHP_EOL;
         $html .= '  <a class="mdl-tabs__tab" href="#answers">'.qa_lang_html('cud_lang/answers').'</a>'.PHP_EOL;
-        $html .= '  <a class="mdl-tabs__tab" href="#blgs">'.qa_lang_html('cud_lang/blogs').'</a>'.PHP_EOL;
+        $html .= '  <a class="mdl-tabs__tab" href="#blogs">'.qa_lang_html('cud_lang/blogs').'</a>'.PHP_EOL;
         $html .= '</div>';
         
         return $html;
