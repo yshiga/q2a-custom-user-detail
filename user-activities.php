@@ -22,7 +22,8 @@
     );
     
     $activities = qa_any_sort_and_dedupe(array_merge($activities, $answerqs, $commentqs, $editqs));
-    $activities = array_slice($activities, 0, qa_opt('page_size_activity'));
+    $activitiescount = count($activities);
+    $activities = array_slice($activities, $start, $pagesize);
     $usershtml = qa_userids_handles_html(qa_any_get_userids_handles($activities), false);
     
     $values = array();

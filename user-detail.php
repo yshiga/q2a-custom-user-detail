@@ -10,7 +10,8 @@
     require_once QA_INCLUDE_DIR.'app/updates.php';
     
     $handle = qa_request_part(1);
-
+    $start = qa_get_start();
+    $pagesize = qa_opt('page_size_qs');
     if (!strlen($handle)) {
         $handle = qa_get_logged_in_handle();
         qa_redirect(!empty($handle) ? 'user/'.$handle : 'users');
@@ -60,5 +61,10 @@
     $qa_content['q_list']['questions'] = include CUD_DIR.'/user-questions.php';
     $qa_content['q_list']['answers'] = include CUD_DIR.'/user-answers.php';
     $qa_content['q_list']['blogs'] = include CUD_DIR.'/user-blogs.php';
+    
+    $count = $activitiescount;
+    if (isset($activitiescount) && isset($pagesize)) {
+        $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), null);
+    }
     
     return $qa_content;
