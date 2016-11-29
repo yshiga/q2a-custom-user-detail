@@ -23,6 +23,8 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 @define( 'CUD_FOLDER', basename( dirname( __FILE__ ) ) );
 @define( 'CUD_TARGET_THEME_NAME', 'q2a-material-lite');
 
+// language file
+qa_register_plugin_phrases('qa-custom-user-detail-lang-*.php', 'cud_lang');
 // process
 qa_register_plugin_module('process', 'qa-custom-user-detail-process.php', 'qa_custom_user_detail_process', 'Custom User Detail Process');
 // layer

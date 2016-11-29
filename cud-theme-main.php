@@ -4,7 +4,7 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 	header('Location: ../../');
 	exit;
 }
-
+require_once CUD_DIR.'/cud-html-builder.php';
 class cud_theme_main
 {
     protected $context = array();
@@ -22,6 +22,9 @@ class cud_theme_main
         $theme_obj->widgets('main', 'top');
 
         self::output_user_detail($theme_obj);
+        self::output_q_list_tab_header($theme_obj);
+        self::output_q_list_panels($theme_obj);
+        $theme_obj->output('</div>');
 
         $theme_obj->widgets('main', 'high');
 
@@ -51,7 +54,7 @@ class cud_theme_main
         $raw = $content['raw'];
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
-        $buttons = self::create_buttons($raw['account']['userid']);
+        $buttons = cud_html_builder::create_buttons($raw['account']['userid']);
         return array(
             '^site_url' => qa_opt('site_url'),
             '^blobid' => $raw['account']['avatarblobid'],
@@ -65,5 +68,78 @@ class cud_theme_main
             '^ranking' => $raw['rank'],
             '^buttons' => $buttons,
         );
+    }
+    
+    private static function output_q_list_tab_header($theme_obj)
+    {
+        $html = cud_html_builder::crate_tab_header();
+        $theme_obj->output($html);
+    }
+    
+    private static function output_q_list_tab_footer($theme_obj)
+    {
+        $theme_obj->output('</div>');
+    }
+    
+    private static function output_q_list_panels($theme_obj)
+    {
+        self::output_q_list($theme_obj, 'activities', true);
+        self::output_q_list($theme_obj, 'questions', false);
+        self::output_q_list($theme_obj, 'answers', false);
+        self::output_q_list($theme_obj, 'blogs', false);
+    }
+    
+    private static function output_q_list($theme_obj, $list_type, $active)
+    {
+        $html = cud_html_builder::create_tab_panel($list_type, $active);
+        $theme_obj->output($html);
+        if (isset($theme_obj->content['q_list'][$list_type])) {
+            $q_items = $theme_obj->content['q_list'][$list_type];
+            $theme_obj->q_list_items($q_items);
+        } else {
+            $list_name = qa_lang_html('cud_lang/'.$list_type);
+            $html = cud_html_builder::create_no_item_list($list_name);
+            $theme_obj->output($html);
+        }
+        
+        $theme_obj->output('</div>','</div>');
+    }
+    
+    static function q_item_title($theme_obj, $q_item)
+    {
+        $search = '/.*>(.*)<.*/';
+        $replace = '$1';
+        $q_item_title = preg_replace($search, $replace, $q_item['title']);
+        self::get_thumbnail($q_item['raw']['postid']) ? $theme_obj->output('<div class="mdl-card__title">') : $theme_obj->output('<div class="mdl-card__title no-thumbnail">');
+        $theme_obj->output(
+            '<h1 class="mdl-card__title-text qa-q-item-title">',
+            '<a href="'.$q_item['url'].'">'.$q_item_title.'</a>',
+            // add closed note in title
+            empty($q_item['closed']['state']) ? '' : ' ['.$q_item['closed']['state'].']',
+            '</h1>',
+            '</div>'
+        );
+        
+        $blockwordspreg = qa_get_block_words_preg();
+        if (isset($q_item['raw']['content'])) {
+            $text = qa_viewer_text($q_item['raw']['content'], 'html', array('blockwordspreg' => $blockwordspreg));
+        } else {
+            $text = '';
+        }
+        $q_item_content = mb_strimwidth($text, 0, 150, "...", "utf-8");
+        $theme_obj->output('<div class="qa-item-content">');
+        $theme_obj->output($q_item_content);
+        $theme_obj->output('</div>');
+    }
+    
+    private static function get_thumbnail($postid)
+    {
+        $post = qa_db_single_select(qa_db_full_post_selectspec(null, $postid));
+        $ret = preg_match("/<img(.+?)>/", $post['content'], $matches);
+        if ($ret === 1) {
+            return $matches[1];
+        } else {
+            return '';
+        }
     }
 }

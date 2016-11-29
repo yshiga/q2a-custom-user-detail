@@ -46,7 +46,7 @@ class qa_custom_user_detail_process
         //    Determine the identify of the user
         
         qa_set_template('user');
-        $qa_content = include CUD_DIR.'/user-detail.php';
+        $qa_content = include CUD_DIR.'/pages/user-detail.php';
         
         if (is_array($qa_content)) {
             if (QA_DEBUG_PERFORMANCE)

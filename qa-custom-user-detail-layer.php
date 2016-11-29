@@ -47,4 +47,24 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
     }
     
+    public function q_item_title($q_item)
+    {
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
+        cud_theme_main::q_item_title($this, $q_item);
+        } else {
+            qa_html_theme_base::q_item_title($q_item);
+        }
+    }
+    
+    public function post_avatar_meta($post, $class, $avatarprefix=null, $metaprefix=null, $metaseparator='<br/>')
+    {
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
+            $this->output('<span class="'.$class.'-avatar-meta">');
+            $this->avatar($post, $class, $avatarprefix);
+            $this->post_meta($post, $class, $metaprefix, $metaseparator);
+            $this->output('</span>');
+        } else {
+            qa_html_theme_base::post_avatar_meta($post, $class, $avatarprefix, $metaprefix, $metaseparator);
+        }
+    }
 }

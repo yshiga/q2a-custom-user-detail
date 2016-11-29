@@ -59,7 +59,7 @@
     $qa_content['raw']['rank'] = $userrank;
     
     if(empty($action) || $action == 'activities') {
-        $qa_content['q_list']['activities'] = include CUD_DIR.'/user-activities.php';
+        $qa_content['q_list']['activities'] = include CUD_DIR.'/pages/user-activities.php';
         if (isset($activitiescount) && isset($pagesize)) {
             $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), null);
         } else {
@@ -67,13 +67,13 @@
         }
     }
     if(empty($action) || $action === 'questions') {
-        $qa_content['q_list']['questions'] = include CUD_DIR.'/user-questions.php';
+        $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
     }
     if(empty($action) || $action === 'answers') {
-        $qa_content['q_list']['answers'] = include CUD_DIR.'/user-answers.php';
+        $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
     }
     if(empty($action) || $action === 'blogs') {
-        $qa_content['q_list']['blogs'] = include CUD_DIR.'/user-blogs.php';
+        $qa_content['q_list']['blogs'] = include CUD_DIR.'/pages/user-blogs.php';
     }
     
     return $qa_content;
