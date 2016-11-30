@@ -72,7 +72,8 @@ class cud_theme_main
     
     private static function output_q_list_tab_header($theme_obj)
     {
-        $html = cud_html_builder::crate_tab_header();
+        $active_tab = self::set_active_tab($theme_obj);
+        $html = cud_html_builder::crate_tab_header($active_tab);
         $theme_obj->output($html);
     }
     
@@ -83,19 +84,25 @@ class cud_theme_main
     
     private static function output_q_list_panels($theme_obj)
     {
-        self::output_q_list($theme_obj, 'activities', true);
-        self::output_q_list($theme_obj, 'questions', false);
-        self::output_q_list($theme_obj, 'answers', false);
-        self::output_q_list($theme_obj, 'blogs', false);
+        $active_tab = self::set_active_tab($theme_obj);
+        self::output_q_list($theme_obj, 'activities', $active_tab['activities']);
+        self::output_q_list($theme_obj, 'questions', $active_tab['questions']);
+        self::output_q_list($theme_obj, 'answers', $active_tab['answers']);
+        self::output_q_list($theme_obj, 'blogs', $active_tab['blogs']);
     }
     
-    private static function output_q_list($theme_obj, $list_type, $active)
+    private static function output_q_list($theme_obj, $list_type, $active_tab)
     {
-        $html = cud_html_builder::create_tab_panel($list_type, $active);
+        $html = cud_html_builder::create_tab_panel($list_type, $active_tab);
         $theme_obj->output($html);
         if (isset($theme_obj->content['q_list'][$list_type])) {
             $q_items = $theme_obj->content['q_list'][$list_type];
             $theme_obj->q_list_items($q_items);
+            if (isset($theme_obj->content['page_links_'.$list_type])) {
+                self::page_links($theme_obj, $list_type);
+            }
+            $html = cud_html_builder::create_spinner();
+            $theme_obj->output($html);
         } else {
             $list_name = qa_lang_html('cud_lang/'.$list_type);
             $html = cud_html_builder::create_no_item_list($list_name);
@@ -141,5 +148,29 @@ class cud_theme_main
         } else {
             return '';
         }
+    }
+    
+    private static function page_links($theme_obj, $list_type)
+    {
+        $page_links = @$theme_obj->content['page_links_'.$list_type];
+        if (!empty($page_links)) {
+            $theme_obj->output('<div class="qa-page-links-'.$list_type.'">');
+            $theme_obj->page_links_list(@$page_links['items']);
+            $theme_obj->page_links_clear();
+            $theme_obj->output('</div>');
+        }
+    }
+    
+    private static function set_active_tab($theme_obj)
+    {
+        $action = isset($theme_obj->content['raw']['action']) ? $theme_obj->content['raw']['action'] : 'activities';
+        $active_tab = array(
+            'activities' => '',
+            'questions' => '',
+            'answers' => '',
+            'blogs' => ''
+        );
+        $active_tab[$action] = 'is-active';
+        return $active_tab;
     }
 }
