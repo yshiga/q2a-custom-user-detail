@@ -54,9 +54,10 @@
     
     $qa_content['raw']['account'] = $useraccount; // for plugin layers to access
     $qa_content['raw']['profile'] = $userprofile;
-    $qa_content['raw']['userid'] = $userid;
+    $qa_content['raw']['userid'] = $useraccount['userid'];
     $qa_content['raw']['points'] = $userpoints;
     $qa_content['raw']['rank'] = $userrank;
+    $qa_content['raw']['action'] = $action;
     
     if(empty($action) || $action == 'activities') {
         $qa_content['q_list']['activities'] = include CUD_DIR.'/pages/user-activities.php';
@@ -66,14 +67,14 @@
             $qa_content['page_links_activities'] = array();
         }
     }
-    if(empty($action) || $action === 'questions') {
-        $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
-    }
-    if(empty($action) || $action === 'answers') {
-        $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
-    }
-    if(empty($action) || $action === 'blogs') {
-        $qa_content['q_list']['blogs'] = include CUD_DIR.'/pages/user-blogs.php';
-    }
+    // if(empty($action) || $action === 'questions') {
+    //     $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
+    // }
+    // if(empty($action) || $action === 'answers') {
+    //     $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
+    // }
+    // if(empty($action) || $action === 'blogs') {
+    //     $qa_content['q_list']['blogs'] = include CUD_DIR.'/pages/user-blogs.php';
+    // }
     
     return $qa_content;
