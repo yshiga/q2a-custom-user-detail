@@ -10,9 +10,13 @@
     $comments_sel = qa_db_user_recent_c_qs_selectspec($loginuserid, $identifier);
     $edit_sel = qa_db_user_recent_edit_qs_selectspec($loginuserid, $identifier);
     $activities_sel['columns']['content'] = '^posts.content';
+    $activities_sel['columns']['format'] = '^posts.format';
     $answers_sel['columns']['content'] = '^posts.content';
+    $answers_sel['columns']['format'] = '^posts.format';
     $comments_sel['columns']['content'] = '^posts.content';
+    $comments_sel['columns']['format'] = '^posts.format';
     $edit_sel['columns']['content'] = '^posts.content';
+    $edit_sel['columns']['format'] = '^posts.format';
     
     list($activities, $answerqs, $commentqs, $editqs) = qa_db_select_with_pending(
         $activities_sel,
