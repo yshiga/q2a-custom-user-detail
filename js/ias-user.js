@@ -1,10 +1,10 @@
 $(function(){
   $('.ias-spinner').hide();
-  if($("#activities").length && $(".qa-page-links-list").length) {
+  if($(".q-list-activities").length && $(".qa-page-links-list-activities").length) {
     var ias = $(".mdl-layout__content").ias({
-      container: "#activities"
+      container: ".q-list-activities"
       ,item: ".qa-q-list-item"
-      ,pagination: ".qa-page-links-list"
+      ,pagination: ".qa-page-links-list-activities"
       ,next: ".qa-page-next"
       ,delay: 600
     });
