@@ -22,10 +22,12 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 @define( 'CUD_DIR', dirname( __FILE__ ) );
 @define( 'CUD_FOLDER', basename( dirname( __FILE__ ) ) );
 @define( 'CUD_TARGET_THEME_NAME', 'q2a-material-lite');
+@define( 'CUD_RELATIVE_PATH', '../qa-plugin/'.CUD_FOLDER.'/');
 
 // language file
 qa_register_plugin_phrases('qa-custom-user-detail-lang-*.php', 'cud_lang');
 // process
-qa_register_plugin_module('process', 'qa-custom-user-detail-process.php', 'qa_custom_user_detail_process', 'Custom User Detail Process');
+// qa_register_plugin_module('process', 'qa-custom-user-detail-process.php', 'qa_custom_user_detail_process', 'Custom User Detail Process');
 // layer
 qa_register_plugin_layer('qa-custom-user-detail-layer.php','Custom User Detail Layer');
+qa_register_plugin_overrides('qa-custom-user-detail-overrides.php');
