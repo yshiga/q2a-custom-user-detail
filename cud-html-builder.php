@@ -55,7 +55,7 @@ class cud_html_builder
     
     public static function create_spinner()
     {
-        $html .= '<div class="ias-spinner" style="align:center;"><span class="mdl-spinner mdl-js-spinner is-active" style="height:20px;width:20px;"></span></div>';
+        $html = '<div class="ias-spinner" style="align:center;"><span class="mdl-spinner mdl-js-spinner is-active" style="height:20px;width:20px;"></span></div>';
         return $html;
     }
 }

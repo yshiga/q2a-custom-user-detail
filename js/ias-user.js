@@ -26,6 +26,8 @@ $(function(){
   $('#tab-answers').click(function(){
     destroy_ias();
     if (ias_list['answers']) {
+      var ias = ias_list['answers'];
+      ias.bind();
     } else {
       ias_list['answers'] = bind_ias('answers');
     }
@@ -71,8 +73,8 @@ $(function(){
   
   function destroy_ias() {
     for (type in ias_list) {
-      var tmp = ias_list[type];
-      tmp.destroy();
+      var ias = ias_list[type];
+      ias.destroy();
     }
     $('.ias-spinner').hide();
   }

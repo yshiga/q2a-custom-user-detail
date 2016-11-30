@@ -73,9 +73,14 @@
     } else {
         $qa_content['page_links_questions'] = array();
     }
-    // if(empty($action) || $action === 'answers') {
-    //     $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
-    // }
+    
+    $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
+    if (isset($answerscount) && isset($pagesize)) {
+        $qa_content['page_links_answers'] = qa_html_page_links(qa_request(), $start, $pagesize, $answerscount, qa_opt('pages_prev_next'), array('action' => 'answers'));
+    } else {
+        $qa_content['page_links_answers'] = array();
+    }
+
     // if(empty($action) || $action === 'blogs') {
     //     $qa_content['q_list']['blogs'] = include CUD_DIR.'/pages/user-blogs.php';
     // }
