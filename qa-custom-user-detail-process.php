@@ -21,9 +21,6 @@ class qa_custom_user_detail_process
             return;
         }
         
-        if (qa_opt('site_theme') !== CUD_TARGET_THEME_NAME) {
-            return;
-        }
         require_once QA_INCLUDE_DIR.'app/cookies.php';
         require_once QA_INCLUDE_DIR.'app/format.php';
         require_once QA_INCLUDE_DIR.'app/users.php';
@@ -31,7 +28,10 @@ class qa_custom_user_detail_process
         require_once QA_INCLUDE_DIR.'db/selects.php';
 
         global $qa_usage;
-
+        
+        if (qa_opt('site_theme') !== CUD_TARGET_THEME_NAME) {
+            return;
+        }
         qa_report_process_stage('init_page');
         qa_db_connect('qa_page_db_fail_handler');
 
