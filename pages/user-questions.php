@@ -5,12 +5,12 @@
     }
     
     // 質問    
-    $questions_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, qa_opt_if_loaded('page_size_qs'), 0);
+    $questions_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, $pagesize, $start);
     $questions_sel['columns']['content'] = '^posts.content ';
+    $questions_sel['columns']['format'] = '^posts.format ';
     $questions = qa_db_select_with_pending($questions_sel);
     
-    $pagesize = qa_opt('page_size_qs');
-    $questions = array_slice($questions, 0, $pagesize);
+    $questions = array_slice($questions, $start, $pagesize);
     $usershtml = qa_userids_handles_html($questions, false);
     
     $values = array();

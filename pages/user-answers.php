@@ -5,12 +5,12 @@
     }
     
     // 回答
-    $answers_sel =qa_db_user_recent_a_qs_selectspec($loginuserid, $identifier, qa_opt_if_loaded('page_size_activity'), 0);
+    $answers_sel = qa_db_user_recent_a_qs_selectspec($loginuserid, $identifier, $pagesize, $start);
     $answers_sel['columns']['content'] = '^posts.content ';
+    $answers_sel['columns']['format'] = '^posts.format ';
     $answers = qa_db_select_with_pending($answers_sel);
     
-    $pagesize = qa_opt('page_size_qs');
-    $answers = array_slice($answers, 0, $pagesize);
+    $answers = array_slice($answers, $start, $pagesize);
     $usershtml = qa_userids_handles_html($answers, false);
     
     $values = array();
