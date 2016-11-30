@@ -4,13 +4,14 @@
         exit;
     }
     
-    // 質問    
-    $questions_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, $pagesize, $start);
+    // 質問
+    $questions_start = ($action === 'questions') ? $start : 0;
+    $questions_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, null, $questions_start);
     $questions_sel['columns']['content'] = '^posts.content ';
     $questions_sel['columns']['format'] = '^posts.format ';
     $questions = qa_db_select_with_pending($questions_sel);
-    
-    $questions = array_slice($questions, $start, $pagesize);
+    $questionscount = count($questions);
+    $questions = array_slice($questions, $questions_start, $pagesize);
     $usershtml = qa_userids_handles_html($questions, false);
     
     $values = array();
