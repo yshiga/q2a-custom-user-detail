@@ -10,7 +10,7 @@
     require_once QA_INCLUDE_DIR.'app/updates.php';
     
     $handle = qa_request_part(1);
-    $action = qa_request_part(2);
+    $action = qa_get('action');
     $start = qa_get_start();
     $pagesize = qa_opt('page_size_qs');
     if (!strlen($handle)) {
@@ -45,6 +45,7 @@
     //	Get information on user references
     $errors = array();
     
+    qa_set_template('user');
     $qa_content = qa_content_prepare(true);
     
     $userhtml = qa_html($handle);
@@ -59,17 +60,19 @@
     $qa_content['raw']['rank'] = $userrank;
     $qa_content['raw']['action'] = $action;
     
-    if(empty($action) || $action == 'activities') {
-        $qa_content['q_list']['activities'] = include CUD_DIR.'/pages/user-activities.php';
-        if (isset($activitiescount) && isset($pagesize)) {
-            $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), null);
-        } else {
-            $qa_content['page_links_activities'] = array();
-        }
+    $qa_content['q_list']['activities'] = include CUD_DIR.'/pages/user-activities.php';
+    if (isset($activitiescount) && isset($pagesize)) {
+        $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), array('action' => 'activities'));
+    } else {
+        $qa_content['page_links_activities'] = array();
     }
-    // if(empty($action) || $action === 'questions') {
-    //     $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
-    // }
+    
+    $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
+    if (isset($questionscount) && isset($pagesize)) {
+        $qa_content['page_links_questions'] = qa_html_page_links(qa_request(), $start, $pagesize, $questionscount, qa_opt('pages_prev_next'), array('action' => 'questions'));
+    } else {
+        $qa_content['page_links_questions'] = array();
+    }
     // if(empty($action) || $action === 'answers') {
     //     $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
     // }
