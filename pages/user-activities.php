@@ -5,7 +5,7 @@
     }
     
     // アクティビティ
-    $activities_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, 100);
+    $activities_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, null);
     $answers_sel = qa_db_user_recent_a_qs_selectspec($loginuserid, $identifier);
     $comments_sel = qa_db_user_recent_c_qs_selectspec($loginuserid, $identifier);
     $edit_sel = qa_db_user_recent_edit_qs_selectspec($loginuserid, $identifier);
@@ -24,10 +24,10 @@
         $comments_sel,
         $edit_sel
     );
-    
+    $activitiy_start = ($action === 'activities') ? $start : 0;
     $activities = qa_any_sort_and_dedupe(array_merge($activities, $answerqs, $commentqs, $editqs));
     $activitiescount = count($activities);
-    $activities = array_slice($activities, $start, $pagesize);
+    $activities = array_slice($activities, $activitiy_start, $pagesize);
     $usershtml = qa_userids_handles_html(qa_any_get_userids_handles($activities), false);
     
     $values = array();
