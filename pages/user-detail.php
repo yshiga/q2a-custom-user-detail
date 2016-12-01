@@ -60,6 +60,9 @@
     $qa_content['raw']['rank'] = $userrank;
     $qa_content['raw']['action'] = $action;
     
+    $questioncount = (int)@$userpoints['qposts'];
+    $answercount = (int)@$userpoints['aposts'];
+    
     $qa_content['q_list']['activities'] = include CUD_DIR.'/pages/user-activities.php';
     if (isset($activitiescount) && isset($pagesize)) {
         $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), array('action' => 'activities'));
@@ -68,15 +71,15 @@
     }
     
     $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
-    if (isset($questionscount) && isset($pagesize)) {
-        $qa_content['page_links_questions'] = qa_html_page_links(qa_request(), $start, $pagesize, $questionscount, qa_opt('pages_prev_next'), array('action' => 'questions'));
+    if (isset($questioncount) && isset($pagesize)) {
+        $qa_content['page_links_questions'] = qa_html_page_links(qa_request(), $start, $pagesize, $questioncount, qa_opt('pages_prev_next'), array('action' => 'questions'));
     } else {
         $qa_content['page_links_questions'] = array();
     }
     
     $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
-    if (isset($answerscount) && isset($pagesize)) {
-        $qa_content['page_links_answers'] = qa_html_page_links(qa_request(), $start, $pagesize, $answerscount, qa_opt('pages_prev_next'), array('action' => 'answers'));
+    if (isset($answercount) && isset($pagesize)) {
+        $qa_content['page_links_answers'] = qa_html_page_links(qa_request(), $start, $pagesize, $answercount, qa_opt('pages_prev_next'), array('action' => 'answers'));
     } else {
         $qa_content['page_links_answers'] = array();
     }

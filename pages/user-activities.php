@@ -24,10 +24,9 @@
         $comments_sel,
         $edit_sel
     );
-    $activitiy_start = ($action === 'activities') ? $start : 0;
     $activities = qa_any_sort_and_dedupe(array_merge($activities, $answerqs, $commentqs, $editqs));
     $activitiescount = count($activities);
-    $activities = array_slice($activities, $activitiy_start, $pagesize);
+    $activities = array_slice($activities, $start, $pagesize);
     $usershtml = qa_userids_handles_html(qa_any_get_userids_handles($activities), false);
     
     $values = array();
