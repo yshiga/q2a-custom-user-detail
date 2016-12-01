@@ -1,8 +1,11 @@
 $(function(){
   var ias_list = {};
   
-  ias_list['activities'] = bind_ias('activities');
-  console.log(ias_list);
+  if (!action) {
+    action = 'activities';
+  }
+  ias_list[action] = bind_ias(action);
+  
   $('#tab-activities').click(function(){
     destroy_ias();
     if (ias_list['activities']) {
@@ -11,7 +14,6 @@ $(function(){
     } else {
       ias_list['activities'] = bind_ias('activities');
     }
-    console.log(ias_list);
   });
   $('#tab-questions').click(function(){
     destroy_ias();
@@ -21,7 +23,6 @@ $(function(){
     } else {
       ias_list['questions'] = bind_ias('questions');
     }
-    console.log(ias_list);
   });
   $('#tab-answers').click(function(){
     destroy_ias();
@@ -31,7 +32,6 @@ $(function(){
     } else {
       ias_list['answers'] = bind_ias('answers');
     }
-    console.log(ias_list);
   });
   $('#tab-blogs').click(function(){
     destroy_ias();
@@ -39,12 +39,11 @@ $(function(){
     } else {
       ias_list['blogs'] = bind_ias('blogs');
     }
-    console.log(ias_list);
   });
   
   function bind_ias(list_type) {
+    $('.ias-spinner').hide();
     if($("#"+list_type).length && $(".qa-page-links-"+list_type).length) {
-      $('.ias-spinner').hide();
       var ias = $(".mdl-layout__content").ias({
         container: "#"+list_type
         ,item: ".qa-q-list-item"
@@ -61,10 +60,10 @@ $(function(){
         html: '', // optionally
       }));
       ias.on('load', function() {
-        $('.ias-spinner').show();
+        $('.q-list-'+list_type+' .ias-spinner').show();
       });
       ias.on('noneLeft', function() {
-        $('.ias-spinner').hide();
+        $('.q-list-'+list_type+' .ias-spinner').hide();
       });
       return ias;
     }
