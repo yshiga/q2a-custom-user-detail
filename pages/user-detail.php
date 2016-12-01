@@ -81,8 +81,13 @@
         $qa_content['page_links_answers'] = array();
     }
 
-    // if(empty($action) || $action === 'blogs') {
-    //     $qa_content['q_list']['blogs'] = include CUD_DIR.'/pages/user-blogs.php';
-    // }
+
+    $qa_content['q_list']['blogs'] = include CUD_DIR.'/pages/user-blogs.php';
+    if (isset($blogcount) && isset($pagesize)) {
+        $qa_content['page_links_blogs'] = qa_html_page_links(qa_request(), $start, $pagesize, $blogcount, qa_opt('pages_prev_next'), array('action' => 'blogs'));
+    } else {
+        $qa_content['page_links_blogs'] = array();
+    }
+
     
     return $qa_content;

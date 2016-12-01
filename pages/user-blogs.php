@@ -5,12 +5,15 @@
     }
     
     // ブログ
-    $blogs_sel = qas_blog_db_user_recent_posts_selectspec( $loginuserid, $identifier, qa_opt_if_loaded( 'qas_blog_page_size_ps' ), 0 );
+    $blog_start = ($action === 'blogs') ? $start : 0;
+    $blogs_sel = qas_blog_db_user_recent_posts_selectspec( $loginuserid, $identifier, null, $blog_start );
     $blogs_sel['columns']['content'] = '^blogs.content ';
+    $blogs_sel['columns']['format'] = '^blogs.format ';
     $blogs = qa_db_select_with_pending($blogs_sel);
+    $blogcount = count($blogs);
     
     $pagesize = qa_opt('page_size_qs');
-    $blogs = array_slice($blogs, 0, $pagesize);
+    $blogs = array_slice($blogs, $blog_start, $pagesize);
     $usershtml = qa_userids_handles_html($blogs, false);
     
     $values = array();
