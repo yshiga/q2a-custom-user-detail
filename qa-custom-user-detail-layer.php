@@ -12,14 +12,15 @@ class qa_html_theme_layer extends qa_html_theme_base
         $this->infscr = new qa_infinite_scroll();
     }
     
-    function head_script()
+    function body_footer()
     {
-        qa_html_theme_base::head_script();
+        qa_html_theme_base::body_footer();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
             $action = isset($this->content['raw']['action']) ? $this->content['raw']['action'] : 'activities';
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'.$this->infscr->pluginjsurl.'jquery-ias.min.js"></SCRIPT>');
             $this->output('<SCRIPT TYPE="text/javascript">var action = "'.$action.'";</SCRIPT>');
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/ias-user.js"></SCRIPT>');
+            $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-favorite.js"></SCRIPT>');
         }
     }
 

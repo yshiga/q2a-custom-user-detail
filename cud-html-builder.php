@@ -8,12 +8,13 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 class cud_html_builder
 {
     
-    public static function create_buttons($userid)
+    public static function create_buttons($userid, $handle, $favorite)
     {
         if($userid === qa_get_logged_in_userid()) {
             $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="/account">プロフィール編集</a>';
         } else {
-            $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect">フォローする</a><a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect">メッセージ送信</a>';
+            $buttons .= '<div style="margin-bottom:6px;" '.$favorite['favorite_id'].'><a class=" mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" '.$favorite['favorite_tags'].'  data-favorite="'.$favorite['favorite'].'" '.$favorite['code'].'>フォローする</a></div>';
+            $buttons .= '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" href="'.qa_path_html('message/'.$handle).'">メッセージ送信</a>';
         }
         return $buttons;
     }

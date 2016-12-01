@@ -42,7 +42,7 @@
                 unset($userfields[$index]); // don't pay attention to user fields we're not allowed to view
         }
     }
-    //	Get information on user references
+    //    Get information on user references
     $errors = array();
     
     qa_set_template('user');
@@ -53,6 +53,13 @@
     $qa_content['title'] = qa_lang_html_sub('profile/user_x', $userhtml);
     $qa_content['error'] = @$errors['page'];
     
+    if (isset($loginuserid) && $loginuserid != $useraccount['userid'] && !QA_FINAL_EXTERNAL_USERS) {
+        $favoritemap = qa_get_favorite_non_qs_map();
+        $favorite = @$favoritemap['user'][$useraccount['userid']];
+
+        $qa_content['favorite'] = cud_favorite_form(QA_ENTITY_USER, $useraccount['userid'], $favorite,
+            qa_lang_sub($favorite ? 'main/remove_x_favorites' : 'users/add_user_x_favorites', $handle));
+    }
     $qa_content['raw']['account'] = $useraccount; // for plugin layers to access
     $qa_content['raw']['profile'] = $userprofile;
     $qa_content['raw']['userid'] = $useraccount['userid'];
@@ -94,3 +101,13 @@
 
     
     return $qa_content;
+    
+    function cud_favorite_form($entitytype, $entityid, $favorite, $title)
+    {
+        return array(
+            'favorite' => (int)$favorite,
+            'code' => 'data-code="'.qa_get_form_security_code('favorite-'.$entitytype.'-'.$entityid).'"',
+            'favorite_id' => 'id="favoriting"',
+            'favorite_tags' => 'title="'.qa_html($title).'" data-name="'.qa_html('favorite_'.$entitytype.'_'.$entityid.'_'.(int)!$favorite).'"',
+        );
+    }
