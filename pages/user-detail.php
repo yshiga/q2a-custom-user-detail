@@ -108,6 +108,6 @@
             'favorite' => (int)$favorite,
             'code' => 'data-code="'.qa_get_form_security_code('favorite-'.$entitytype.'-'.$entityid).'"',
             'favorite_id' => 'id="favoriting"',
-            'favorite_tags' => 'title="'.qa_html($title).'" data-name="'.qa_html('favorite_'.$entitytype.'_'.$entityid.'_'.(int)!$favorite).'"',
+            'favorite_tags' => 'title="'.qa_html($title).'" name="'.qa_html('favorite_'.$entitytype.'_'.$entityid.'_'.(int)!$favorite).'"',
         );
     }

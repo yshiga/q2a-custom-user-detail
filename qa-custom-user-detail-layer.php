@@ -70,4 +70,36 @@ class qa_html_theme_layer extends qa_html_theme_base
             qa_html_theme_base::post_avatar_meta($post, $class, $avatarprefix, $metaprefix, $metaseparator);
         }
     }
+    
+    public function favorite_button($tags, $class)
+    {
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME) {
+    		if (isset($tags)) {
+                $label = $this->get_follow_label($tags);
+                $new_tags = $this->replace_tags($tags);
+                $html = '<a class=" mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" '.$new_tags.'>'.$label.'</a>';
+                $this->output($html);
+            }
+        } else {
+            qa_html_theme_base::favorite_button($tags, $class);
+        }
+    }
+    
+    private function get_follow_label($tags)
+    {
+        $label = '';
+        $pat = '/title\s*=\s*["\']([^"\']+)["\']/i';
+        $matchcount = preg_match($pat, $tags, $match);
+        if ($matchcount > 0) {
+            $label = $match[1];
+        }
+        return $label;
+    }
+    
+    private function replace_tags($tags)
+    {
+        $pat = '/onclick\s*=\s*["\']([^"\']+)["\']/i';
+        $tags2 = preg_replace($pat, '', $tags);
+        return $tags2;
+    }
 }
