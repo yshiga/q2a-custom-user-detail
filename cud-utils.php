@@ -19,7 +19,7 @@ class cud_utils
         
         $sql = "SELECT count(*)";
         $sql .= " FROM ^posts";
-        $sql .= " WHERE type = 'A'";
+        $sql .= " WHERE (type = 'A' OR type = 'Q')";
         $sql .= " AND userid = $";
         $sql .= " AND created > DATE_SUB(NOW(), INTERVAL # DAY)";
         
