@@ -192,6 +192,8 @@ class cud_theme_main
     {
         $path = CUD_DIR . '/html/not_logged_in.html';
         $html = file_get_contents($path);
+        $params = self::get_links_url_params();
+        $html = strtr($html, $params);
         $theme_obj->output($html);
     }
     
@@ -200,5 +202,14 @@ class cud_theme_main
         $path = CUD_DIR . '/html/not_post_answer.html';
         $html = file_get_contents($path);
         $theme_obj->output($html);
+    }
+    
+    private static function get_links_url_params()
+    {
+        $request = qa_request();
+        return array(
+            '^register' => qa_html(qa_path('register', array('to' => $request), qa_path_to_root())),
+            '^login' => qa_html(qa_path('login', array('to' => $request), qa_path_to_root())),
+        );
     }
 }
