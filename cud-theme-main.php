@@ -4,7 +4,10 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 	header('Location: ../../');
 	exit;
 }
+
 require_once CUD_DIR.'/cud-html-builder.php';
+require_once CUD_DIR.'/cud-utils.php';
+
 class cud_theme_main
 {
     protected $context = array();
@@ -21,9 +24,20 @@ class cud_theme_main
 
         $theme_obj->widgets('main', 'top');
 
-        self::output_user_detail($theme_obj);
-        self::output_q_list_tab_header($theme_obj);
-        self::output_q_list_panels($theme_obj);
+        if (qa_is_logged_in()) {
+            $request = qa_request_parts();
+            $handle = isset($request[1]) ? $request[1] : '';
+            if (cud_utils::get_answer_count_days() > 0 ||
+                qa_get_logged_in_handle() === $handle) {
+                self::output_user_detail($theme_obj);
+                self::output_q_list_tab_header($theme_obj);
+                self::output_q_list_panels($theme_obj);
+            } else {
+                self::output_not_post_answer($theme_obj);
+            }
+        } else {
+            self::output_not_logged_in($theme_obj);
+        }
         $theme_obj->output('</div>');
 
         $theme_obj->widgets('main', 'high');
@@ -172,5 +186,19 @@ class cud_theme_main
         );
         $active_tab[$action] = 'is-active';
         return $active_tab;
+    }
+    
+    private static function output_not_logged_in($theme_obj)
+    {
+        $path = CUD_DIR . '/html/not_logged_in.html';
+        $html = file_get_contents($path);
+        $theme_obj->output($html);
+    }
+    
+    private static function output_not_post_answer($theme_obj)
+    {
+        $path = CUD_DIR . '/html/not_post_answer.html';
+        $html = file_get_contents($path);
+        $theme_obj->output($html);
     }
 }
