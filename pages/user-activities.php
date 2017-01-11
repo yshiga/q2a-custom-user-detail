@@ -17,7 +17,8 @@
     $comments_sel['columns']['format'] = '^posts.format';
     $edit_sel['columns']['content'] = '^posts.content';
     $edit_sel['columns']['format'] = '^posts.format';
-    
+	$edit_sel['source'] .= " AND editposts.updatetype NOT IN ('A', 'T')";
+	
     list($activities, $answerqs, $commentqs, $editqs) = qa_db_select_with_pending(
         $activities_sel,
         $answers_sel,
