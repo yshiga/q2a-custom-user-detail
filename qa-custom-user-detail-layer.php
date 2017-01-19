@@ -43,7 +43,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     
     public function main()
     {
-        $editing = (qa_get_state === 'edit' && qa_get_logged_in_level >= QA_USER_LEVEL_ADMIN);
+        $editing = (qa_get_state() === 'edit' && qa_get_logged_in_level >= QA_USER_LEVEL_ADMIN);
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME 
             && $this->template === 'user'
             && !$editing) {
