@@ -1,8 +1,8 @@
 <?php
 
 if (!defined('QA_VERSION')) { // don't allow this page to be requested directly from browser
-	header('Location: ../../');
-	exit;
+    header('Location: ../../');
+    exit;
 }
 
 class cud_html_builder
@@ -10,13 +10,19 @@ class cud_html_builder
     
     public static function create_buttons($userid, $handle, $favorite)
     {
+        $buttons = '';
         if($userid === qa_get_logged_in_userid()) {
-            $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="/account">プロフィール編集</a>';
+            $url = '/account';
+            $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'">プロフィール編集</a>';
         } else {
             if($favorite['favorite'] === 1) {
                 $follow = 'フォローをやめる';
             } else {
                 $follow = 'フォローする';
+            }
+            if (qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN) {
+                $url = '?state=edit';
+                $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'" style="margin-bottom:6px;">プロフィール編集</a>';
             }
             $buttons .= '<div style="margin-bottom:6px;" '.$favorite['favorite_id'].' '.$favorite['code'].'>';
             $buttons .= '<a class=" mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" '.$favorite['favorite_tags'].'>';
