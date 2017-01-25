@@ -68,7 +68,8 @@ class cud_theme_main
         $raw = $content['raw'];
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
-        $buttons = cud_html_builder::create_buttons($raw['account']['userid'], $raw['account']['handle'], $content['favorite']);
+        $favorite = isset($content['favorite']) ? $content['favorite'] : '';
+        $buttons = cud_html_builder::create_buttons($raw['account']['userid'], $raw['account']['handle'], $favorite);
         return array(
             '^site_url' => qa_opt('site_url'),
             '^blobid' => $raw['account']['avatarblobid'],
