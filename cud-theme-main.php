@@ -133,9 +133,14 @@ class cud_theme_main
         $replace = '$1';
         $q_item_title = preg_replace($search, $replace, $q_item['title']);
         self::get_thumbnail($q_item['raw']['postid']) ? $theme_obj->output('<div class="mdl-card__title">') : $theme_obj->output('<div class="mdl-card__title no-thumbnail">');
+        if ($theme_obj->template === 'user') {
+          $target = 'target="_blank"';
+        } else {
+          $target = '';
+        }
         $theme_obj->output(
             '<h1 class="mdl-card__title-text qa-q-item-title">',
-            '<a href="'.$q_item['url'].'">'.$q_item_title.'</a>',
+            '<a href="'.$q_item['url'].'" '.$target.' >'.$q_item_title.'</a>',
             // add closed note in title
             empty($q_item['closed']['state']) ? '' : ' ['.$q_item['closed']['state'].']',
             '</h1>',
