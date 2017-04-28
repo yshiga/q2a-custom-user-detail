@@ -27,14 +27,9 @@ class cud_theme_main
         if (qa_is_logged_in()) {
             $request = qa_request_parts();
             $handle = isset($request[1]) ? $request[1] : '';
-            if (cud_utils::get_answer_count_days() > 0 ||
-                qa_get_logged_in_handle() === $handle) {
-                self::output_user_detail($theme_obj);
-                self::output_q_list_tab_header($theme_obj);
-                self::output_q_list_panels($theme_obj);
-            } else {
-                self::output_not_post_answer($theme_obj);
-            }
+            self::output_user_detail($theme_obj);
+            self::output_q_list_tab_header($theme_obj);
+            self::output_q_list_panels($theme_obj);
         } else {
             self::output_not_logged_in($theme_obj);
         }
