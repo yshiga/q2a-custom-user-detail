@@ -612,12 +612,12 @@
         $questioncount = (int)@$userpoints['qposts'];
         $answercount = (int)@$userpoints['aposts'];
         
-        $qa_content['q_list']['activities'] = include CUD_DIR.'/pages/user-activities.php';
-        if (isset($activitiescount) && isset($pagesize)) {
-            $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), array('action' => 'activities'));
-        } else {
-            $qa_content['page_links_activities'] = array();
-        }
+        // $qa_content['q_list']['activities'] = include CUD_DIR.'/pages/user-activities.php';
+        // if (isset($activitiescount) && isset($pagesize)) {
+        //     $qa_content['page_links_activities'] = qa_html_page_links(qa_request(), $start, $pagesize, $activitiescount, qa_opt('pages_prev_next'), array('action' => 'activities'));
+        // } else {
+        //     $qa_content['page_links_activities'] = array();
+        // }
         
         $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
         if (isset($questioncount) && isset($pagesize)) {
