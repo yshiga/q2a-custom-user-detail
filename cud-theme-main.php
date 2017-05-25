@@ -95,7 +95,7 @@ class cud_theme_main
     private static function output_q_list_panels($theme_obj)
     {
         $active_tab = self::set_active_tab($theme_obj);
-        self::output_q_list($theme_obj, 'activities', $active_tab['activities']);
+        // self::output_q_list($theme_obj, 'activities', $active_tab['activities']);
         self::output_q_list($theme_obj, 'questions', $active_tab['questions']);
         self::output_q_list($theme_obj, 'answers', $active_tab['answers']);
         self::output_q_list($theme_obj, 'blogs', $active_tab['blogs']);
@@ -178,9 +178,9 @@ class cud_theme_main
     
     private static function set_active_tab($theme_obj)
     {
-        $action = isset($theme_obj->content['raw']['action']) ? $theme_obj->content['raw']['action'] : 'activities';
+        $action = isset($theme_obj->content['raw']['action']) ? $theme_obj->content['raw']['action'] : 'questions';
         $active_tab = array(
-            'activities' => '',
+            // 'activities' => '',
             'questions' => '',
             'answers' => '',
             'blogs' => ''
