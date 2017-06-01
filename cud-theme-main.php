@@ -74,9 +74,13 @@ class cud_theme_main
             '^years' => $raw['profile']['ニホンミツバチ-飼-育-歴'],
             '^hivetype' => $raw['profile']['使-用-している-巣-箱'],
             '^about' => $raw['profile']['about'],
-            '^points' => $points,
-            '^ranking' => $raw['rank'],
+            '^points' => qa_lang_html_sub('cud_lang/points',$points),
+            '^ranking' => qa_lang_html_sub('cud_lang/ranking',$raw['rank']),
             '^buttons' => $buttons,
+            '^location_label' => qa_lang_html('cud_lang/location'),
+            '^groups_label' => qa_lang_html('cud_lang/number_gropus'),
+            '^rearing_history' => qa_lang_html('cud_lang/rearing_history'),
+            '^using_hive' => qa_lang_html('cud_lang/using_hive'),
         );
     }
     

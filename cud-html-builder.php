@@ -13,22 +13,24 @@ class cud_html_builder
         $buttons = '';
         if($userid === qa_get_logged_in_userid()) {
             $url = '/account';
-            $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'">プロフィール編集</a>';
+            $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'">'.qa_lang_html('cud_lang/edit_profile').'</a>';
         } else {
             if($favorite['favorite'] === 1) {
-                $follow = 'フォローをやめる';
+                $follow = qa_lang_html('cud_lang/unfollow');
             } else {
-                $follow = 'フォローする';
+                $follow = qa_lang_html('cud_lang/follow');
             }
             if (qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN) {
                 $url = '?state=edit';
-                $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'" style="margin-bottom:6px;">プロフィール編集</a>';
+                $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'" style="margin-bottom:6px;">';
+                $buttons .= qa_lang_html('cud_lang/edit_profile').'</a>';
             }
             $buttons .= '<div style="margin-bottom:6px;" '.$favorite['favorite_id'].' '.$favorite['code'].'>';
             $buttons .= '<a class=" mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" '.$favorite['favorite_tags'].'>';
             $buttons .= $follow.'</a>';
             $buttons .= '</div>';
-            $buttons .= '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" href="'.qa_path_html('message/'.$handle).'">メッセージ送信</a>';
+            $buttons .= '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" href="'.qa_path_html('message/'.$handle).'">';
+            $buttons .= qa_lang_html('cud_lang/send_message').'</a>';
         }
         return $buttons;
     }
