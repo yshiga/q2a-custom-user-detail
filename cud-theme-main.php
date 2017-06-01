@@ -74,9 +74,13 @@ class cud_theme_main
             '^years' => $raw['profile']['ニホンミツバチ-飼-育-歴'],
             '^hivetype' => $raw['profile']['使-用-している-巣-箱'],
             '^about' => $raw['profile']['about'],
-            '^points' => $points,
-            '^ranking' => $raw['rank'],
+            '^points' => qa_lang_html_sub('cud_lang/points',$points),
+            '^ranking' => qa_lang_html_sub('cud_lang/ranking',$raw['rank']),
             '^buttons' => $buttons,
+            '^location_label' => qa_lang_html('cud_lang/location'),
+            '^groups_label' => qa_lang_html('cud_lang/number_gropus'),
+            '^rearing_history' => qa_lang_html('cud_lang/rearing_history'),
+            '^using_hive' => qa_lang_html('cud_lang/using_hive'),
         );
     }
     
@@ -198,19 +202,25 @@ class cud_theme_main
         $theme_obj->output($html);
     }
     
-    private static function output_not_post_answer($theme_obj)
-    {
-        $path = CUD_DIR . '/html/not_post_answer.html';
-        $html = file_get_contents($path);
-        $theme_obj->output($html);
-    }
+    // private static function output_not_post_answer($theme_obj)
+    // {
+    //     $path = CUD_DIR . '/html/not_post_answer.html';
+    //     $html = file_get_contents($path);
+    //     $subs = array(
+    //       'msg_no_post' => qa_lang('cud_lang/msg_no_post'),
+    //       'msg_do_post' => qa_lang('cud_lang/msg_do_post'),
+    //     );
+    //     $theme_obj->output(strtr($html, $subs));
+    // }
     
     private static function get_links_url_params()
     {
         $request = qa_request();
+        $register_url =qa_html(qa_path('register', array('to' => $request), qa_path_to_root()));
+        $login_url =qa_html(qa_path('login', array('to' => $request), qa_path_to_root()));
         return array(
-            '^register' => qa_html(qa_path('register', array('to' => $request), qa_path_to_root())),
-            '^login' => qa_html(qa_path('login', array('to' => $request), qa_path_to_root())),
+            '^msg_register' => qa_lang_sub('cud_lang/msg_register', $register_url),
+            '^msg_login' => qa_lang_sub('cud_lang/msg_login', $login_url),
         );
     }
 }

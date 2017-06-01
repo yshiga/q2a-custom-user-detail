@@ -18,7 +18,16 @@ class qa_html_theme_layer extends qa_html_theme_base
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
             $action = isset($this->content['raw']['action']) ? $this->content['raw']['action'] : 'questions';
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'.$this->infscr->pluginjsurl.'jquery-ias.min.js"></SCRIPT>');
-            $this->output('<SCRIPT TYPE="text/javascript">var action = "'.$action.'";</SCRIPT>');
+            $cud_lang_json = json_encode (array(
+              'read_next' => qa_lang_html('cud_lang/read_next'),
+              'read_previous' => qa_lang_html('cud_lang/read_previous'),
+            ));
+            $this->output(
+              '<SCRIPT TYPE="text/javascript">',
+              'var action = "'.$action.'";',
+              "var cud_lang = '".$cud_lang_json."';",
+              '</SCRIPT>'
+            );
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/ias-user.js"></SCRIPT>');
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-favorite.js"></SCRIPT>');
         }
