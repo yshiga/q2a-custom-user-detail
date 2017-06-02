@@ -126,49 +126,6 @@ class cud_theme_main
         $theme_obj->output('</div>','</div>');
     }
     
-    static function q_item_title($theme_obj, $q_item)
-    {
-        $search = '/.*>(.*)<.*/';
-        $replace = '$1';
-        $q_item_title = preg_replace($search, $replace, $q_item['title']);
-        self::get_thumbnail($q_item['raw']['postid']) ? $theme_obj->output('<div class="mdl-card__title">') : $theme_obj->output('<div class="mdl-card__title no-thumbnail">');
-        if ($theme_obj->template === 'user') {
-          $target = 'target="_blank"';
-        } else {
-          $target = '';
-        }
-        $theme_obj->output(
-            '<h1 class="mdl-card__title-text qa-q-item-title">',
-            '<a href="'.$q_item['url'].'" '.$target.' >'.$q_item_title.'</a>',
-            // add closed note in title
-            empty($q_item['closed']['state']) ? '' : ' ['.$q_item['closed']['state'].']',
-            '</h1>',
-            '</div>'
-        );
-        
-        $blockwordspreg = qa_get_block_words_preg();
-        if (isset($q_item['raw']['content'])) {
-            $text = qa_viewer_text($q_item['raw']['content'], 'html', array('blockwordspreg' => $blockwordspreg));
-        } else {
-            $text = '';
-        }
-        $q_item_content = mb_strimwidth($text, 0, 150, "...", "utf-8");
-        $theme_obj->output('<div class="qa-item-content">');
-        $theme_obj->output($q_item_content);
-        $theme_obj->output('</div>');
-    }
-    
-    private static function get_thumbnail($postid)
-    {
-        $post = qa_db_single_select(qa_db_full_post_selectspec(null, $postid));
-        $ret = preg_match("/<img(.+?)>/", $post['content'], $matches);
-        if ($ret === 1) {
-            return $matches[1];
-        } else {
-            return '';
-        }
-    }
-    
     private static function page_links($theme_obj, $list_type)
     {
         $page_links = @$theme_obj->content['page_links_'.$list_type];
