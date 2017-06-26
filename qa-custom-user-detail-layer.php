@@ -38,6 +38,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         qa_html_theme_base::head_css();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
             $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.$this->infscr->plugincssurl.'jquery.ias.css"/>');
+            $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/cud.css"/>');
         }
     }
     
