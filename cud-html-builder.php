@@ -35,15 +35,15 @@ class cud_html_builder
         return $buttons;
     }
     
-    public static function crate_tab_header($active_tab)
+    public static function crate_tab_header($active_tab, $postcounts)
     {
         $html = '';
         $html .= '<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">'.PHP_EOL;
         $html .= '    <div class="mdl-tabs__tab-bar mdl-color--white margin--16px margin--bottom-0">'.PHP_EOL;
         // $html .= '  <a class="mdl-tabs__tab '. $active_tab['activities'] .'" href="#activities"  id="tab-activities">'.qa_lang_html('cud_lang/activities').'</a>'.PHP_EOL;
-        $html .= '  <a class="mdl-tabs__tab '. $active_tab['questions'] .'" href="#questions"  id="tab-questions"><span class="mdl-badge" data-badge="10">'.qa_lang_html('cud_lang/questions').'</span></a>'.PHP_EOL;
-        $html .= '  <a class="mdl-tabs__tab '. $active_tab['answers'] .'" href="#answers"  id="tab-answers"><span class="mdl-badge" data-badge="10">'.qa_lang_html('cud_lang/answers').'</span></a>'.PHP_EOL;
-        $html .= '  <a class="mdl-tabs__tab '. $active_tab['blogs'] .'" href="#blogs"  id="tab-blogs"><span class="mdl-badge" data-badge="10">'.qa_lang_html('cud_lang/blogs').'</span></a>'.PHP_EOL;
+        $html .= '  <a class="mdl-tabs__tab '. $active_tab['questions'] .'" href="#questions"  id="tab-questions"><span class="mdl-badge" data-badge="'.$postcounts['questions'].'">'.qa_lang_html('cud_lang/questions').'</span></a>'.PHP_EOL;
+        $html .= '  <a class="mdl-tabs__tab '. $active_tab['answers'] .'" href="#answers"  id="tab-answers"><span class="mdl-badge" data-badge="'.$postcounts['answers'].'">'.qa_lang_html('cud_lang/answers').'</span></a>'.PHP_EOL;
+        $html .= '  <a class="mdl-tabs__tab '. $active_tab['blogs'] .'" href="#blogs"  id="tab-blogs"><span class="mdl-badge" data-badge="'.$postcounts['blogs'].'">'.qa_lang_html('cud_lang/blogs').'</span></a>'.PHP_EOL;
         $html .= '</div>';
         
         return $html;
