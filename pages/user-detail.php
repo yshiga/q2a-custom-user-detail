@@ -641,6 +641,11 @@
             $qa_content['page_links_blogs'] = array();
         }
     }
+        
+    $qa_content['counts'] = array();
+    $qa_content['counts']['questions'] = $questioncount;
+    $qa_content['counts']['answers'] = $answercount;
+    $qa_content['counts']['blogs'] = $blogcount;
     
     return $qa_content;
     

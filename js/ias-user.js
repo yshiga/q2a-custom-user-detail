@@ -73,7 +73,9 @@ $(function(){
   function destroy_ias() {
     for (type in ias_list) {
       var ias = ias_list[type];
-      ias.destroy();
+      if(ias) {
+          ias.destroy();
+      }
     }
     $('.ias-spinner').hide();
   }

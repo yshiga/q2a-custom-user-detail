@@ -87,7 +87,8 @@ class cud_theme_main
     private static function output_q_list_tab_header($theme_obj)
     {
         $active_tab = self::set_active_tab($theme_obj);
-        $html = cud_html_builder::crate_tab_header($active_tab);
+        $counts = $theme_obj->content['counts'];
+        $html = cud_html_builder::crate_tab_header($active_tab, $counts);
         $theme_obj->output($html);
     }
     
@@ -180,4 +181,5 @@ class cud_theme_main
             '^msg_login' => qa_lang_sub('cud_lang/msg_login', $login_url),
         );
     }
+    
 }
