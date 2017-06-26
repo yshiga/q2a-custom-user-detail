@@ -3,9 +3,9 @@
         header('Location: ../');
         exit;
     }
-    
     // 回答
-    $answers_sel = qa_db_user_recent_a_qs_selectspec($loginuserid, $identifier, $pagesize, $start);
+    $answers_start = ($action === 'answers') ? $start : 0;
+    $answers_sel = qa_db_user_recent_a_qs_selectspec($loginuserid, $identifier, $pagesize, $answers_start);
     $answers_sel['columns']['content'] = '^posts.content ';
     $answers_sel['columns']['format'] = '^posts.format ';
     $answers = qa_db_select_with_pending($answers_sel);

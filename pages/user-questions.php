@@ -3,9 +3,9 @@
         header('Location: ../');
         exit;
     }
-    
     // 質問
-    $questions_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, $pagesize, $start);
+    $questions_start = ($action === 'questions') ? $start : 0;
+    $questions_sel = qa_db_user_recent_qs_selectspec($loginuserid, $identifier, $pagesize, $questions_start);
     $questions_sel['columns']['content'] = '^posts.content ';
     $questions_sel['columns']['format'] = '^posts.format ';
     $questions = qa_db_select_with_pending($questions_sel);
