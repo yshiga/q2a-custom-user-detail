@@ -7,7 +7,7 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 
 class cud_html_builder
 {
-    
+
     public static function create_buttons($userid, $handle, $favorite)
     {
         $buttons = '';
@@ -34,7 +34,7 @@ class cud_html_builder
         }
         return $buttons;
     }
-    
+
     public static function crate_tab_header($active_tab, $postcounts)
     {
         $html = '';
@@ -45,34 +45,75 @@ class cud_html_builder
         $html .= '  <a class="mdl-tabs__tab '. $active_tab['answers'] .'" href="#answers"  id="tab-answers"><span class="mdl-badge" data-badge="'.$postcounts['answers'].'">'.qa_lang_html('cud_lang/answers').'</span></a>'.PHP_EOL;
         $html .= '  <a class="mdl-tabs__tab '. $active_tab['blogs'] .'" href="#blogs"  id="tab-blogs"><span class="mdl-badge" data-badge="'.$postcounts['blogs'].'">'.qa_lang_html('cud_lang/blogs').'</span></a>'.PHP_EOL;
         $html .= '</div>';
-        
+
         return $html;
     }
-    
+
     public static function create_tab_panel($list_type, $active)
     {
         $html = '';
         $html .= '<div class="mdl-tabs__panel '.$active.'" id="'.$list_type.'">'.PHP_EOL;
         $html .= '  <div class="qa-q-list q-list-'.$list_type.'">'.PHP_EOL;
-        
+
         return $html;
     }
-    
-    public static function create_no_item_list($list_name)
+
+    public static function create_no_item_list($list_type, $is_my_profile)
     {
-        $html = '';
-        $html = '<section><div class="qa-a-list-item"><div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">';
-        $html .= '<div class="mdl-card__supporting-text">';
-        $html .= '<div class="qa-q-item-main">';
-        $html .= qa_lang_html_sub('profile/no_posts_by_x', $list_name);
-        $html .= "</div></div></div></div></section>";
-        
-        return $html;
+      if($is_my_profile) {
+        return self::create_no_item_list_mine($list_type);
+      } else {
+        return self::create_no_item_list_other($list_type);
+      }
     }
-    
+
     public static function create_spinner()
     {
+
         $html = '<div class="ias-spinner" style="align:center;"><span class="mdl-spinner mdl-js-spinner is-active" style="height:20px;width:20px;"></span></div>';
         return $html;
+    }
+
+    private static function create_no_item_list_mine($list_type)
+    {
+      $template_path = CUD_DIR . '/html/no_item_list_mine.html';
+      $template = file_get_contents($template_path);
+
+      $action_link = '';
+      if($list_type == 'questions'){
+        $action_link = qa_opt('site_url') . 'ask';
+      } elseif($list_type == 'answers') {
+        $action_link = qa_opt('site_url') . 'how-to-use#answerask';
+      } elseif($list_type == 'blogs') {
+        $action_link = qa_opt('site_url') . 'blog/new';
+      }
+
+      $image_dir = qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/';
+      $params = array(
+        '^title' => qa_lang('cud_lang/no_item_list_mine_title_' . $list_type),
+        '^message' => qa_lang('cud_lang/no_item_list_mine_message_' . $list_type),
+        '^image' => $image_dir. 'no_item_list_mine_' . $list_type . '.svg',
+        '^action_btn' => qa_lang('cud_lang/no_item_list_mine_action_btn_' . $list_type),
+        '^action_link' => $action_link
+      );
+      $template = file_get_contents($template_path);
+      $html = strtr($template, $params);
+
+      return $html;
+    }
+
+    private static function create_no_item_list_other($list_type)
+    {
+      $path = CUD_DIR . '/html/no_item_list_other.html';
+      $template = file_get_contents($path);
+
+      $list_name = qa_lang_html('cud_lang/'.$list_type);
+      $params = array(
+        '^site_url' => qa_opt(site_url),
+        '^message' => qa_lang_html_sub('cud_lang/no_posts', $list_name),
+        '^image' => qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/no_item_icon.svg'
+      );
+      $html = strtr($template, $params);
+      return $html;
     }
 }
