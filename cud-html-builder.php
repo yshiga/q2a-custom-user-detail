@@ -83,7 +83,7 @@ class cud_html_builder
       if($list_type == 'questions'){
         $action_link = qa_opt('site_url') . 'ask';
       } elseif($list_type == 'answers') {
-        $action_link = qa_opt('site_url') . 'how-to-use#answerask';
+        $action_link = qa_opt('site_url') . 'how-to-use#answer';
       } elseif($list_type == 'blogs') {
         $action_link = qa_opt('site_url') . 'blog/new';
       }
@@ -91,7 +91,6 @@ class cud_html_builder
       $image_dir = qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/';
       $params = array(
         '^title' => qa_lang('cud_lang/no_item_list_mine_title_' . $list_type),
-        '^message' => qa_lang('cud_lang/no_item_list_mine_message_' . $list_type),
         '^image' => $image_dir. 'no_item_list_mine_' . $list_type . '.svg',
         '^action_btn' => qa_lang('cud_lang/no_item_list_mine_action_btn_' . $list_type),
         '^action_link' => $action_link
