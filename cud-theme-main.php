@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (!defined('QA_VERSION')) { // don't allow this page to be requested directly from browser
 	header('Location: ../../');
@@ -11,7 +11,7 @@ require_once CUD_DIR.'/cud-utils.php';
 class cud_theme_main
 {
     protected $context = array();
-    
+
     public static function main($theme_obj)
     {
         $content = $theme_obj->content;
@@ -44,12 +44,12 @@ class cud_theme_main
         $theme_obj->page_links();
         $theme_obj->suggest_next();
         $theme_obj->widgets('main', 'bottom');
-        
+
         $theme_obj->output('</div> <!-- END qa-main -->', '');
         $theme_obj->output('</section>');
         $theme_obj->output('</div> <!-- END mdl-layout__content -->', '');
     }
-    
+
     private static function output_user_detail($theme_obj) {
         $path = CUD_DIR . '/html/main_user_detail.html';
         $html = file_get_contents($path);
@@ -57,7 +57,7 @@ class cud_theme_main
         $params = self::create_params($theme_obj->content);
         $theme_obj->output( strtr($html, $params) );
     }
-    
+
     private static function create_params($content)
     {
         $raw = $content['raw'];
@@ -83,7 +83,7 @@ class cud_theme_main
             '^using_hive' => qa_lang_html('cud_lang/using_hive'),
         );
     }
-    
+
     private static function output_q_list_tab_header($theme_obj)
     {
         $active_tab = self::set_active_tab($theme_obj);
@@ -91,12 +91,12 @@ class cud_theme_main
         $html = cud_html_builder::crate_tab_header($active_tab, $counts);
         $theme_obj->output($html);
     }
-    
+
     private static function output_q_list_tab_footer($theme_obj)
     {
         $theme_obj->output('</div>');
     }
-    
+
     private static function output_q_list_panels($theme_obj)
     {
         $active_tab = self::set_active_tab($theme_obj);
@@ -105,12 +105,13 @@ class cud_theme_main
         self::output_q_list($theme_obj, 'answers', $active_tab['answers']);
         self::output_q_list($theme_obj, 'blogs', $active_tab['blogs']);
     }
-    
+
     private static function output_q_list($theme_obj, $list_type, $active_tab)
     {
         $html = cud_html_builder::create_tab_panel($list_type, $active_tab);
         $theme_obj->output($html);
-        if (isset($theme_obj->content['q_list'][$list_type])) {
+				// 投稿がある場合
+        if (count($theme_obj->content['q_list'][$list_type]) > 0) {
             $q_items = $theme_obj->content['q_list'][$list_type];
             $theme_obj->q_list_items($q_items);
             if (isset($theme_obj->content['page_links_'.$list_type])) {
@@ -118,15 +119,17 @@ class cud_theme_main
             }
             $html = cud_html_builder::create_spinner();
             $theme_obj->output($html);
+
+						// 投稿がない場合
         } else {
-            $list_name = qa_lang_html('cud_lang/'.$list_type);
-            $html = cud_html_builder::create_no_item_list($list_name);
-            $theme_obj->output($html);
+						// 自分のプロフィール
+          	$html = cud_html_builder::create_no_item_list($list_type, self::is_my_profile($theme_obj->content));
+          	$theme_obj->output($html);
         }
-        
+
         $theme_obj->output('</div>','</div>');
     }
-    
+
     private static function page_links($theme_obj, $list_type)
     {
         $page_links = @$theme_obj->content['page_links_'.$list_type];
@@ -137,7 +140,7 @@ class cud_theme_main
             $theme_obj->output('</div>');
         }
     }
-    
+
     private static function set_active_tab($theme_obj)
     {
         $action = isset($theme_obj->content['raw']['action']) ? $theme_obj->content['raw']['action'] : 'questions';
@@ -150,7 +153,7 @@ class cud_theme_main
         $active_tab[$action] = 'is-active';
         return $active_tab;
     }
-    
+
     private static function output_not_logged_in($theme_obj)
     {
         $path = CUD_DIR . '/html/not_logged_in.html';
@@ -159,7 +162,7 @@ class cud_theme_main
         $html = strtr($html, $params);
         $theme_obj->output($html);
     }
-    
+
     // private static function output_not_post_answer($theme_obj)
     // {
     //     $path = CUD_DIR . '/html/not_post_answer.html';
@@ -170,7 +173,7 @@ class cud_theme_main
     //     );
     //     $theme_obj->output(strtr($html, $subs));
     // }
-    
+
     private static function get_links_url_params()
     {
         $request = qa_request();
@@ -181,5 +184,8 @@ class cud_theme_main
             '^msg_login' => qa_lang_sub('cud_lang/msg_login', $login_url),
         );
     }
-    
+
+		private static function is_my_profile($content) {
+			return (qa_get_logged_in_userid() == $content['raw']['account']['userid']);
+		}
 }

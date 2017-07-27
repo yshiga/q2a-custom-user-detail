@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return array(
     // default(Japanese)
@@ -22,4 +22,14 @@ return array(
     'follow' => 'フォローする',
     'unfollow' => 'フォローをやめる',
     'send_message' => 'メッセージ送信',
+    'no_posts' => '^がありません。',
+
+    /* 0件表示 */
+    'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
+    'no_item_list_mine_title_answers' => 'あなたの力で困っている人を助けてあげましょう。',
+    'no_item_list_mine_title_blogs' => '飼育の記録を発信して、<br>全国の愛好家と交流しましょう。',
+
+    'no_item_list_mine_action_btn_questions' => '質問する',
+    'no_item_list_mine_action_btn_answers' => '回答するには？',
+    'no_item_list_mine_action_btn_blogs' => '飼育日誌を書く',
 );
