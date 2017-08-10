@@ -24,19 +24,15 @@ class cud_theme_main
 
         $theme_obj->widgets('main', 'top');
 
-        if (qa_is_logged_in()) {
-            $request = qa_request_parts();
-            $handle = isset($request[1]) ? $request[1] : '';
-            self::output_user_detail($theme_obj->content);
+				$request = qa_request_parts();
+      	$handle = isset($request[1]) ? $request[1] : '';
+      	self::output_user_detail($theme_obj->content);
 
-						$html = cud_html_builder::create_second_section($theme_obj->content);
-        		$theme_obj->output($html);
+				$html = cud_html_builder::create_second_section($theme_obj->content);
+      	$theme_obj->output($html);
 
-            self::output_q_list_tab_header($theme_obj);
-            self::output_q_list_panels($theme_obj);
-        } else {
-            self::output_not_logged_in($theme_obj);
-        }
+      	self::output_q_list_tab_header($theme_obj);
+      	self::output_q_list_panels($theme_obj);
         $theme_obj->output('</div>');
 
         $theme_obj->widgets('main', 'high');
@@ -158,26 +154,6 @@ class cud_theme_main
         $active_tab[$action] = 'is-active';
         return $active_tab;
     }
-
-    private static function output_not_logged_in($theme_obj)
-    {
-        $path = CUD_DIR . '/html/not_logged_in.html';
-        $html = file_get_contents($path);
-        $params = self::get_links_url_params();
-        $html = strtr($html, $params);
-        $theme_obj->output($html);
-    }
-
-    // private static function output_not_post_answer($theme_obj)
-    // {
-    //     $path = CUD_DIR . '/html/not_post_answer.html';
-    //     $html = file_get_contents($path);
-    //     $subs = array(
-    //       'msg_no_post' => qa_lang('cud_lang/msg_no_post'),
-    //       'msg_do_post' => qa_lang('cud_lang/msg_do_post'),
-    //     );
-    //     $theme_obj->output(strtr($html, $subs));
-    // }
 
     private static function get_links_url_params()
     {

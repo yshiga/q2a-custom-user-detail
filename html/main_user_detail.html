@@ -1,6 +1,6 @@
 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col user">
 
-  <?php if($userid !== qa_get_logged_in_userid()): ?>
+  <?php if(qa_get_logged_in_userid() !== null && $userid !== qa_get_logged_in_userid()): ?>
   <div class="mdl-card__menu">
     <div id="favoriting" <?php echo $favorite[ 'favorite_id'];?>
       <?php echo $favorite['code']; ?> >
@@ -45,7 +45,7 @@
       </p>
     </div>
 
-    <?php if($userid !== qa_get_logged_in_userid()): ?>
+    <?php if(qa_get_logged_in_userid() !== null && $userid !== qa_get_logged_in_userid()): ?>
     <div class="mdl-card__actions mdl-card--border">
       <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="<?php echo $message_url;?>" data-upgraded=",MaterialButton,MaterialRipple">
         <i class="material-icons mdl-color-text--primary">mail</i>
