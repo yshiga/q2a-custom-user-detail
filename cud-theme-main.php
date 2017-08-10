@@ -27,7 +27,11 @@ class cud_theme_main
         if (qa_is_logged_in()) {
             $request = qa_request_parts();
             $handle = isset($request[1]) ? $request[1] : '';
-            self::output_user_detail($theme_obj);
+            self::output_user_detail($theme_obj->content);
+
+						$html = cud_html_builder::create_second_section();
+        		$theme_obj->output($html);
+
             self::output_q_list_tab_header($theme_obj);
             self::output_q_list_panels($theme_obj);
         } else {
@@ -50,38 +54,39 @@ class cud_theme_main
         $theme_obj->output('</div> <!-- END mdl-layout__content -->', '');
     }
 
-    private static function output_user_detail($theme_obj) {
+    private static function output_user_detail($content) {
         $path = CUD_DIR . '/html/main_user_detail.html';
-        $html = file_get_contents($path);
-        $buttons = '';
-        $params = self::create_params($theme_obj->content);
-        $theme_obj->output( strtr($html, $params) );
-    }
 
-    private static function create_params($content)
-    {
         $raw = $content['raw'];
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
         $favorite = isset($content['favorite']) ? $content['favorite'] : '';
-        $buttons = cud_html_builder::create_buttons($raw['account']['userid'], $raw['account']['handle'], $favorite);
-        return array(
-            '^site_url' => qa_opt('site_url'),
-            '^blobid' => $raw['account']['avatarblobid'],
-            '^handle' => $raw['account']['handle'],
-            '^location' => $raw['profile']['location'],
-            '^groups' => $raw['profile']['飼-育-群-数'],
-            '^years' => $raw['profile']['ニホンミツバチ-飼-育-歴'],
-            '^hivetype' => $raw['profile']['使-用-している-巣-箱'],
-            '^about' => $raw['profile']['about'],
-            '^points' => qa_lang_html_sub('cud_lang/points',$points),
-            '^ranking' => qa_lang_html_sub('cud_lang/ranking',$raw['rank']),
-            '^buttons' => $buttons,
-            '^location_label' => qa_lang_html('cud_lang/location'),
-            '^groups_label' => qa_lang_html('cud_lang/number_gropus'),
-            '^rearing_history' => qa_lang_html('cud_lang/rearing_history'),
-            '^using_hive' => qa_lang_html('cud_lang/using_hive'),
-        );
+
+				$site_url = qa_opt('site_url');
+        $blobid = $raw['account']['avatarblobid'];
+				$handle = $raw['account']['handle'];
+				$userid = $raw['account']['userid'];
+				$location = $raw['profile']['location'];
+        $groups = $raw['profile']['飼-育-群-数'];
+				$years = $raw['profile']['ニホンミツバチ-飼-育-歴'];
+				$hivetype = $raw['profile']['使-用-している-巣-箱'];
+        $about = $raw['profile']['about'];
+				$points = qa_lang_html_sub('cud_lang/points',$points);
+        $ranking = qa_lang_html_sub('cud_lang/ranking',$raw['rank']);
+				$location_label = qa_lang_html('cud_lang/location');
+        $groups_label = qa_lang_html('cud_lang/number_gropus');
+        $rearing_history = qa_lang_html('cud_lang/rearing_history');
+				$using_hive = qa_lang_html('cud_lang/using_hive');
+				$message_label = qa_lang_html('cud_lang/send_message');
+				$message_url = qa_path_html('message/'.$handle);
+
+  			if($favorite['favorite'] === 1) {
+					$follow_message = qa_lang_html('cud_lang/unfollow');
+				} else {
+					$follow_message = qa_lang_html('cud_lang/follow');
+				}
+
+    		include $path;
     }
 
     private static function output_q_list_tab_header($theme_obj)

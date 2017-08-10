@@ -5,13 +5,13 @@ require_once CUD_DIR.'/cud-theme-main.php';
 class qa_html_theme_layer extends qa_html_theme_base
 {
     private $infscr = null;
-    
+
     function qa_html_theme_layer($template, $content, $rooturl, $request)
     {
         qa_html_theme_base::qa_html_theme_base($template, $content, $rooturl, $request);
         $this->infscr = new qa_infinite_scroll();
     }
-    
+
     function body_footer()
     {
         qa_html_theme_base::body_footer();
@@ -41,7 +41,7 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/cud.css"/>');
         }
     }
-    
+
     public function body_content()
     {
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
@@ -50,11 +50,11 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
         qa_html_theme_base::body_content();
     }
-    
+
     public function main()
     {
         $editing = (qa_get_state() === 'edit' && qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN);
-        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME 
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME
             && $this->template === 'user'
             && !$editing) {
             cud_theme_main::main($this);
@@ -62,7 +62,7 @@ class qa_html_theme_layer extends qa_html_theme_base
             qa_html_theme_base::main();
         }
     }
-    
+
     public function post_avatar_meta($post, $class, $avatarprefix=null, $metaprefix=null, $metaseparator='<br/>')
     {
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
@@ -74,21 +74,43 @@ class qa_html_theme_layer extends qa_html_theme_base
             qa_html_theme_base::post_avatar_meta($post, $class, $avatarprefix, $metaprefix, $metaseparator);
         }
     }
-    
+
     public function favorite_button($tags, $class)
     {
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME) {
     		if (isset($tags)) {
                 $label = $this->get_follow_label($tags);
                 $new_tags = $this->replace_tags($tags);
-                $html = '<a class=" mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" '.$new_tags.'>'.$label.'</a>';
+                $is_follow = $this->get_follow_status($tags);
+
+                $html = cud_html_builder::create_favorite_button($label, $new_tags, $is_follow);
                 $this->output($html);
+
             }
         } else {
             qa_html_theme_base::favorite_button($tags, $class);
         }
     }
-    
+
+
+    private function get_follow_status($tags) {
+
+        $nametag = '';
+        $pat = '/name\s*=\s*["\']([^"\']+)["\']/i';
+        $matchcount = preg_match($pat, $tags, $match);
+        if ($matchcount > 0) {
+          $nametag = $match[1];
+          if(mb_substr($nametag, -1) == 1) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+        error_log("FATAL: could not get follow status");
+        return false;
+    }
+
     private function get_follow_label($tags)
     {
         $label = '';
@@ -99,7 +121,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
         return $label;
     }
-    
+
     private function replace_tags($tags)
     {
         $pat = '/onclick\s*=\s*["\']([^"\']+)["\']/i';

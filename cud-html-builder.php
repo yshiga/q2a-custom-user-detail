@@ -8,31 +8,34 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 class cud_html_builder
 {
 
-    public static function create_buttons($userid, $handle, $favorite)
-    {
-        $buttons = '';
-        if($userid === qa_get_logged_in_userid()) {
-            $url = '/account';
-            $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'">'.qa_lang_html('cud_lang/edit_profile').'</a>';
-        } else {
-            if($favorite['favorite'] === 1) {
-                $follow = qa_lang_html('cud_lang/unfollow');
-            } else {
-                $follow = qa_lang_html('cud_lang/follow');
-            }
-            if (qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN) {
-                $url = '?state=edit';
-                $buttons = '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="'.$url.'" style="margin-bottom:6px;">';
-                $buttons .= qa_lang_html('cud_lang/edit_profile').'</a>';
-            }
-            $buttons .= '<div style="margin-bottom:6px;" '.$favorite['favorite_id'].' '.$favorite['code'].'>';
-            $buttons .= '<a class=" mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" '.$favorite['favorite_tags'].'>';
-            $buttons .= $follow.'</a>';
-            $buttons .= '</div>';
-            $buttons .= '<a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-button--primary mdl-color-text--white mdl-js-ripple-effect" href="'.qa_path_html('message/'.$handle).'">';
-            $buttons .= qa_lang_html('cud_lang/send_message').'</a>';
-        }
-        return $buttons;
+    public static function create_favorite_button($label, $tags, $is_follow){
+
+      $html = '<a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect';
+      if($is_follow) {
+        $html .= ' mdl-button--colored mdl-color-text--white';
+      }
+      $html .= '" title="' . $label . '"';
+      $html .= $tags;
+      $html .= ' data-upgraded=",MaterialButton,MaterialRipple">';
+      $html .= ' <i class="material-icons">favorite</i> <span class="mdl-button__ripple-container">';
+      $html .= ' <span class="mdl-ripple"></span> </span> </a>';
+      return $html;
+    }
+
+    public static function create_second_section(){
+      $template_path = CUD_DIR . '/html/second_section.html';
+      $template = file_get_contents($template_path);
+
+      $params = array(
+        '^follow_count_label' => qa_lang_html('cud_lang/follow_count'),
+        '^follow_list_page_url' => '#', // TODO
+        '^follow_count' => 99,
+        '^follower_count_label' => qa_lang_html('cud_lang/follower_count'),
+        '^follower_list_page_url' => '#',
+        '^follower_count' => 103,
+      );
+
+      return strtr($template, $params);
     }
 
     public static function crate_tab_header($active_tab, $postcounts)
@@ -108,7 +111,7 @@ class cud_html_builder
 
       $list_name = qa_lang_html('cud_lang/'.$list_type);
       $params = array(
-        '^site_url' => qa_opt(site_url),
+        '^site_url' => qa_opt('site_url'),
         '^message' => qa_lang_html_sub('cud_lang/no_posts', $list_name),
         '^image' => qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/no_item_icon.svg'
       );
