@@ -24,6 +24,9 @@ return array(
     'send_message' => 'メッセージ送信',
     'no_posts' => '^がありません。',
 
+    'follow_count' => 'お気に入りの数',
+    'follower_count' => 'お気に入りられ数',
+
     /* 0件表示 */
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
     'no_item_list_mine_title_answers' => 'あなたの力で困っている人を助けてあげましょう。',
