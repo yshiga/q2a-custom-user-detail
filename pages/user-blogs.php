@@ -10,6 +10,7 @@
     $blogs_sel['columns']['content'] = '^blogs.content ';
     $blogs_sel['columns']['format'] = '^blogs.format ';
     $blogs = qa_db_select_with_pending($blogs_sel);
+    $blogids = array_keys($blogs);
     $blogcount = count($blogs);
     
     $pagesize = qa_opt('page_size_qs');
@@ -21,7 +22,7 @@
     $htmldefaults['whoview'] = false;
     $htmldefaults['avatarsize'] = 0;
     $htmldefaults['contentview'] = true;
-    $blog_comments = get_blog_comments();
+    $blog_comments = get_blog_comments($blogids);
 
     foreach ($blogs as $post) {
         $fields = qas_blog_post_html_fields( $post, $loginuserid, qa_cookie_get(),
@@ -36,9 +37,9 @@
     
     return $values;
 
-    function get_blog_comments()
+    function get_blog_comments($postids)
     {
-        $results = qa_db_read_all_assoc(qa_db_query_sub( qas_blog_db_blog_comments_sql(), 'C', 'B' ));
+        $results = qa_db_read_all_assoc(qa_db_query_sub( qas_blog_db_blog_comments_sql(), 'C', 'B', $postids));
         
         $comments = array();
         foreach ($results as $result) {
