@@ -1,6 +1,7 @@
 <?php
 
 require_once CUD_DIR.'/cud-theme-main.php';
+require_once CUD_DIR.'/cud-theme-main-following.php';
 
 class qa_html_theme_layer extends qa_html_theme_base
 {
@@ -54,10 +55,13 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function main()
     {
         $editing = (qa_get_state() === 'edit' && qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN);
-        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME
-            && $this->template === 'user'
-            && !$editing) {
+        $valid_theme = (qa_opt('site_theme') === CUD_TARGET_THEME_NAME);
+        if ($valid_theme && $this->template === 'user' && !$editing) {
             cud_theme_main::main($this);
+        } else if ($valid_theme && $this->template === 'user-following') {
+            cud_theme_main_following::main($this);
+        } else if ($valid_theme && $this->template === 'user-followers') {
+            cud_theme_main_following::main($this);
         } else {
             qa_html_theme_base::main();
         }
