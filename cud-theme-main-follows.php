@@ -8,7 +8,7 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 require_once CUD_DIR.'/cud-html-builder.php';
 require_once CUD_DIR.'/cud-utils.php';
 
-class cud_theme_main_following
+class cud_theme_main_follows
 {
     protected $context = array();
 
@@ -35,6 +35,9 @@ EOF;
 
         $theme_obj->output($header);
         $theme_obj->output($tabs);
+
+        $theme_obj->page_links();
+
         $theme_obj->output($footer);
     }
 

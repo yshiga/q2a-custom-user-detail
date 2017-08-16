@@ -1,7 +1,7 @@
 <?php
 
 require_once CUD_DIR.'/cud-theme-main.php';
-require_once CUD_DIR.'/cud-theme-main-following.php';
+require_once CUD_DIR.'/cud-theme-main-follows.php';
 
 class qa_html_theme_layer extends qa_html_theme_base
 {
@@ -59,9 +59,9 @@ class qa_html_theme_layer extends qa_html_theme_base
         if ($valid_theme && $this->template === 'user' && !$editing) {
             cud_theme_main::main($this);
         } else if ($valid_theme && $this->template === 'user-following') {
-            cud_theme_main_following::main($this);
+            cud_theme_main_follows::main($this);
         } else if ($valid_theme && $this->template === 'user-followers') {
-            cud_theme_main_following::main($this);
+            cud_theme_main_follows::main($this);
         } else {
             qa_html_theme_base::main();
         }
