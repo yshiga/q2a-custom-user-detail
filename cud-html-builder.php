@@ -7,6 +7,7 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 
 class cud_html_builder
 {
+    const ABOUT_MAX_LENGTH = 68;
 
     public static function create_favorite_button($label, $tags, $is_follow){
 
@@ -22,16 +23,16 @@ class cud_html_builder
       return $html;
     }
 
-    public static function create_second_section($content){
+    public static function create_second_section($content, $handle){
       $template_path = CUD_DIR . '/html/second_section.html';
       $template = file_get_contents($template_path);
 
       $params = array(
         '^follow_count_label' => qa_lang_html('cud_lang/follow_count'),
-        '^follow_list_page_url' => '#', // TODO
+        '^follow_list_page_url' => $handle.'/following',
         '^follow_count' => $content['counts']['follows'],
         '^follower_count_label' => qa_lang_html('cud_lang/follower_count'),
-        '^follower_list_page_url' => '#',
+        '^follower_list_page_url' => $handle.'/followers',
         '^follower_count' => $content['counts']['followers'],
       );
 
@@ -117,5 +118,82 @@ class cud_html_builder
       );
       $html = strtr($template, $params);
       return $html;
+    }
+
+    public static function create_follows_header($title)
+    {
+      $path = CUD_DIR . '/html/follows_main_header.html';
+      $template = file_get_contents($path);
+      $params = array(
+        '^title' => $title
+      );
+      $html = strtr($template, $params);
+      return $html;
+    }
+
+    public static function create_follows_footer()
+    {
+      $path = CUD_DIR . '/html/follows_main_footer.html';
+      $template = file_get_contents($path);
+      return $template;
+    }
+
+    public static function create_follows_tab($content)
+    {
+      $path = CUD_DIR . '/html/follows_main_tab.html';
+      $template = file_get_contents($path);
+      $following_active = '';
+      $followers_active = '';
+      if ($content['type'] === 'following') {
+        $following_active = 'is-active qa-sub-nav-selected';
+      } else {
+        $followers_active = 'is-active qa-sub-nav-selected';
+      }
+      $params = array(
+        '^following_count' => $content['users']['following_count'],
+        '^followers_count' => $content['users']['followers_count'],
+        '^following_text' => qa_lang_html('cud_lang/following'),
+        '^followers_text' => qa_lang_html('cud_lang/followers'),
+        '^following_active' => $following_active,
+        '^followers_active' => $followers_active,
+        '^users_list' => self::create_follows_list($content['users'])
+      );
+      $html = strtr($template, $params);
+      return $html;
+    }
+
+    public static function create_follows_list($users)
+    {
+        if (count($users['items']) <= 0) {
+            return '<div><span style="font-size:18px;color:#646464;padding-left:12px;">'.qa_lang_html('main/no_active_users').'</span></div>';
+        }
+        $path = CUD_DIR . '/html/follows_user_item.html';
+        $template = file_get_contents($path);
+        $html = '';
+        foreach ($users['items'] as $user) {
+            $params = self::create_follows_params($user);
+            $html .= strtr($template, $params);
+            $html .= PHP_EOL;
+        }
+        return $html;
+    }
+
+    public static function create_follows_params($user)
+    {
+        if (mb_strlen($user['about'], 'UTF-8') > self::ABOUT_MAX_LENGTH) {
+            $about = mb_substr($user['about'], 0, self::ABOUT_MAX_LENGTH - 1, 'UTF-8');
+            $about .= '<a href="'.$user['url'].'">...</a>';
+        } else {
+            $about = $user['about'];
+        }
+        return array(
+            '^blobid' => $user['raw']['avatarblobid'],
+            '^label' => $user['label'],
+            '^location' => $user['location'],
+            '^points' => $user['score'],
+            '^about' =>  $about,
+            '^url' => $user['url'],
+            '^location_label' => qa_lang_html('cud_lang/location_label'),
+        );
     }
 }

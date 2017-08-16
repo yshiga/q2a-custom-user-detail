@@ -28,7 +28,7 @@ class cud_theme_main
       	$handle = isset($request[1]) ? $request[1] : '';
       	self::output_user_detail($theme_obj->content);
 
-				$html = cud_html_builder::create_second_section($theme_obj->content);
+				$html = cud_html_builder::create_second_section($theme_obj->content, $handle);
       	$theme_obj->output($html);
 
       	self::output_q_list_tab_header($theme_obj);
@@ -56,7 +56,7 @@ class cud_theme_main
         $raw = $content['raw'];
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
-        $favorite = isset($content['favorite']) ? $content['favorite'] : '';
+        $favorite = isset($content['favorite']) ? $content['favorite'] : null;
 
 				$site_url = qa_opt('site_url');
         $blobid = $raw['account']['avatarblobid'];
@@ -76,7 +76,7 @@ class cud_theme_main
 				$message_label = qa_lang_html('cud_lang/send_message');
 				$message_url = qa_path_html('message/'.$handle);
 
-  			if($favorite['favorite'] === 1) {
+  			if(isset($favorite) && $favorite['favorite'] === 1) {
 					$follow_message = qa_lang_html('cud_lang/unfollow');
 				} else {
 					$follow_message = qa_lang_html('cud_lang/follow');
