@@ -25,4 +25,13 @@ class cud_utils
         
         return qa_db_read_one_value(qa_db_query_sub($sql, $userid, $days));
     }
+
+    public static function get_follows_count($userid)
+    {
+        $sql = "SELECT ";
+        $sql .= "(SELECT COUNT(*) FROM ^userfavorites WHERE entitytype = 'U' AND userid = $) AS following, ";
+        $sql .= "(SELECT COUNT(*) FROM ^userfavorites WHERE entitytype = 'U' AND entityid = $) AS followers ";
+        
+        return qa_db_read_one_assoc(qa_db_query_sub($sql, $userid, $userid));
+    }
 }
