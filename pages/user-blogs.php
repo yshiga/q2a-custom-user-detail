@@ -39,7 +39,10 @@
 
     function get_blog_comments($postids)
     {
-        $results = qa_db_read_all_assoc(qa_db_query_sub( qas_blog_db_blog_comments_sql(), 'C', 'B', $postids));
+        if(count($postids) <= 0) {
+            return array();
+        }
+        $results = qa_db_read_all_assoc(qa_db_query_sub( qas_blog_db_blog_comments_sql($postids), 'C', 'B'));
         
         $comments = array();
         foreach ($results as $result) {
