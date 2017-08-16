@@ -28,7 +28,7 @@ class cud_theme_main
       	$handle = isset($request[1]) ? $request[1] : '';
       	self::output_user_detail($theme_obj->content);
 
-				$html = cud_html_builder::create_second_section($theme_obj->content);
+				$html = cud_html_builder::create_second_section($theme_obj->content, $handle);
       	$theme_obj->output($html);
 
       	self::output_q_list_tab_header($theme_obj);

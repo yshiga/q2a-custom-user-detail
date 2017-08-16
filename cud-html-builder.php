@@ -23,16 +23,16 @@ class cud_html_builder
       return $html;
     }
 
-    public static function create_second_section($content){
+    public static function create_second_section($content, $handle){
       $template_path = CUD_DIR . '/html/second_section.html';
       $template = file_get_contents($template_path);
 
       $params = array(
         '^follow_count_label' => qa_lang_html('cud_lang/follow_count'),
-        '^follow_list_page_url' => '#', // TODO
+        '^follow_list_page_url' => $handle.'/following',
         '^follow_count' => $content['counts']['follows'],
         '^follower_count_label' => qa_lang_html('cud_lang/follower_count'),
-        '^follower_list_page_url' => '#',
+        '^follower_list_page_url' => $handle.'/followers',
         '^follower_count' => $content['counts']['followers'],
       );
 
