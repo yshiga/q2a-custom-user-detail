@@ -12,10 +12,8 @@ function qa_page_routing()
         $part = qa_request_part(2);
         switch ($part) {
             case 'following':
-                $routing['user/'] = CUD_RELATIVE_PATH . 'pages/user-following.php';
-                break;
             case 'followers':
-                $routing['user/'] = CUD_RELATIVE_PATH . 'pages/user-followers.php';
+                $routing['user/'] = CUD_RELATIVE_PATH . 'pages/user-follows.php';
                 break;
             default:
                 $routing['user/'] = CUD_RELATIVE_PATH . 'pages/user-detail.php';
