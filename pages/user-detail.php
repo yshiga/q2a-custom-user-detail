@@ -640,12 +640,20 @@
         } else {
             $qa_content['page_links_blogs'] = array();
         }
+
+        $qa_content['q_list']['favorites'] = include CUD_DIR.'/pages/user-favorites.php';
+        if (isset($favoritecount) && isset($pagesize)) {
+            $qa_content['page_links_favorites'] = qa_html_page_links(qa_request(), $start, $pagesize, $blogcount, qa_opt('pages_prev_next'), array('action' => 'favorites'));
+        } else {
+            $qa_content['page_links_favorites'] = array();
+        }
     }
 
     $qa_content['counts'] = array();
     $qa_content['counts']['questions'] = $questioncount;
     $qa_content['counts']['answers'] = $answercount;
     $qa_content['counts']['blogs'] = $blogcount;
+    $qa_content['counts']['favorites'] = $favoritecount;
 
     $follows_sql = 'SELECT count(*) FROM qa_userfavorites WHERE entitytype ="U" AND userid=#';
     $qa_content['counts']['follows'] = qa_db_read_one_value(qa_db_query_sub($follows_sql, $userid));

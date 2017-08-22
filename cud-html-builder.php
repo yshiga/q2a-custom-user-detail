@@ -41,16 +41,24 @@ class cud_html_builder
 
     public static function crate_tab_header($active_tab, $postcounts)
     {
-        $html = '';
-        $html .= '<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">'.PHP_EOL;
-        $html .= '    <div class="mdl-tabs__tab-bar mdl-color--white margin--16px margin--bottom-0">'.PHP_EOL;
-        // $html .= '  <a class="mdl-tabs__tab '. $active_tab['activities'] .'" href="#activities"  id="tab-activities">'.qa_lang_html('cud_lang/activities').'</a>'.PHP_EOL;
-        $html .= '  <a class="mdl-tabs__tab '. $active_tab['questions'] .'" href="#questions"  id="tab-questions"><span class="mdl-badge" data-badge="'.$postcounts['questions'].'">'.qa_lang_html('cud_lang/questions').'</span></a>'.PHP_EOL;
-        $html .= '  <a class="mdl-tabs__tab '. $active_tab['answers'] .'" href="#answers"  id="tab-answers"><span class="mdl-badge" data-badge="'.$postcounts['answers'].'">'.qa_lang_html('cud_lang/answers').'</span></a>'.PHP_EOL;
-        $html .= '  <a class="mdl-tabs__tab '. $active_tab['blogs'] .'" href="#blogs"  id="tab-blogs"><span class="mdl-badge" data-badge="'.$postcounts['blogs'].'">'.qa_lang_html('cud_lang/blogs').'</span></a>'.PHP_EOL;
-        $html .= '</div>';
+        $template_path = CUD_DIR . '/html/main_tab_header.html';
+        $template = file_get_contents($template_path);
+        $params = array(
+          '^questions_active' => $active_tab['questions'],
+          '^questions_count' => $postcounts['questions'],
+          '^questions_label' => qa_lang_html('cud_lang/questions'),
+          '^answers_active' => $active_tab['answers'],
+          '^answers_count' => $postcounts['answers'],
+          '^answers_label' => qa_lang_html('cud_lang/answers'),
+          '^blogs_active' => $active_tab['blogs'],
+          '^blogs_count' => $postcounts['blogs'],
+          '^blogs_label' => qa_lang_html('cud_lang/blogs'),
+          '^favorites_active' => $active_tab['favorites'],
+          '^favorites_count' => $postcounts['favorites'],
+          '^favorites_label' => qa_lang_html('cud_lang/favorites'),
+        );
 
-        return $html;
+        return strtr($template, $params);
     }
 
     public static function create_tab_panel($list_type, $active)
@@ -90,6 +98,8 @@ class cud_html_builder
         $action_link = qa_opt('site_url') . 'how-to-use#answer';
       } elseif($list_type == 'blogs') {
         $action_link = qa_opt('site_url') . 'blog/new';
+      } elseif($list_type == 'favorites') {
+        $action_link = qa_opt('site_url') . 'how-to-use#bookmark';
       }
 
       $image_dir = qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/';
