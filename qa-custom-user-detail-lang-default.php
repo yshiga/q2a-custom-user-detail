@@ -6,6 +6,7 @@ return array(
     'questions' => '質問',
     'answers' => '回答',
     'blogs' => '飼育日誌',
+    'favorites' => 'ブックマーク',
     'location' => '都道府県',
     'number_gropus' => '飼育群数',
     'rearing_history' => '養蜂歴',
@@ -31,10 +32,12 @@ return array(
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
     'no_item_list_mine_title_answers' => 'あなたの力で困っている人を助けてあげましょう。',
     'no_item_list_mine_title_blogs' => '飼育の記録を発信して、<br>全国の愛好家と交流しましょう。',
+    'no_item_list_mine_title_favorites' => '質問をお気に入りに追加すると、ここに表示されます。',
 
     'no_item_list_mine_action_btn_questions' => '質問する',
     'no_item_list_mine_action_btn_answers' => '回答するには？',
     'no_item_list_mine_action_btn_blogs' => '飼育日誌を書く',
+    'no_item_list_mine_action_btn_favorites' => 'もっと詳しく',
 
     /* following, follwers */
     'follows_title' => '^さんのフォロー・フォロワー一覧',
