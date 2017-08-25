@@ -25,8 +25,8 @@ return array(
     'send_message' => 'メッセージ送信',
     'no_posts' => '^がありません。',
 
-    'follow_count' => 'お気に入りの数',
-    'follower_count' => 'お気に入りられ数',
+    'follow_count' => 'フォロー',
+    'follower_count' => 'フォロワー',
 
     /* 0件表示 */
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
@@ -41,7 +41,7 @@ return array(
 
     /* following, follwers */
     'follows_title' => '^さんのフォロー・フォロワー一覧',
-    'following' => 'お気に入り',
-    'followers' => 'お気に入られ',
+    'following' => 'フォロー',
+    'followers' => 'フォロワー',
     'location_label' => '活動場所',
 );
