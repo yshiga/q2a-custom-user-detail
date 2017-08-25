@@ -81,7 +81,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     public function favorite_button($tags, $class)
     {
-        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME) {
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->tamplate==='user') {
     		if (isset($tags)) {
                 $label = $this->get_follow_label($tags);
                 $new_tags = $this->replace_tags($tags);
