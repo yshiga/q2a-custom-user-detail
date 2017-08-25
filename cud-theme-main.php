@@ -105,7 +105,6 @@ class cud_theme_main
         self::output_q_list($theme_obj, 'questions', $active_tab['questions']);
         self::output_q_list($theme_obj, 'answers', $active_tab['answers']);
         self::output_q_list($theme_obj, 'blogs', $active_tab['blogs']);
-        print_r($theme_obj['q_list']['favorites']);
         self::output_q_list($theme_obj, 'favorites', $active_tab['favorites']);
     }
 
