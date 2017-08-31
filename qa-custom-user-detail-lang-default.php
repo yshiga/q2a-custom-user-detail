@@ -44,4 +44,6 @@ return array(
     'following' => 'フォロー',
     'followers' => 'フォロワー',
     'location_label' => '活動場所',
+    'no_following' => 'フォローしているユーザーがいません。',
+    'no_followers' => 'フォロワーがいません。',
 );

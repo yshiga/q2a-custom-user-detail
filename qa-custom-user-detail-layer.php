@@ -36,8 +36,13 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     function head_css()
     {
+        $allow_templates = array(
+            'user',
+            'user-following',
+            'user-followers'
+        );
         qa_html_theme_base::head_css();
-        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && in_array($this->template, $allow_templates)) {
             $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.$this->infscr->plugincssurl.'jquery.ias.css"/>');
             $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/cud.css"/>');
         }
