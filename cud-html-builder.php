@@ -29,10 +29,10 @@ class cud_html_builder
 
       $params = array(
         '^follow_count_label' => qa_lang_html('cud_lang/follow_count'),
-        '^follow_list_page_url' => $handle.'/following',
+        '^follow_list_page_url' => '/user/'.$handle.'/following',
         '^follow_count' => $content['counts']['follows'],
         '^follower_count_label' => qa_lang_html('cud_lang/follower_count'),
-        '^follower_list_page_url' => $handle.'/followers',
+        '^follower_list_page_url' => '/user/'.$handle.'/followers',
         '^follower_count' => $content['counts']['followers'],
       );
 
@@ -166,16 +166,16 @@ class cud_html_builder
         '^followers_text' => qa_lang_html('cud_lang/followers'),
         '^following_active' => $following_active,
         '^followers_active' => $followers_active,
-        '^users_list' => self::create_follows_list($content['users'])
+        '^users_list' => self::create_follows_list($content['users'], $content['type'])
       );
       $html = strtr($template, $params);
       return $html;
     }
 
-    public static function create_follows_list($users)
+    public static function create_follows_list($users, $type)
     {
         if (count($users['items']) <= 0) {
-            return '<div><span style="font-size:18px;color:#646464;padding-left:12px;">'.qa_lang_html('main/no_active_users').'</span></div>';
+            return self::create_no_follows($type);
         }
         $path = CUD_DIR . '/html/follows_user_item.html';
         $template = file_get_contents($path);
@@ -205,5 +205,18 @@ class cud_html_builder
             '^url' => $user['url'],
             '^location_label' => qa_lang_html('cud_lang/location_label'),
         );
+    }
+
+    private static function create_no_follows($type)
+    {
+      $path = CUD_DIR . '/html/no_follows.html';
+      $template = file_get_contents($path);
+
+      $params = array(
+        '^message' => qa_lang_html('cud_lang/no_'.$type),
+        '^image' => qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/no_item_icon.svg'
+      );
+      $html = strtr($template, $params);
+      return $html;
     }
 }
