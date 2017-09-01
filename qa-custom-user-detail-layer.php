@@ -5,12 +5,10 @@ require_once CUD_DIR.'/cud-theme-main-follows.php';
 
 class qa_html_theme_layer extends qa_html_theme_base
 {
-    private $infscr = null;
 
     function qa_html_theme_layer($template, $content, $rooturl, $request)
     {
         qa_html_theme_base::qa_html_theme_base($template, $content, $rooturl, $request);
-        $this->infscr = new qa_infinite_scroll();
     }
 
     function body_footer()
@@ -18,7 +16,6 @@ class qa_html_theme_layer extends qa_html_theme_base
         qa_html_theme_base::body_footer();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
             $action = isset($this->content['raw']['action']) ? $this->content['raw']['action'] : 'questions';
-            $this->output('<SCRIPT TYPE="text/javascript" SRC="'.$this->infscr->pluginjsurl.'jquery-ias.min.js"></SCRIPT>');
             $cud_lang_json = json_encode (array(
               'read_next' => qa_lang_html('cud_lang/read_next'),
               'read_previous' => qa_lang_html('cud_lang/read_previous'),
@@ -29,7 +26,6 @@ class qa_html_theme_layer extends qa_html_theme_base
               "var cud_lang = '".$cud_lang_json."';",
               '</SCRIPT>'
             );
-            $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/ias-user.js"></SCRIPT>');
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-favorite.js"></SCRIPT>');
         }
     }
@@ -43,7 +39,6 @@ class qa_html_theme_layer extends qa_html_theme_base
         );
         qa_html_theme_base::head_css();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && in_array($this->template, $allow_templates)) {
-            $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.$this->infscr->plugincssurl.'jquery.ias.css"/>');
             $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/cud.css"/>');
         }
     }

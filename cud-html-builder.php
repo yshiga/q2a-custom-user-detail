@@ -78,14 +78,7 @@ class cud_html_builder
         return self::create_no_item_list_other($list_type);
       }
     }
-
-    public static function create_spinner()
-    {
-
-        $html = '<div class="ias-spinner" style="align:center;"><span class="mdl-spinner mdl-js-spinner is-active" style="height:20px;width:20px;"></span></div>';
-        return $html;
-    }
-
+    
     private static function create_no_item_list_mine($list_type)
     {
       $template_path = CUD_DIR . '/html/no_item_list_mine.html';

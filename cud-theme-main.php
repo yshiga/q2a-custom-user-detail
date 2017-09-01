@@ -119,8 +119,6 @@ class cud_theme_main
             if (isset($theme_obj->content['page_links_'.$list_type])) {
                 self::page_links($theme_obj, $list_type);
             }
-            $html = cud_html_builder::create_spinner();
-            $theme_obj->output($html);
 
 						// 投稿がない場合
         } else {
