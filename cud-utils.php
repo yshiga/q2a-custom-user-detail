@@ -26,15 +26,23 @@ class cud_utils
         return qa_db_read_one_value(qa_db_query_sub($sql, $userid, $days));
     }
 
+    /*
+     * フォロー、ファオロワーの数を取得
+     */
     public static function get_follows_count($userid)
     {
         $sql = "SELECT ";
-        $sql .= "(SELECT COUNT(*) FROM ^userfavorites WHERE entitytype = 'U' AND userid = $) AS following, ";
-        $sql .= "(SELECT COUNT(*) FROM ^userfavorites WHERE entitytype = 'U' AND entityid = $) AS followers ";
+        $sql .= " (SELECT COUNT(*) FROM ^users WHERE userid IN ";
+        $sql .= "   (SELECT entityid FROM ^userfavorites WHERE entitytype = 'U' AND userid = $)) AS following, ";
+        $sql .= " (SELECT COUNT(*) FROM ^users WHERE userid IN ";
+        $sql .= "   (SELECT userid FROM ^userfavorites WHERE entitytype = 'U' AND entityid = $)) AS followers ";
         
         return qa_db_read_one_assoc(qa_db_query_sub($sql, $userid, $userid));
     }
 
+    /*
+     * フォローまたはフォロワー取得のクエリを返す
+     */
     public static function get_follows_query($type)
     {
         $query = "";
@@ -60,6 +68,9 @@ class cud_utils
         return $query;
     }
 
+    /*
+     * ユーザーリスト用のデータの配列を返す
+     */
     public static function get_users_items($users)
     {
         $items = array();
