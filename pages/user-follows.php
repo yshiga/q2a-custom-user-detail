@@ -17,7 +17,8 @@
         $handle = qa_get_logged_in_handle();
         qa_redirect(!empty($handle) ? 'user/'.$handle : 'users');
     }
-    $userid = qa_db_user_find_by_handle($handle);
+    $userids = qa_db_user_find_by_handle($handle);
+    $userid = $userids[0];
 
     //    Get list of favorites users
     $selectspec = qa_db_top_users_selectspec($start, qa_opt_if_loaded('page_size_users'));
