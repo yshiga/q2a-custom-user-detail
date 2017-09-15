@@ -27,3 +27,16 @@ div.mdl-card.no-follows {
   width: 100%;
   margin: 8px 0;
 }
+
+/* フォロー、フォロワー一覧のヘッダ */
+.user-follows {
+  display: block;
+}
+
+@media screen and (max-width: 1024px) {
+  .user-follows {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
