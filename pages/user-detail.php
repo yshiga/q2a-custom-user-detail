@@ -8,6 +8,7 @@
     require_once QA_INCLUDE_DIR.'app/format.php';
     require_once QA_INCLUDE_DIR.'app/limits.php';
     require_once QA_INCLUDE_DIR.'app/updates.php';
+    require_once CUD_DIR.'/cud-utils.php';
 
     $handle = qa_request_part(1);
     $action = qa_get('action');
@@ -655,11 +656,9 @@
     $qa_content['counts']['blogs'] = $blogcount;
     $qa_content['counts']['favorites'] = $favoritecount;
 
-    $follows_sql = 'SELECT count(*) FROM qa_userfavorites WHERE entitytype ="U" AND userid=#';
-    $qa_content['counts']['follows'] = qa_db_read_one_value(qa_db_query_sub($follows_sql, $userid));
-
-    $followers_sql = 'SELECT count(*) FROM qa_userfavorites WHERE entitytype ="U" AND entityid=#';
-    $qa_content['counts']['followers'] = qa_db_read_one_value(qa_db_query_sub($followers_sql, $userid));
+    $count = cud_utils::get_follows_count($useraccount['userid']);
+    $qa_content['counts']['follows'] = $count['following'];
+    $qa_content['counts']['followers'] = $count['followers'];
 
     return $qa_content;
 
