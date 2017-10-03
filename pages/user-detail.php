@@ -622,14 +622,14 @@
 
         $qa_content['q_list']['questions'] = include CUD_DIR.'/pages/user-questions.php';
         if (isset($questioncount) && isset($pagesize)) {
-            $qa_content['page_links_questions'] = qa_html_page_links(qa_request(), $start, $pagesize, $questioncount, qa_opt('pages_prev_next'), array('action' => 'questions'));
+            $qa_content['page_links_questions'] = qa_html_page_links(qa_request(), $questions_start, $pagesize, $questioncount, qa_opt('pages_prev_next'), array('action' => 'questions'));
         } else {
             $qa_content['page_links_questions'] = array();
         }
 
         $qa_content['q_list']['answers'] = include CUD_DIR.'/pages/user-answers.php';
         if (isset($answercount) && isset($pagesize)) {
-            $qa_content['page_links_answers'] = qa_html_page_links(qa_request(), $start, $pagesize, $answercount, qa_opt('pages_prev_next'), array('action' => 'answers'));
+            $qa_content['page_links_answers'] = qa_html_page_links(qa_request(), $answers_start, $pagesize, $answercount, qa_opt('pages_prev_next'), array('action' => 'answers'));
         } else {
             $qa_content['page_links_answers'] = array();
         }
@@ -637,14 +637,14 @@
 
         $qa_content['q_list']['blogs'] = include CUD_DIR.'/pages/user-blogs.php';
         if (isset($blogcount) && isset($pagesize)) {
-            $qa_content['page_links_blogs'] = qa_html_page_links(qa_request(), $start, $pagesize, $blogcount, qa_opt('pages_prev_next'), array('action' => 'blogs'));
+            $qa_content['page_links_blogs'] = qa_html_page_links(qa_request(), $blog_start, $pagesize, $blogcount, qa_opt('pages_prev_next'), array('action' => 'blogs'));
         } else {
             $qa_content['page_links_blogs'] = array();
         }
 
         $qa_content['q_list']['favorites'] = include CUD_DIR.'/pages/user-favorites.php';
         if (isset($favoritecount) && isset($pagesize)) {
-            $qa_content['page_links_favorites'] = qa_html_page_links(qa_request(), $start, $pagesize, $blogcount, qa_opt('pages_prev_next'), array('action' => 'favorites'));
+            $qa_content['page_links_favorites'] = qa_html_page_links(qa_request(), $favorites_start, $pagesize, $favoritecount, qa_opt('pages_prev_next'), array('action' => 'favorites'));
         } else {
             $qa_content['page_links_favorites'] = array();
         }

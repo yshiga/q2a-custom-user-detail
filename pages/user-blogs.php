@@ -6,7 +6,7 @@
     
     // ブログ
     $blog_start = ($action === 'blogs') ? $start : 0;
-    $blogs_sel = qas_blog_db_user_recent_posts_selectspec( $loginuserid, $identifier, null, $blog_start );
+    $blogs_sel = qas_blog_db_user_recent_posts_selectspec( $loginuserid, $identifier, null, 0 );
     $blogs_sel['columns']['content'] = '^blogs.content ';
     $blogs_sel['columns']['format'] = '^blogs.format ';
     $blogs = qa_db_select_with_pending($blogs_sel);
