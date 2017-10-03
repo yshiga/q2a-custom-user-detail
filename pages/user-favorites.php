@@ -5,12 +5,12 @@
     }
     // お気に入り質問
     $favorites_start = ($action === 'favorites') ? $start : 0;
-    $favorites_sel = qa_db_user_favorite_qs_selectspec($userid, $pagesize, $favorites_start);
+    $favorites_sel = qa_db_user_favorite_qs_selectspec($userid, null, 0);
     $favorites_sel['columns']['content'] = '^posts.content ';
     $favorites_sel['columns']['format'] = '^posts.format ';
     $favorites = qa_db_select_with_pending($favorites_sel);
     $favoritecount = count($favorites);
-    $favorites = array_slice($favorites, $start, $pagesize);
+    $favorites = array_slice($favorites, $favorites_start, $pagesize);
     $usershtml = qa_userids_handles_html($favorites, false);
     
     $values = array();
