@@ -15,6 +15,10 @@
       <a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="/account">
         <?php echo qa_lang_html('cud_lang/edit_profile'); ?>
       </a>
+      <?php elseif($userid !== qa_get_logged_in_userid() && qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN) : ?>
+      <a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="<?php echo $editurl; ?>">
+        <?php echo qa_lang_html('cud_lang/edit_profile'); ?>
+      </a>
       <?php endif; ?>
     </div>
     <div class="mdl-cell mdl-cell--8-col">
