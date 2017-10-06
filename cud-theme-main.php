@@ -81,7 +81,7 @@ class cud_theme_main
         } else {
             $follow_message = qa_lang_html('cud_lang/follow');
         }
-        
+        $editurl = qa_path(qa_request(), array('state' => 'edit'), qa_opt('site_url'));
         include $path;
     }
 
