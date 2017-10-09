@@ -20,8 +20,13 @@
     $htmldefaults['contentview'] = true;
 
     foreach ($favorites as $post) {
-        $values[] = qa_post_html_fields($post, $loginuserid, qa_cookie_get(),
+        $fields = qa_post_html_fields($post, $loginuserid, qa_cookie_get(),
             $usershtml, null, qa_post_html_options($post, $htmldefaults));
+
+        if (function_exists('qme_remove_anchor')) {
+            $fields['content'] = qme_remove_anchor($fields['content']);
+        }
+        $values[] = $fields;
     }
     
     return $values;

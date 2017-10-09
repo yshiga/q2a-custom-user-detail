@@ -32,6 +32,9 @@
             'prefix' => '返信',
             'data' => $blog_comments[$post['postid']],
         );
+        if (function_exists('qme_remove_anchor')) {
+            $fields['content'] = qme_remove_anchor($fields['content']);
+        }
         $values[] = $fields;
     }
     
