@@ -96,4 +96,16 @@ class cud_utils
         }
         return $items;
     }
+
+    /*
+     * ユーザーのバッジ数を返す
+     */
+    public static function get_badge_count($userid)
+    {
+        $sql = "SELECT count(*)";
+        $sql.= " FROM ^ys_badges";
+        $sql.= " WHERE userid = #";
+        
+        return qa_db_read_one_value(qa_db_query_sub($sql, $userid));
+    }
 }

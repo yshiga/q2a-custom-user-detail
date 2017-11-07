@@ -27,6 +27,7 @@ return array(
 
     'follow_count' => 'フォロー',
     'follower_count' => 'フォロワー',
+    'badge_count'  => 'バッジ',
 
     /* 0件表示 */
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
