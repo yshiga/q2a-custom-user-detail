@@ -659,6 +659,7 @@
     $count = cud_utils::get_follows_count($useraccount['userid']);
     $qa_content['counts']['follows'] = $count['following'];
     $qa_content['counts']['followers'] = $count['followers'];
+    $qa_content['counts']['badge'] = cud_utils::get_badge_count($useraccount['userid']);
 
     return $qa_content;
 
