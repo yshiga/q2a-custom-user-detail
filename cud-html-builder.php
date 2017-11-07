@@ -34,6 +34,9 @@ class cud_html_builder
         '^follower_count_label' => qa_lang_html('cud_lang/follower_count'),
         '^follower_list_page_url' => '/user/'.$handle.'/followers',
         '^follower_count' => $content['counts']['followers'],
+        '^badge_count_label' => 'バッジ',
+        '^badge_list_page_url' => '/user/'.$handle.'/badge',
+        '^badge_count' => '4',
       );
 
       return strtr($template, $params);
