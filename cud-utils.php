@@ -103,7 +103,7 @@ class cud_utils
     public static function get_badge_count($userid)
     {
         $sql = "SELECT count(*)";
-        $sql.= " FROM ^ys_badges";
+        $sql.= " FROM ^ysb_badges";
         $sql.= " WHERE userid = #";
         
         return qa_db_read_one_value(qa_db_query_sub($sql, $userid));

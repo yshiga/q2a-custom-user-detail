@@ -36,7 +36,7 @@ class cud_html_builder
         '^follower_count' => $content['counts']['followers'],
         '^badge_count_label' => qa_lang_html('cud_lang/badge_count'),
         '^badge_list_page_url' => '/user/'.$handle.'/badge',
-        '^badge_count' => '4',
+        '^badge_count' => $content['counts']['badge'],
       );
 
       return strtr($template, $params);
