@@ -6,15 +6,13 @@
     
     // ブログ
     $blog_start = ($action === 'blogs') ? $start : 0;
-    $blogs_sel = qas_blog_db_user_recent_posts_selectspec( $loginuserid, $identifier, null, 0 );
+    $blogs_sel = qas_blog_db_user_recent_posts_selectspec( $loginuserid, $identifier, $pagesize, $blog_start );
     $blogs_sel['columns']['content'] = '^blogs.content ';
     $blogs_sel['columns']['format'] = '^blogs.format ';
     $blogs = qa_db_select_with_pending($blogs_sel);
     $blogids = array_keys($blogs);
-    $blogcount = count($blogs);
+    $blogcount = get_total_blog_count($userid);
     
-    $pagesize = qa_opt('page_size_qs');
-    $blogs = array_slice($blogs, $blog_start, $pagesize);
     $usershtml = qa_userids_handles_html($blogs, false);
     
     $values = array();
@@ -52,4 +50,14 @@
             $comments[$result['postid']] = $result['comments'];
         }
         return $comments;
+    }
+
+    function get_total_blog_count($userid)
+    {
+        $sql = 'SELECT count(*)';
+        $sql.= ' FROM ^blogs';
+        $sql.= " WHERE type = 'B'";
+        $sql.= ' AND userid = #';
+
+        return qa_db_read_one_value(qa_db_query_sub($sql, $userid), true);
     }
