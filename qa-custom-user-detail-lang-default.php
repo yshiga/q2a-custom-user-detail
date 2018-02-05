@@ -19,7 +19,7 @@ return array(
     'msg_do_post' => '<p><a href="/ask">質問を投稿する</a>か、回答を投稿してください。最深の質問は<a href="/">こちら</a></p>',
     'read_next' => '続きを読む',
     'read_previous' => '前を読む',
-    'edit_profile' => 'プロフィール編集',
+    'edit_profile' => 'アカウント編集',
     'follow' => 'フォローする',
     'unfollow' => 'フォローをやめる',
     'send_message' => 'メッセージ送信',
