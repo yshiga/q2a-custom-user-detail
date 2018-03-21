@@ -103,8 +103,8 @@ class cud_theme_main
         $active_tab = self::set_active_tab($theme_obj);
         // self::output_q_list($theme_obj, 'activities', $active_tab['activities']);
         self::output_q_list($theme_obj, 'blogs', $active_tab['blogs']);
-        self::output_q_list($theme_obj, 'questions', $active_tab['questions']);
         self::output_q_list($theme_obj, 'answers', $active_tab['answers']);
+        self::output_q_list($theme_obj, 'questions', $active_tab['questions']);
         self::output_q_list($theme_obj, 'favorites', $active_tab['favorites']);
     }
 
