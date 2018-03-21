@@ -15,7 +15,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     {
         qa_html_theme_base::body_footer();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
-            $action = isset($this->content['raw']['action']) ? $this->content['raw']['action'] : 'questions';
+            $action = isset($this->content['raw']['action']) ? $this->content['raw']['action'] : 'blogs';
             $cud_lang_json = json_encode (array(
               'read_next' => qa_lang_html('cud_lang/read_next'),
               'read_previous' => qa_lang_html('cud_lang/read_previous'),
