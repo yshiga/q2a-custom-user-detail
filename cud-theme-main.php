@@ -62,17 +62,10 @@ class cud_theme_main
         $blobid = $raw['account']['avatarblobid'];
         $handle = $raw['account']['handle'];
         $userid = $raw['account']['userid'];
-        $location = $raw['profile']['location'];
-        $groups = $raw['profile']['飼-育-群-数'];
-        $years = $raw['profile']['ニホンミツバチ-飼-育-歴'];
-        $hivetype = $raw['profile']['使-用-している-巣-箱'];
-        $about = $raw['profile']['about'];
+        $profile = $raw['newprofile'];
+        $about = $raw['userabout']['value'];
         $points = qa_lang_html_sub('cud_lang/points',$points);
         $ranking = qa_lang_html_sub('cud_lang/ranking',$raw['rank']);
-        $location_label = qa_lang_html('cud_lang/location');
-        $groups_label = qa_lang_html('cud_lang/number_gropus');
-        $rearing_history = qa_lang_html('cud_lang/rearing_history');
-        $using_hive = qa_lang_html('cud_lang/using_hive');
         $message_label = qa_lang_html('cud_lang/send_message');
         $message_url = qa_path_html('message/'.$handle);
 
