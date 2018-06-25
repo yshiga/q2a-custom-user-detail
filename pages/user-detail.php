@@ -609,7 +609,7 @@
         if ($field['title'] !== 'about') {
             $tmp = array(
                 'key' => $field['title'],
-                'label' => $field['content'],
+                'label' => qa_user_userfield_label($field),
                 'value' => @$userprofile[$field['title']]
             );
             $newprofile[$field['position']] = $tmp;
