@@ -12,7 +12,7 @@
     <div class="mdl-cell mdl-cell--4-col mdl-typography mdl-typography--text-center">
       <img src="<?php echo $site_url;?>?qa=image&amp;qa_blobid=<?php echo $blobid; ?>&amp;qa_size=150" />
       <?php if($userid === qa_get_logged_in_userid()): ?>
-      <a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="/account">
+      <a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="<?php echo $account_url; ?>">
         <?php echo qa_lang_html('cud_lang/edit_profile'); ?>
       </a>
       <?php elseif($userid !== qa_get_logged_in_userid() && qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN) : ?>

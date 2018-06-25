@@ -59,6 +59,7 @@ class cud_theme_main
         $favorite = isset($content['favorite']) ? $content['favorite'] : null;
 
         $site_url = qa_opt('site_url');
+        $account_url = qa_path('account', null, $site_url);
         $blobid = $raw['account']['avatarblobid'];
         $handle = $raw['account']['handle'];
         $userid = $raw['account']['userid'];
