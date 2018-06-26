@@ -48,9 +48,9 @@ class cud_utils
         $query = "";
         $query .= " ^users JOIN ^userpoints ON ^users.userid=^userpoints.userid";
         $query .= " LEFT JOIN ( SELECT userid, CASE WHEN title = 'about' THEN content ELSE '' END AS about";
-        $query .= " FROM qa_userprofile WHERE title like 'about' ) a ON qa_users.userid = a.userid";
+        $query .= " FROM ^userprofile WHERE title like 'about' ) a ON qa_users.userid = a.userid";
         $query .= " LEFT JOIN ( SELECT userid, CASE WHEN title = 'location' THEN content ELSE '' END AS location";
-        $query .= " FROM qa_userprofile WHERE title like 'location' ) l ON qa_users.userid = l.userid";
+        $query .= " FROM ^userprofile WHERE title like 'location' ) l ON qa_users.userid = l.userid";
         if ($type === 'following') {
             $query .= " WHERE ^users.userid IN ( ";
             $query .= " SELECT entityid ";
