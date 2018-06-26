@@ -27,15 +27,16 @@ class cud_html_builder
       $template_path = CUD_DIR . '/html/second_section.html';
       $template = file_get_contents($template_path);
 
+      $site_url = qa_opt('site_url');
       $params = array(
         '^follow_count_label' => qa_lang_html('cud_lang/follow_count'),
-        '^follow_list_page_url' => '/user/'.$handle.'/following',
+        '^follow_list_page_url' => qa_path('user/'.$handle.'/following', null, $site_url),
         '^follow_count' => $content['counts']['follows'],
         '^follower_count_label' => qa_lang_html('cud_lang/follower_count'),
-        '^follower_list_page_url' => '/user/'.$handle.'/followers',
+        '^follower_list_page_url' => qa_path('user/'.$handle.'/followers', null, $site_url),
         '^follower_count' => $content['counts']['followers'],
         '^badge_count_label' => qa_lang_html('cud_lang/badge_count'),
-        '^badge_list_page_url' => '/user/'.$handle.'/badge',
+        '^badge_list_page_url' => qa_path('user/'.$handle.'/badge', null, $site_url),
         '^badge_count' => $content['counts']['badge'],
       );
 
