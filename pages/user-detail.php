@@ -602,9 +602,27 @@
         $qa_content['raw']['profile'] = $userprofile;
     }
 
+    $tmp = array();
+    $newprofile = array();
+    $about = array();
+    foreach ($userfields as $field) {
+        if ($field['title'] !== 'about') {
+            $tmp = array(
+                'key' => $field['title'],
+                'label' => qa_user_userfield_label($field),
+                'value' => @$userprofile[$field['title']]
+            );
+            $newprofile[$field['position']] = $tmp;
+        } else {
+            $about['label'] = $field['content'];
+            $about['value'] = @$userprofile[$field['title']];
+        }
+    }
     if (!$userediting) {
         $qa_content['raw']['account'] = $useraccount; // for plugin layers to access
         $qa_content['raw']['profile'] = $userprofile;
+        $qa_content['raw']['newprofile'] = $newprofile;
+        $qa_content['raw']['userabout'] = $about;
         $qa_content['raw']['userid'] = $useraccount['userid'];
         $qa_content['raw']['points'] = $userpoints;
         $qa_content['raw']['rank'] = $userrank;
