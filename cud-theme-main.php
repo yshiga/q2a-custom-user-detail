@@ -63,6 +63,7 @@ class cud_theme_main
         $blobid = $raw['account']['avatarblobid'];
         $handle = $raw['account']['handle'];
         $userid = $raw['account']['userid'];
+        $login_userid = qa_get_logged_in_userid();
         $profile = $raw['newprofile'];
         $about = $raw['userabout']['value'];
         $points = qa_lang_html_sub('cud_lang/points',$points);
