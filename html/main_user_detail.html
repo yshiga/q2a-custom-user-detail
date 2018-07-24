@@ -1,6 +1,6 @@
 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col user">
 
-  <?php if(qa_get_logged_in_userid() !== null && $userid !== qa_get_logged_in_userid()): ?>
+  <?php if(isset($login_userid) && $userid != $login_userid): ?>
   <div class="mdl-card__menu">
     <div id="favoriting" <?php echo $favorite[ 'favorite_id'];?>
       <?php echo $favorite['code']; ?> >
@@ -11,11 +11,11 @@
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col mdl-typography mdl-typography--text-center">
       <img src="<?php echo $site_url;?>?qa=image&amp;qa_blobid=<?php echo $blobid; ?>&amp;qa_size=150" />
-      <?php if($userid === qa_get_logged_in_userid()): ?>
+      <?php if($userid == $login_userid): ?>
       <a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="<?php echo $account_url; ?>">
         <?php echo qa_lang_html('cud_lang/edit_profile'); ?>
       </a>
-      <?php elseif($userid !== qa_get_logged_in_userid() && qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN) : ?>
+      <?php elseif($userid != $login_userid && qa_get_logged_in_level() >= QA_USER_LEVEL_ADMIN) : ?>
       <a class="mdl-button mdl-button__block mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="<?php echo $editurl; ?>">
         <?php echo qa_lang_html('cud_lang/edit_profile'); ?>
       </a>
@@ -43,7 +43,7 @@
       </p>
     </div>
 
-    <?php if(qa_get_logged_in_userid() !== null && $userid !== qa_get_logged_in_userid()): ?>
+    <?php if(isset($login_userid) && $userid != $login_userid): ?>
     <div class="mdl-card__actions mdl-card--border">
       <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="<?php echo $message_url;?>" data-upgraded=",MaterialButton,MaterialRipple">
         <i class="material-icons mdl-color-text--primary">mail</i>
