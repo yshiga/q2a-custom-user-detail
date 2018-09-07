@@ -615,7 +615,9 @@
             $newprofile[$field['position']] = $tmp;
         } else {
             $about['label'] = $field['content'];
-            $about['value'] = @$userprofile[$field['title']];
+            $value = @$userprofile[$field['title']];
+            $value = cud_utils::add_url_link($value);
+            $about['value'] = $value;
         }
     }
     if (!$userediting) {

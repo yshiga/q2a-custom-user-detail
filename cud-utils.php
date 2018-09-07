@@ -117,4 +117,26 @@ class cud_utils
 
         return $badge_count + $ranking_badge_count;
     }
+
+    public static function add_url_link($html)
+    {
+        require_once QA_INCLUDE_DIR.'util/string.php';
+
+        $htmlunlinkeds=array_reverse(preg_split('|<[Aa]\s+[^>]+>.*</[Aa]\s*>|', $html, -1, PREG_SPLIT_OFFSET_CAPTURE));
+
+        foreach ($htmlunlinkeds as $htmlunlinked) {
+            $thishtmluntaggeds=array_reverse(preg_split('/<[^>]*>/', $htmlunlinked[0], -1, PREG_SPLIT_OFFSET_CAPTURE));
+
+            foreach ($thishtmluntaggeds as $thishtmluntagged) {
+                $innerhtml=$thishtmluntagged[0];
+
+                if (is_numeric(strpos($innerhtml, '://'))) {
+                    $newhtml=qa_html_convert_urls($innerhtml, true);
+
+                    $html=substr_replace($html, $newhtml, $htmlunlinked[1]+$thishtmluntagged[1], strlen($innerhtml));
+                }
+            }
+        }
+        return $html;
+    }
 }
