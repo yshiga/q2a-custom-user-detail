@@ -31,3 +31,5 @@ qa_register_plugin_phrases('qa-custom-user-detail-lang-*.php', 'cud_lang');
 // layer
 qa_register_plugin_layer('qa-custom-user-detail-layer.php','Custom User Detail Layer');
 qa_register_plugin_overrides('qa-custom-user-detail-overrides.php');
+// admin
+qa_register_plugin_module('module', 'qa-custom-user-detail-admin.php','qa_cud_admin', 'q2a custom user detail');

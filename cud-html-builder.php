@@ -101,8 +101,7 @@ class cud_html_builder
 
       $image_dir = qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/';
       $params = array(
-        '^title' => qa_lang('cud_lang/no_item_list_mine_title_' . $list_type),
-        '^image' => $image_dir. 'no_item_list_mine_' . $list_type . '.svg',
+        '^content' => qa_opt('cud_opt_no_post_'.$list_type),
         '^action_btn' => qa_lang('cud_lang/no_item_list_mine_action_btn_' . $list_type),
         '^action_link' => $action_link
       );
