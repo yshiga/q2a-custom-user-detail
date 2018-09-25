@@ -120,7 +120,7 @@ class cud_html_builder
       $params = array(
         '^site_url' => qa_opt('site_url'),
         '^message' => qa_lang_html_sub('cud_lang/no_posts', $list_name),
-        '^image' => qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/no_item_icon.svg'
+        '^image' => qa_opt('cud_opt_no_post_others_image')
       );
       $html = strtr($template, $params);
       return $html;
