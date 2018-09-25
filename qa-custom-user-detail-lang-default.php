@@ -47,4 +47,12 @@ return array(
     'location_label' => '活動場所',
     'no_following' => 'フォローしているユーザーがいません。',
     'no_followers' => 'フォロワーがいません。',
+
+    /* Options */
+    'no_post_blogs'     => '日誌未投稿の場合のHTML：',
+    'no_post_answers'   => '回答未投稿の場合のHTML：',
+    'no_post_questions' => '質問未投稿の場合のHTML：',
+    'no_post_favorites' => 'ブックマーク0件の場合のHTML：',
+
+    'no_post_others_image' => '他ユーザーの投稿が0件の場合の画像(URL)：',
 );

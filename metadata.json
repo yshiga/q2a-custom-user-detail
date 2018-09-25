@@ -1,0 +1,12 @@
+{
+	"name": "Custom User Detail",
+	"uri": "https://github.com/yshiga/q2a-custom-user-detail",
+	"description": "Provide a new user profile page.",
+	"version": "1.0",
+	"date": "2016-11-23",
+	"author": "yshiga",
+	"author_uri": "http://38qa.net",
+	"license": "GPLv2",
+	"update_uri": "",
+	"min_q2a": "1.7"
+}
