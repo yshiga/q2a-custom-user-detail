@@ -5,7 +5,7 @@ return array(
     'activities' => '活動履歴',
     'questions' => '質問',
     'answers' => '回答',
-    'blogs' => '飼育日誌',
+    'blogs' => '日誌',
     'favorites' => 'ブックマーク',
     'location' => '都道府県',
     'number_gropus' => '飼育群数',
@@ -37,7 +37,7 @@ return array(
 
     'no_item_list_mine_action_btn_questions' => '質問する',
     'no_item_list_mine_action_btn_answers' => '回答するには？',
-    'no_item_list_mine_action_btn_blogs' => '飼育日誌を書く',
+    'no_item_list_mine_action_btn_blogs' => '日誌を書く',
     'no_item_list_mine_action_btn_favorites' => 'もっと詳しく',
 
     /* following, follwers */
