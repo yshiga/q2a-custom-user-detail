@@ -96,7 +96,7 @@ class cud_html_builder
       } elseif($list_type == 'blogs') {
         $action_link = qa_opt('site_url') . 'blog/new';
       } elseif($list_type == 'favorites') {
-        $action_link = qa_opt('site_url') . 'how-to-use#bookmark';
+        $action_link = qa_opt('site_url') . 'help-general-browsing#bookmark';
       }
 
       $image_dir = qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/';
