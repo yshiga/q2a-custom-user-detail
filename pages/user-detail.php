@@ -564,7 +564,7 @@
 
         $qa_content['q_list']['blog-favorites'] = include CUD_DIR.'/pages/user-blog-favorites.php';
         if (isset($blog_favorites_count) && isset($pagesize)) {
-            $qa_content['page_links_blog_favorites'] = qa_html_page_links(qa_request(), $blog_favorites_start, $pagesize, $blog_favorites_count, qa_opt('pages_prev_next'), array('action' => 'blog-favorites'));
+            $qa_content['page_links_blog-favorites'] = qa_html_page_links(qa_request(), $blog_favorites_start, $pagesize, $blog_favorites_count, qa_opt('pages_prev_next'), array('action' => 'blog-favorites'));
         } else {
             $qa_content['page_links_blog_favorites'] = array();
         }
@@ -575,7 +575,7 @@
     $qa_content['counts']['answers'] = $answercount;
     $qa_content['counts']['blogs'] = $blogcount;
     $qa_content['counts']['favorites'] = $favoritecount;
-    $qa_content['counts']['blog-favorites'] = $blog_favorites_count;
+    $qa_content['counts']['blog_favorites'] = $blog_favorites_count;
 
     $count = cud_utils::get_follows_count($useraccount['userid']);
     $qa_content['counts']['follows'] = $count['following'];

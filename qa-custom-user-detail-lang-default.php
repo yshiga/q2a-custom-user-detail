@@ -7,6 +7,7 @@ return array(
     'answers' => '回答',
     'blogs' => '日誌',
     'favorites' => 'ブックマーク',
+    'blog-favorites' => '日誌のブックマーク',
     'location' => '都道府県',
     'number_gropus' => '飼育群数',
     'rearing_history' => '養蜂歴',
@@ -30,17 +31,20 @@ return array(
     'badge_count'  => 'バッジ',
 
     'favorites_label'  => '<i class="material-icons">favorites</i>質問',
+    'blog_favorites_label'  => '<i class="material-icons">favorites</i>日誌',
 
     /* 0件表示 */
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
     'no_item_list_mine_title_answers' => 'あなたの力で困っている人を助けてあげましょう。',
     'no_item_list_mine_title_blogs' => '飼育の記録を発信して、<br>全国の愛好家と交流しましょう。',
     'no_item_list_mine_title_favorites' => '質問をブックマークに追加すると、ここに表示されます。',
+    'no_item_list_mine_title_blog_favorites' => '日誌をブックマークに追加すると、ここに表示されます。',
 
     'no_item_list_mine_action_btn_questions' => '質問する',
     'no_item_list_mine_action_btn_answers' => '回答するには？',
     'no_item_list_mine_action_btn_blogs' => '日誌を書く',
     'no_item_list_mine_action_btn_favorites' => 'もっと詳しく',
+    'no_item_list_mine_action_btn_blog-favorites' => 'もっと詳しく',
 
     /* following, follwers */
     'follows_title' => '^さんのフォロー・フォロワー一覧',

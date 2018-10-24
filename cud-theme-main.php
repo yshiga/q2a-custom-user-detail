@@ -24,15 +24,15 @@ class cud_theme_main
 
         $theme_obj->widgets('main', 'top');
 
-                $request = qa_request_parts();
-          $handle = isset($request[1]) ? $request[1] : '';
-          self::output_user_detail($theme_obj->content);
+        $request = qa_request_parts();
+        $handle = isset($request[1]) ? $request[1] : '';
+        self::output_user_detail($theme_obj->content);
 
-                $html = cud_html_builder::create_second_section($theme_obj->content, $handle);
-          $theme_obj->output($html);
+        $html = cud_html_builder::create_second_section($theme_obj->content, $handle);
+        $theme_obj->output($html);
 
-          self::output_q_list_tab_header($theme_obj);
-          self::output_q_list_panels($theme_obj);
+        self::output_q_list_tab_header($theme_obj);
+        self::output_q_list_panels($theme_obj);
         $theme_obj->output('</div>');
 
         $theme_obj->widgets('main', 'high');
@@ -101,6 +101,7 @@ class cud_theme_main
         self::output_q_list($theme_obj, 'answers', $active_tab['answers']);
         self::output_q_list($theme_obj, 'questions', $active_tab['questions']);
         self::output_q_list($theme_obj, 'favorites', $active_tab['favorites']);
+        self::output_q_list($theme_obj, 'blog-favorites', $active_tab['blog-favorites']);
     }
 
     private static function output_q_list($theme_obj, $list_type, $active_tab)
