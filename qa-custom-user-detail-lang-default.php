@@ -29,6 +29,8 @@ return array(
     'follower_count' => 'フォロワー',
     'badge_count'  => 'バッジ',
 
+    'favorites_label'  => '<i class="material-icons">favorites</i>質問',
+
     /* 0件表示 */
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
     'no_item_list_mine_title_answers' => 'あなたの力で困っている人を助けてあげましょう。',

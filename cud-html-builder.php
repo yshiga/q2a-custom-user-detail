@@ -59,7 +59,7 @@ class cud_html_builder
           '^blogs_label' => qa_lang_html('cud_lang/blogs'),
           '^favorites_active' => $active_tab['favorites'],
           '^favorites_count' => $postcounts['favorites'],
-          '^favorites_label' => qa_lang_html('cud_lang/favorites'),
+          '^favorites_label' => qa_lang('cud_lang/favorites_label'),
         );
 
         return strtr($template, $params);
