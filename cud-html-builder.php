@@ -59,7 +59,10 @@ class cud_html_builder
           '^blogs_label' => qa_lang_html('cud_lang/blogs'),
           '^favorites_active' => $active_tab['favorites'],
           '^favorites_count' => $postcounts['favorites'],
-          '^favorites_label' => qa_lang_html('cud_lang/favorites'),
+          '^favorites_label' => qa_lang('cud_lang/favorites_label'),
+          '^blog_favorites_active' => $active_tab['blog-favorites'],
+          '^blog_favorites_count' => $postcounts['blog_favorites'],
+          '^blog_favorites_label' => qa_lang('cud_lang/blog_favorites_label'),
         );
 
         return strtr($template, $params);
@@ -96,6 +99,8 @@ class cud_html_builder
       } elseif($list_type == 'blogs') {
         $action_link = qa_opt('site_url') . 'blog/new';
       } elseif($list_type == 'favorites') {
+        $action_link = qa_opt('site_url') . 'help-general-browsing#bookmark';
+      } elseif($list_type == 'blog-favorites') {
         $action_link = qa_opt('site_url') . 'help-general-browsing#bookmark';
       }
 
