@@ -29,6 +29,7 @@ class qa_cud_admin
             qa_opt('cud_opt_no_post_answers', qa_post_text('cud_opt_no_post_answers'));
             qa_opt('cud_opt_no_post_questions', qa_post_text('cud_opt_no_post_questions'));
             qa_opt('cud_opt_no_post_favorites', qa_post_text('cud_opt_no_post_favorites'));
+            qa_opt('cud_opt_no_post_blog-favorites', qa_post_text('cud_opt_no_post_blog-favorites'));
             qa_opt('cud_opt_no_post_others_image', qa_post_text('cud_opt_no_post_others_image'));
             $ok = qa_lang('admin/options_saved');
         }
@@ -64,6 +65,14 @@ class qa_cud_admin
             'label' => qa_lang('cud_lang/no_post_favorites'),
             'tags' => 'NAME="cud_opt_no_post_favorites"',
             'value' => qa_opt('cud_opt_no_post_favorites'),
+            'type' => 'textarea',
+            'rows' => 5,
+        );
+
+        $fields[] = array(
+            'label' => qa_lang('cud_lang/no_post_blog-favorites'),
+            'tags' => 'NAME="cud_opt_no_post_blog-favorites"',
+            'value' => qa_opt('cud_opt_no_post_blog-favorites'),
             'type' => 'textarea',
             'rows' => 5,
         );
