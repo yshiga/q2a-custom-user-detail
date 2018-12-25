@@ -1,9 +1,5 @@
 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col user">
 
-  <?php if(isset($login_userid) && $userid != $login_userid): ?>
-  <div class="mdl-card__menu">
-  </div>
-  <?php endif; ?>
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col mdl-typography mdl-typography--text-center">
       <img src="<?php echo $site_url;?>?qa=image&amp;qa_blobid=<?php echo $blobid; ?>&amp;qa_size=150" class="qa-avatar-image" />
@@ -21,10 +17,12 @@
       <div class="mdl-typography--headline mb2 flex">
         <?php echo $handle; ?>
       </div>
+      <?php if(isset($login_userid) && $userid != $login_userid): ?>
       <div id="favoriting" <?php echo $favorite[ 'favorite_id'];?>
         <?php echo $favorite['code']; ?> >
         <?php echo cud_html_builder::create_favorite_button($follow_message, $favorite[ 'favorite_tags'], ($favorite['favorite'] === 1)); ?>
       </div>
+      <?php endif; ?>
       <ul>
         <?php foreach($profile as $field) : ?>
           <li><span class="mdl-typography--font-bold">
