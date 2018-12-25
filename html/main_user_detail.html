@@ -2,10 +2,6 @@
 
   <?php if(isset($login_userid) && $userid != $login_userid): ?>
   <div class="mdl-card__menu">
-    <div id="favoriting" <?php echo $favorite[ 'favorite_id'];?>
-      <?php echo $favorite['code']; ?> >
-      <?php echo cud_html_builder::create_favorite_button($follow_message, $favorite[ 'favorite_tags'], ($favorite['favorite'] === 1)); ?>
-    </div>
   </div>
   <?php endif; ?>
   <div class="mdl-grid">
@@ -22,8 +18,12 @@
       <?php endif; ?>
     </div>
     <div class="mdl-cell mdl-cell--8-col">
-      <div class="mdl-typography--headline">
+      <div class="mdl-typography--headline mb2 flex">
         <?php echo $handle; ?>
+      </div>
+      <div id="favoriting" <?php echo $favorite[ 'favorite_id'];?>
+        <?php echo $favorite['code']; ?> >
+        <?php echo cud_html_builder::create_favorite_button($follow_message, $favorite[ 'favorite_tags'], ($favorite['favorite'] === 1)); ?>
       </div>
       <ul>
         <?php foreach($profile as $field) : ?>
