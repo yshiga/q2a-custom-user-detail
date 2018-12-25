@@ -11,12 +11,19 @@ class qa_html_theme_layer extends qa_html_theme_base
         qa_html_theme_base::qa_html_theme_base($template, $content, $rooturl, $request);
     }
 
+    function body_prefix()
+    {
+        qa_html_theme_base::body_prefix();
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
+            $html = cud_html_builder::create_confirm_dialog();
+            $this->output($html);
+        }
+    }
+
     function body_footer()
     {
         qa_html_theme_base::body_footer();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
-            $html = cud_html_builder::create_confirm_dialog();
-            $this->output($html);
             $action = isset($this->content['raw']['action']) ? $this->content['raw']['action'] : 'blogs';
             $handle = $this->content['raw']['account']['handle'];
             $cud_lang_json = json_encode (array(

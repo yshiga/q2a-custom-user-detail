@@ -38,7 +38,7 @@ return array(
     'unfollow_label' => 'フォロー解除',
     'follow_confirm_title' => '^さんをフォローしますか？',
     'follow_confirm_content' => 'フォローすると^さんの新しい投稿のお知らせが届きます。',
-    'unfollow_confirm_title' => '^さんをフォローをやめますか？',
+    'unfollow_confirm_title' => '^さんのフォローをやめますか？',
     'unfollow_confirm_content' => '^さんの新しい投稿のお知らせを受け取れなくなります。',
 
     /* 0件表示 */
