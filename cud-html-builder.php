@@ -11,15 +11,19 @@ class cud_html_builder
 
     public static function create_favorite_button($label, $tags, $is_follow){
 
-      $html = '<a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect';
+      $html = '<a class="mdl-button mdl-js-button mdl-js-ripple-effect border';
       if($is_follow) {
-        $html .= ' mdl-button--colored mdl-color-text--white';
+        $class = " mdl-button--colored";
+        $button_label = qa_lang_html('cud_lang/following_label');
+      } else {
+        $class = "";
+        $button_label = qa_lang_html('cud_lang/follow');
       }
-      $html .= '" title="' . $label . '"';
+      $html .= $class .'" title="' . $label . '"';
       $html .= $tags;
-      $html .= ' data-upgraded=",MaterialButton,MaterialRipple">';
-      $html .= ' <i class="material-icons">favorite</i> <span class="mdl-button__ripple-container">';
-      $html .= ' <span class="mdl-ripple"></span> </span> </a>';
+      $html .= ' >';
+      $html .= ' <i class="material-icons">favorite</i>'.$button_label;
+      $html .= '</a>';
       return $html;
     }
 
@@ -84,6 +88,13 @@ class cud_html_builder
       } else {
         return self::create_no_item_list_other($list_type);
       }
+    }
+
+    public static function create_confirm_dialog()
+    {
+      $template_path = CUD_DIR . '/html/favorite_confirm_dialog.html';
+      $html = file_get_contents($template_path);
+      return $html;
     }
     
     private static function create_no_item_list_mine($list_type)

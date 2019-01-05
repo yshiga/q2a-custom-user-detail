@@ -11,19 +11,35 @@ class qa_html_theme_layer extends qa_html_theme_base
         qa_html_theme_base::qa_html_theme_base($template, $content, $rooturl, $request);
     }
 
+    function body_prefix()
+    {
+        qa_html_theme_base::body_prefix();
+        if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
+            $html = cud_html_builder::create_confirm_dialog();
+            $this->output($html);
+        }
+    }
+
     function body_footer()
     {
         qa_html_theme_base::body_footer();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
             $action = isset($this->content['raw']['action']) ? $this->content['raw']['action'] : 'blogs';
+            $handle = $this->content['raw']['account']['handle'];
             $cud_lang_json = json_encode (array(
               'read_next' => qa_lang_html('cud_lang/read_next'),
               'read_previous' => qa_lang_html('cud_lang/read_previous'),
+              'follow_title' => qa_lang_html_sub('cud_lang/follow_confirm_title', $handle),
+              'follow_content' => qa_lang_html_sub('cud_lang/follow_confirm_content', $handle),
+              'follow_action' => qa_lang_html('cud_lang/follow'),
+              'unfollow_title' => qa_lang_html_sub('cud_lang/unfollow_confirm_title', $handle),
+              'unfollow_content' => qa_lang_html_sub('cud_lang/unfollow_confirm_content', $handle),
+              'unfollow_action' => qa_lang_html('cud_lang/unfollow_label'),
             ));
             $this->output(
               '<SCRIPT TYPE="text/javascript">',
               'var action = "'.$action.'";',
-              "var cud_lang = '".$cud_lang_json."';",
+              "var cud_lang = ".$cud_lang_json.";",
               '</SCRIPT>'
             );
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-favorite.js"></SCRIPT>');

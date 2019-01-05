@@ -33,6 +33,14 @@ return array(
     'favorites_label'  => '<i class="material-icons">favorites</i>質問',
     'blog_favorites_label'  => '<i class="material-icons">favorites</i>日誌',
 
+    /* お気に入りボタン、確認ダイアログ*/
+    'following_label' => 'フォロー中',
+    'unfollow_label' => 'フォロー解除',
+    'follow_confirm_title' => '^さんをフォローしますか？',
+    'follow_confirm_content' => 'フォローすると^さんの新しい投稿のお知らせが届きます。',
+    'unfollow_confirm_title' => '^さんのフォローをやめますか？',
+    'unfollow_confirm_content' => '^さんの新しい投稿のお知らせを受け取れなくなります。',
+
     /* 0件表示 */
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
     'no_item_list_mine_title_answers' => 'あなたの力で困っている人を助けてあげましょう。',
