@@ -70,6 +70,7 @@ class cud_theme_main
         $ranking = qa_lang_html_sub('cud_lang/ranking',$raw['rank']);
         $message_label = qa_lang_html('cud_lang/send_message');
         $message_url = qa_path_html('message/'.$handle);
+        $usersource = $raw['usersource'];
 
         if(isset($favorite) && $favorite['favorite'] === 1) {
             $follow_message = qa_lang_html('cud_lang/unfollow');

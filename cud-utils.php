@@ -139,4 +139,36 @@ class cud_utils
         }
         return $html;
     }
+
+    /**
+     * userlogin テーブルから source を取得
+     * その後表示用に変換
+     */
+    public static function get_usersource($userid)
+    {
+        $source = '';
+        $sql = '';
+        $sql = 'SELECT ul.source';
+        $sql.= ' FROM ^users us';
+        $sql.= ' INNER JOIN ^userlogins ul ON us.userid = ul.userid';
+        $sql.= ' WHERE us.userid = #';
+
+        $result = qa_db_read_one_value(qa_db_query_sub($sql, $userid), true);
+
+        switch (strtolower($result)) {
+            case 'facebook':
+                $source = 'Facebookアカウント';
+                break;
+            case 'twitter':
+                $source = 'Twitterアカウント';
+                break;
+            case 'google':
+                $source = 'Googleアカウント';
+                break;
+            default:
+                $source = 'メールアドレス';
+        }
+
+        return $source . 'で登録しています';
+    }
 }

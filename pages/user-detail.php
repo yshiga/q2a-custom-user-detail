@@ -584,6 +584,8 @@
     $qa_content['counts']['followers'] = $count['followers'];
     $qa_content['counts']['badge'] = cud_utils::get_badge_count($useraccount['userid']);
 
+    $qa_content['raw']['usersource'] = cud_utils::get_usersource($useraccount['userid']);
+
     return $qa_content;
 
     function cud_favorite_form($entitytype, $entityid, $favorite, $title)
