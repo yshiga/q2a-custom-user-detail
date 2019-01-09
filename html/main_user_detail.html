@@ -14,9 +14,10 @@
       <?php endif; ?>
     </div>
     <div class="mdl-cell mdl-cell--8-col">
-      <div class="mdl-typography--headline mb2 flex">
+      <div class="mdl-typography--headline flex">
         <?php echo $handle; ?>
       </div>
+      <div class="mdl-card__subtitle-text mdl-color-text--grey-400 registering-by">〇〇で登録しています</div>
       <?php if(isset($login_userid) && $userid != $login_userid): ?>
       <div id="favoriting" <?php echo $favorite[ 'favorite_id'];?>
         <?php echo $favorite['code']; ?> >
