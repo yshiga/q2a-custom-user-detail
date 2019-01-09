@@ -70,4 +70,9 @@ return array(
     'no_post_blog-favorites' => '日誌のブックマーク0件の場合のHTML：',
 
     'no_post_others_image' => '他ユーザーの投稿が0件の場合の画像(URL)：',
+
+    /* 登録経路 */
+    'account'           => '^アカウント',
+    'registerd_by'      => '^で登録しています',
+    'mail_address'      => 'メールアドレス',
 );

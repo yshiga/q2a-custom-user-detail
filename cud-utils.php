@@ -157,18 +157,18 @@ class cud_utils
 
         switch (strtolower($result)) {
             case 'facebook':
-                $source = 'Facebookアカウント';
+                $source = qa_lang_sub('cud_lang/account', 'Facebook');
                 break;
             case 'twitter':
-                $source = 'Twitterアカウント';
+                $source = qa_lang_sub('cud_lang/account', 'Twitter');
                 break;
             case 'google':
-                $source = 'Googleアカウント';
+                $source = qa_lang_sub('cud_lang/account', 'Google');
                 break;
             default:
-                $source = 'メールアドレス';
+                $source = qa_lang('cud_lang/mail_address');
         }
 
-        return $source . 'で登録しています';
+        return qa_lang_sub('cud_lang/registerd_by', $source);
     }
 }
