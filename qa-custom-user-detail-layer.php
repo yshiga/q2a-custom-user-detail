@@ -6,6 +6,8 @@ require_once CUD_DIR.'/cud-theme-main-follows.php';
 class qa_html_theme_layer extends qa_html_theme_base
 {
 
+    const CSS_VER = '1.0.1';
+
     function __construct($template, $content, $rooturl, $request)
     {
         qa_html_theme_base::qa_html_theme_base($template, $content, $rooturl, $request);
@@ -55,7 +57,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         );
         qa_html_theme_base::head_css();
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && in_array($this->template, $allow_templates)) {
-            $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/cud.css"/>');
+            $this->output('<LINK REL="stylesheet" TYPE="text/css" HREF="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/cud.css?ver='.self::CSS_VER.'" />');
         }
     }
 
