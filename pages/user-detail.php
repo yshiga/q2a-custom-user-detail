@@ -584,7 +584,8 @@
     $qa_content['counts']['followers'] = $count['followers'];
     $qa_content['counts']['badge'] = cud_utils::get_badge_count($useraccount['userid']);
 
-    $qa_content['raw']['usersource'] = cud_utils::get_usersource($useraccount['userid']);
+    $usersource = ($loginuserid == $useraccount['userid']) ? cud_utils::get_usersource($useraccount['userid']) : '';
+    $qa_content['raw']['usersource'] = $usersource;
 
     return $qa_content;
 
