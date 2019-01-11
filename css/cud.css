@@ -38,6 +38,11 @@ div.mdl-card.no-follows {
   position: relative;
 }
 
+.mdl-card__subtitle-text.registering-by {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
 @media screen and (max-width: 1024px) {
   .user-follows {
     display: -webkit-flex;

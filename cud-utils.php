@@ -139,4 +139,36 @@ class cud_utils
         }
         return $html;
     }
+
+    /**
+     * userlogin テーブルから source を取得
+     * その後表示用に変換
+     */
+    public static function get_usersource($userid)
+    {
+        $source = '';
+        $sql = '';
+        $sql = 'SELECT ul.source';
+        $sql.= ' FROM ^users us';
+        $sql.= ' INNER JOIN ^userlogins ul ON us.userid = ul.userid';
+        $sql.= ' WHERE us.userid = #';
+
+        $result = qa_db_read_one_value(qa_db_query_sub($sql, $userid), true);
+
+        switch (strtolower($result)) {
+            case 'facebook':
+                $source = qa_lang_sub('cud_lang/account', 'Facebook');
+                break;
+            case 'twitter':
+                $source = qa_lang_sub('cud_lang/account', 'Twitter');
+                break;
+            case 'google':
+                $source = qa_lang_sub('cud_lang/account', 'Google');
+                break;
+            default:
+                $source = qa_lang('cud_lang/mail_address');
+        }
+
+        return qa_lang_sub('cud_lang/registerd_by', $source);
+    }
 }
