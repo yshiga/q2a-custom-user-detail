@@ -50,3 +50,26 @@ div.mdl-card.no-follows {
     display: flex;
   }
 }
+
+/* フォローフォロワー数 */
+@media (max-width: 839px) and (min-width: 480px) {
+  .mdl-cell.mdl-cell--4-col-tablet {
+    width: calc(33.3333333333% - 16px);
+  }
+  .mdl-cell.mdl-cell--4-col-tablet .mdl-card__supporting-text {
+    width: unset;
+  }
+}
+@media screen and (max-width: 479px) {
+  .mdl-cell.mdl-cell--4-col-phone {
+    width: calc(33.3333333333% - 16px);
+  }
+  .mdl-cell.mdl-cell--4-col-phone .mdl-card__supporting-text {
+    width: unset;
+  }
+}
+@media screen and (max-width: 369px) {
+  .mdl-cell.mdl-cell--4-col-phone .mdl-card__supporting-text {
+    font-size: 10px;
+  }
+}
