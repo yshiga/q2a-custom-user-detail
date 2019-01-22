@@ -69,7 +69,14 @@ div.mdl-card.no-follows {
   }
 }
 @media screen and (max-width: 369px) {
+  .mdl-grid.padding--0 {
+    padding: 0 4px !important;
+  }
+  .mdl-cell.mdl-cell--4-col-phone {
+    margin: 4px;
+    width: calc(33.3333333333% - 8px);
+  }
   .mdl-cell.mdl-cell--4-col-phone .mdl-card__supporting-text {
-    font-size: 10px;
+    padding: 8px;
   }
 }
