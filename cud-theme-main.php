@@ -26,7 +26,7 @@ class cud_theme_main
 
         $request = qa_request_parts();
         $handle = isset($request[1]) ? $request[1] : '';
-        self::output_user_detail($theme_obj->content);
+        self::output_user_detail($theme_obj);
 
         $html = cud_html_builder::create_second_section($theme_obj->content, $handle);
         $theme_obj->output($html);
@@ -50,9 +50,10 @@ class cud_theme_main
         $theme_obj->output('</div> <!-- END mdl-layout__content -->', '');
     }
 
-    private static function output_user_detail($content) {
+    private static function output_user_detail($theme_obj) {
         $path = CUD_DIR . '/html/main_user_detail.html';
 
+        $content = $theme_obj->content;
         $raw = $content['raw'];
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
@@ -71,6 +72,17 @@ class cud_theme_main
         $message_label = qa_lang_html('cud_lang/send_message');
         $message_url = qa_path_html('message/'.$handle);
         $usersource = $raw['usersource'];
+        if (array_key_exists($userid, $theme_obj->ex_users)) {
+            $ex_name = $theme_obj->ex_users[$userid];
+            $ex_label = qa_lang_sub('cud_lang/ex_user_label', $ex_name);
+            $ex_user =<<<EOS
+<span class="mdl-typography--subhead mdl-color-text--primary ex-user">
+  <i class="material-icons mr1">school</i>{$ex_label}
+</span>
+EOS;
+        } else {
+            $ex_user = '';
+        }
 
         if(isset($favorite) && $favorite['favorite'] === 1) {
             $follow_message = qa_lang_html('cud_lang/unfollow');
@@ -146,7 +158,8 @@ class cud_theme_main
             'questions' => '',
             'answers' => '',
             'blogs' => '',
-            'favorites' => ''
+            'favorites' => '',
+            'blog-favorites' => '',
         );
         $active_tab[$action] = 'is-active';
         return $active_tab;
