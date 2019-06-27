@@ -75,4 +75,6 @@ return array(
     'account'           => '^アカウント',
     'registerd_by'      => '^で登録しています',
     'mail_address'      => 'メールアドレス',
+
+    'ex_user_label'     => 'エキスパートユーザー (^)',
 );

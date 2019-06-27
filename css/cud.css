@@ -73,3 +73,9 @@ div.mdl-card.no-follows {
     padding: 16px 0;
   }
 }
+
+.ex-user {
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: bold;
+}
