@@ -32,6 +32,13 @@ class cud_html_builder
       $template = file_get_contents($template_path);
 
       $site_url = qa_opt('site_url');
+      $col_num = 4;
+      if (isset($content['counts']['badge'])) {
+        $badge_count = self::create_badge_count($content['counts']['badge'], $handle);
+      } else {
+        $badge_count = '';
+        $col_num = 6;
+      }
       $params = array(
         '^follow_count_label' => qa_lang_html('cud_lang/follow_count'),
         '^follow_list_page_url' => qa_path('user/'.$handle.'/following', null, $site_url),
@@ -39,9 +46,8 @@ class cud_html_builder
         '^follower_count_label' => qa_lang_html('cud_lang/follower_count'),
         '^follower_list_page_url' => qa_path('user/'.$handle.'/followers', null, $site_url),
         '^follower_count' => $content['counts']['followers'],
-        '^badge_count_label' => qa_lang_html('cud_lang/badge_count'),
-        '^badge_list_page_url' => qa_path('user/'.$handle.'/badge', null, $site_url),
-        '^badge_count' => $content['counts']['badge'],
+        '^badge_count' => $badge_count,
+        '^col_num' => $col_num,
       );
 
       return strtr($template, $params);
@@ -228,6 +234,23 @@ class cud_html_builder
         '^message' => qa_lang_html('cud_lang/no_'.$type),
         '^image' => qa_opt('site_url') . 'qa-plugin/'. CUD_FOLDER . '/image/no_item_icon.svg'
       );
+      $html = strtr($template, $params);
+      return $html;
+    }
+
+    private static function create_badge_count($count, $handle)
+    {
+      $label = qa_lang_html('cud_lang/badge_count');
+      $url = qa_path('user/'.$handle.'/badge', null, qa_opt('site_url'));
+
+      $path = CUD_DIR . '/html/second_section_badge.html';
+      $template = file_get_contents($path);
+      $params = array(
+        '^label' => $label,
+        '^url' => $url,
+        '^count' => $count,
+      );
+
       $html = strtr($template, $params);
       return $html;
     }
