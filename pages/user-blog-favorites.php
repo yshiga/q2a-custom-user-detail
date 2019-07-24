@@ -6,7 +6,7 @@
     
     // ブログのお気に入り
     $blog_favorites_start = ($action === 'blog-favorites') ? $start : 0;
-    $blog_favorites_sel = cud_user_blog_favorites_selectspec( $userid, $identifyier, $pagesize, $blog_favorites_start);
+    $blog_favorites_sel = cud_user_blog_favorites_selectspec( $userid, $identifier, $pagesize, $blog_favorites_start);
     $blog_favorites = qa_db_select_with_pending($blog_favorites_sel);
     $blog_favorites_count = get_total_blog_favorites_count($userid);
     

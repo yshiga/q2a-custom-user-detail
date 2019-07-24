@@ -171,4 +171,11 @@ class cud_utils
 
         return qa_lang_sub('cud_lang/registerd_by', $source);
     }
+
+    public static function exists_plugin($plugin_name)
+    {
+        $plugin_file = QA_PLUGIN_DIR . $plugin_name;
+
+        return file_exists($plugin_file);
+    }
 }
