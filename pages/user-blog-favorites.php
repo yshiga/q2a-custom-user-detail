@@ -14,8 +14,6 @@
     
     $values = array();
     $htmldefaults = qa_post_html_defaults('B');
-    $htmldefaults['whoview'] = false;
-    $htmldefaults['avatarsize'] = 0;
     $htmldefaults['contentview'] = true;
 
     foreach ($blog_favorites as $post) {
