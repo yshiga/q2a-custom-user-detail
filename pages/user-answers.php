@@ -11,13 +11,7 @@
     $answers = qa_db_select_with_pending($answers_sel);
     // $answers = array_slice($answers, $start, $pagesize);
 
-    $useridhandles = array(
-        '0' => array(
-            'userid' => $userid,
-            'handle' => $handle,
-        ),
-    );
-    $usershtml = qa_userids_handles_html($useridhandles, false);
+    $usershtml = qa_userids_handles_html($answers, false);
     
     $values = array();
     $htmldefaults = qa_post_html_defaults('Q');
@@ -26,11 +20,8 @@
 
     foreach ($answers as $question) {
         $options = qa_post_html_options($question, $htmldefaults);
-        $fields = qa_other_to_q_html_fields($question, $loginuserid, qa_cookie_get(),
+        $fields = qa_post_html_fields($question, $loginuserid, qa_cookie_get(),
             $usershtml, null, $options);
-
-        $fields['who']=qa_who_to_html(false, $question['ouserid'], $usershtml, null, false, @$question['ohandle']);
-        $fields['who']['userid'] = $userid;
         
         if (function_exists('qme_remove_anchor')) {
             $fields['content'] = qme_remove_anchor($fields['content']);
