@@ -45,6 +45,7 @@ class qa_html_theme_layer extends qa_html_theme_base
               '</SCRIPT>'
             );
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-favorite.js"></SCRIPT>');
+            $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-tab.js"></SCRIPT>');
         }
     }
 
