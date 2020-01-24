@@ -15,6 +15,20 @@
     </div>
     <div class="mdl-cell mdl-cell--8-col">
       <?php echo $ex_user; ?>
+      <?php if(isset($login_userid) && $userid != $login_userid): ?>
+      <div id="mute-button-container">
+        <button type="button" class="mdl-button mdl-js-button mdl-button--icon" id="menu-mute" style="position: absolute; right: 0; top: 0;">
+          <i class="material-icons">more_vert</i>
+        </button>
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-mute">
+          <li class="mdl-menu__item">
+            <button class="mdl-button" id="mute-button" name="mute_M_2711_1" <?php echo $favorite['code']; ?> >
+              <?php echo qa_lang_html('cud_lang/mute_label'); ?>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <?php endif; ?>
       <div class="mdl-typography--headline flex">
         <?php echo $handle; ?>
       </div>
