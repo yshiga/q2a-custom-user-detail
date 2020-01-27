@@ -80,6 +80,6 @@ return array(
 
     /* ミュートボタン */
     'mute_label' => 'ミュートする',
-    'unmute_label' => 'ミュート解除',
+    'unmute_label' => 'ミュートを解除する',
     'mute_confirm_title' => '^さんをミュートしますか？',
 );
