@@ -43,7 +43,6 @@ $(document).ready(function(){
           data: JSON.stringify(JSONdata)
       })
       .done(function(res) {
-        console.log(res);
         location.reload();
       })
       .fail(function(res) {
