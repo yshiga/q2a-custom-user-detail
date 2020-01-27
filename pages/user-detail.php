@@ -274,6 +274,11 @@
 
         $qa_content['favorite'] = cud_favorite_form(QA_ENTITY_USER, $useraccount['userid'], $favorite,
             qa_lang_sub($favorite ? 'main/remove_x_favorites' : 'users/add_user_x_favorites', $handle));
+
+        $mutemap = cud_get_mute_map();
+        $mute = @$mutemap[$useraccount['userid']];
+        $qa_content['mute'] = cud_muteuser_form(QA_ENTITY_MUTE, $useraccount['userid'], $mute, 
+            qa_lang($mute ? 'cud_lang/unmute_label' : 'cud_lang/mute_label'));
     }
 
     if (!QA_FINAL_EXTERNAL_USERS) {
@@ -597,5 +602,42 @@
             'code' => 'data-code="'.qa_get_form_security_code('favorite-'.$entitytype.'-'.$entityid).'"',
             'favorite_id' => 'id="favoriting"',
             'favorite_tags' => 'title="'.qa_html($title).'" name="'.qa_html('favorite_'.$entitytype.'_'.$entityid.'_'.(int)!$favorite).'"',
+        );
+    }
+
+    function cud_muteuser_form($entitytype, $entityid, $mute, $title)
+    {
+        return array(
+            'mute' => (int)$mute,
+            'code' => 'data-code="'.qa_get_form_security_code('favorite-'.$entitytype.'-'.$entityid).'"',
+            'tags' => 'id="mute-button" name="'.qa_html('favorite_'.$entitytype.'_'.$entityid.'_'.(int)!$mute).'"',
+            'label' => qa_html($title),
+        );
+    }
+
+    function cud_get_mute_map()
+    {
+        $qa_mute_map=array();
+        $loginuserid=qa_get_logged_in_userid();
+
+        if (isset($loginuserid)) {
+            require_once QA_INCLUDE_DIR.'db/selects.php';
+            require_once QA_INCLUDE_DIR.'util/string.php';
+
+            $muteusers=qa_db_get_pending_result('mutemaps', cud_db_user_mute_selectspec($loginuserid));
+
+            foreach ($muteusers as $user) {
+                $qa_mute_map[$user['userid']]=true;
+            }
+        }
+        return $qa_mute_map;
+    }
+
+    function cud_db_user_mute_selectspec($userid)
+    {
+        return array(
+            'columns' => array('type' => 'entitytype', 'userid' => 'entityid'),
+            'source' => '^userfavorites WHERE userid=$ AND entitytype=$',
+            'arguments' => array($userid, QA_ENTITY_MUTE),
         );
     }
