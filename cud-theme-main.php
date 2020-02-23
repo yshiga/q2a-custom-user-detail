@@ -97,7 +97,7 @@ EOS;
     {
         $active_tab = self::set_active_tab($theme_obj);
         $counts = $theme_obj->content['counts'];
-        $html = cud_html_builder::crate_tab_header($active_tab, $counts);
+        $html = cud_html_builder::create_tab_header($active_tab, $counts);
         $theme_obj->output($html);
     }
 

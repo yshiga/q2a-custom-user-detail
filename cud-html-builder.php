@@ -53,7 +53,7 @@ class cud_html_builder
       return strtr($template, $params);
     }
 
-    public static function crate_tab_header($active_tab, $postcounts)
+    public static function create_tab_header($active_tab, $postcounts)
     {
         $template_path = CUD_DIR . '/html/main_tab_header.html';
         $template = file_get_contents($template_path);
