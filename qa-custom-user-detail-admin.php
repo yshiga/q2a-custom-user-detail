@@ -10,6 +10,8 @@ class qa_cud_admin
     public function option_default($option)
     {
         switch ($option) {
+            case 'cud_opt_hide_blog':
+                return false;
             default:
                 return;
         }
@@ -31,6 +33,7 @@ class qa_cud_admin
             qa_opt('cud_opt_no_post_favorites', qa_post_text('cud_opt_no_post_favorites'));
             qa_opt('cud_opt_no_post_blog-favorites', qa_post_text('cud_opt_no_post_blog-favorites'));
             qa_opt('cud_opt_no_post_others_image', qa_post_text('cud_opt_no_post_others_image'));
+            qa_opt('cud_opt_hide_blog', (int)qa_post_text('cud_opt_hide_blog'));
             $ok = qa_lang('admin/options_saved');
         }
 
@@ -86,6 +89,13 @@ class qa_cud_admin
             'tags' => 'NAME="cud_opt_no_post_others_image"',
             'value' => qa_opt('cud_opt_no_post_others_image'),
             'type' => 'text',
+        );
+
+        $fields[] = array(
+            'label' => qa_lang('cud_lang/hide_blog'),
+            'tags' => 'NAME="cud_opt_hide_blog"',
+            'value' => qa_opt('cud_opt_hide_blog'),
+            'type' => 'checkbox',
         );
 
         return array(
