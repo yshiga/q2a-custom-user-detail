@@ -71,6 +71,9 @@ return array(
 
     'no_post_others_image' => '他ユーザーの投稿が0件の場合の画像(URL)：',
 
+    'hide_blog' => '日誌を表示しない',
+
+
     /* 登録経路 */
     'account'           => '^アカウント',
     'registerd_by'      => '^で登録しています',

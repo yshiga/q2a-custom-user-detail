@@ -97,7 +97,7 @@ EOS;
     {
         $active_tab = self::set_active_tab($theme_obj);
         $counts = $theme_obj->content['counts'];
-        $html = cud_html_builder::crate_tab_header($active_tab, $counts);
+        $html = cud_html_builder::create_tab_header($active_tab, $counts);
         $theme_obj->output($html);
     }
 
@@ -110,11 +110,16 @@ EOS;
     {
         $active_tab = self::set_active_tab($theme_obj);
         // self::output_q_list($theme_obj, 'activities', $active_tab['activities']);
-        self::output_q_list($theme_obj, 'blogs', $active_tab['blogs']);
+        
+        if(!qa_opt('cud_opt_hide_blog')) {
+            self::output_q_list($theme_obj, 'blogs', $active_tab['blogs']);
+        }
         self::output_q_list($theme_obj, 'answers', $active_tab['answers']);
         self::output_q_list($theme_obj, 'questions', $active_tab['questions']);
         self::output_q_list($theme_obj, 'favorites', $active_tab['favorites']);
-        self::output_q_list($theme_obj, 'blog-favorites', $active_tab['blog-favorites']);
+        if(!qa_opt('cud_opt_hide_blog')) {
+            self::output_q_list($theme_obj, 'blog-favorites', $active_tab['blog-favorites']);
+        }
     }
 
     private static function output_q_list($theme_obj, $list_type, $active_tab)
@@ -152,7 +157,8 @@ EOS;
 
     private static function set_active_tab($theme_obj)
     {
-        $action = isset($theme_obj->content['raw']['action']) ? $theme_obj->content['raw']['action'] : 'blogs';
+        $default = qa_opt('cud_opt_hide_blog') ? 'answers' : 'blogs';
+        $action = isset($theme_obj->content['raw']['action']) ? $theme_obj->content['raw']['action'] : $default;
         $active_tab = array(
             // 'activities' => '',
             'questions' => '',
