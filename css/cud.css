@@ -79,3 +79,7 @@ div.mdl-card.no-follows {
   font-size: 14px;
   font-weight: bold;
 }
+
+p.user-detail-about {
+  word-break: break-word;
+}
