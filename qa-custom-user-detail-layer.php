@@ -6,7 +6,7 @@ require_once CUD_DIR.'/cud-theme-main-follows.php';
 class qa_html_theme_layer extends qa_html_theme_base
 {
 
-    const CSS_VER = '1.0.3';
+    const CSS_VER = '1.0.4';
 
     function __construct($template, $content, $rooturl, $request)
     {
