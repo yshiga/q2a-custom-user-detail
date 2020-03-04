@@ -4,9 +4,23 @@
         exit;
     }
     
+    $loginhandle = qa_get_logged_in_handle();
+
     // ブログ
     $blog_start = ($action === 'blogs') ? $start : 0;
-    $blogs_sel = qas_blog_db_user_recent_posts_selectspec( $loginuserid, $identifier, $pagesize, $blog_start );
+    $blogs_sel = qas_blog_db_posts_basic_selectspec( $loginuserid );
+
+    $blogs_sel['source'] .= " WHERE ^blogs.userid=" . ( QA_FINAL_EXTERNAL_USERS ? "$" : "(SELECT userid FROM ^users WHERE handle=$ LIMIT 1)" );
+    $compare = QA_FINAL_EXTERNAL_USERS ? $loginuserid : $loginhandle;
+    if ($identifier === $compare) {
+        $type = "(type = 'B' OR type = 'D')";
+    } else {
+        $type = "type = 'B'";
+    }
+    $blogs_sel['source'] .= " AND ".$type;
+    $blogs_sel['source'] .= " ORDER BY ^blogs.created DESC LIMIT #,#";
+    array_push( $blogs_sel[ 'arguments' ], $identifier, $blog_start, $pagesize );
+    $blogs_sel['sortdesc'] = 'created';
     $blogs_sel['columns']['content'] = '^blogs.content ';
     $blogs_sel['columns']['format'] = '^blogs.format ';
     $blogs = qa_db_select_with_pending($blogs_sel);
@@ -23,10 +37,10 @@
     foreach ($blogs as $post) {
         $fields = qas_blog_post_html_fields( $post, $loginuserid, qa_cookie_get(),
             $usershtml, null, qas_blog_post_html_options( $post, $htmldefaults ) );
-        $fields['answers_raw'] = $blog_comments[$post['postid']];
+        $fields['answers_raw'] = @$blog_comments[$post['postid']];
         $fields['answers'] = array(
             'prefix' => '返信',
-            'data' => $blog_comments[$post['postid']],
+            'data' => @$blog_comments[$post['postid']],
         );
         if (function_exists('qme_remove_anchor')) {
             $fields['content'] = qme_remove_anchor($fields['content']);
@@ -41,7 +55,7 @@
         if(count($postids) <= 0) {
             return array();
         }
-        $results = qa_db_read_all_assoc(qa_db_query_sub( qas_blog_db_blog_comments_sql($postids), 'C', 'B'));
+        $results = qa_db_read_all_assoc(qa_db_query_sub( qas_blog_db_blog_comments_sql($postids), 'C', 'B', 'D'));
         
         $comments = array();
         foreach ($results as $result) {
