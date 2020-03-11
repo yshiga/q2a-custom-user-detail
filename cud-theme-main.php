@@ -67,6 +67,13 @@ class cud_theme_main
         $login_userid = qa_get_logged_in_userid();
         $profile = $raw['newprofile'];
         $about = $raw['userabout']['value'];
+        if (!empty($raw['about_post'])) {
+            $show_detail_button = true;
+            $about_post_url = qa_path($raw['about_post'], null, qa_opt('site_url'));
+        } else {
+            $show_detail_button = false;
+            $about_post_url = '';
+        }
         $points = qa_lang_html_sub('cud_lang/points',$points);
         $ranking = qa_lang_html_sub('cud_lang/ranking',$raw['rank']);
         $message_label = qa_lang_html('cud_lang/send_message');

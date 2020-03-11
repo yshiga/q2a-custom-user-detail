@@ -41,6 +41,14 @@
       <p class="user-detail-about">
         <?php echo $about; ?>
       </p>
+      <?php if ($show_detail_button): ?>
+      <div class="mdl-cell mdl-cell--7-col">
+          <a class="mdl-button mdl-button__block mdl-button--raised mdl-button--colored mdl-color-text--white mdl-js-button"
+             href="<?php echo $about_post_url; ?>">
+              <?php echo qa_lang('cud_lang/view_detail_profile'); ?>
+          </a>
+      </div>
+      <?php endif; ?>
     </div>
 
     <?php if(isset($login_userid) && $userid != $login_userid): ?>
