@@ -25,6 +25,7 @@ return array(
     'unfollow' => 'フォローをやめる',
     'send_message' => 'メッセージ送信',
     'no_posts' => '^がありません。',
+    'view_detail_profile' => '詳しいプロフィールを読む',
 
     'follow_count' => 'フォロー',
     'follower_count' => 'フォロワー',
