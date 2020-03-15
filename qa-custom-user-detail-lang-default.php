@@ -81,4 +81,9 @@ return array(
     'mail_address'      => 'メールアドレス',
 
     'ex_user_label'     => 'エキスパートユーザー (^)',
+
+    /* ミュートボタン */
+    'mute_label' => 'ミュートする',
+    'unmute_label' => 'ミュートを解除する',
+    'mute_confirm_title' => '^さんをミュートしますか？',
 );

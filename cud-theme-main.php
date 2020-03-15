@@ -58,6 +58,7 @@ class cud_theme_main
         $points = $raw['points']['points'];
         $points = $points ? number_format($points) : 0;
         $favorite = isset($content['favorite']) ? $content['favorite'] : null;
+        $mute = isset($content['mute']) ? $content['mute'] : null;
 
         $site_url = qa_opt('site_url');
         $account_url = qa_path('account', null, $site_url);

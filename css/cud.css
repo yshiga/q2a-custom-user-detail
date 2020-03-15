@@ -80,6 +80,14 @@ div.mdl-card.no-follows {
   font-weight: bold;
 }
 
+#mute-button-container {
+  position: relative;
+}
+
+#mute-button-container .mdl-menu__container {
+  position: absolute;
+}
+
 p.user-detail-about {
   word-break: break-word;
 }

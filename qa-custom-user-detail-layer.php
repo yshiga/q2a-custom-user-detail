@@ -19,6 +19,11 @@ class qa_html_theme_layer extends qa_html_theme_base
         if (qa_opt('site_theme') === CUD_TARGET_THEME_NAME && $this->template === 'user') {
             $html = cud_html_builder::create_confirm_dialog();
             $this->output($html);
+            if( qa_get_logged_in_userid() &&
+                qa_get_logged_in_userid() !== $this->content['raw']['account']['userid']) {
+                $mute_dialog = cud_html_builder::create_mute_confirm_dialog();
+                $this->output($mute_dialog);
+            } 
         }
     }
 
@@ -37,6 +42,8 @@ class qa_html_theme_layer extends qa_html_theme_base
               'unfollow_title' => qa_lang_html_sub('cud_lang/unfollow_confirm_title', $handle),
               'unfollow_content' => qa_lang_html_sub('cud_lang/unfollow_confirm_content', $handle),
               'unfollow_action' => qa_lang_html('cud_lang/unfollow_label'),
+              'mute_title' => qa_lang_html_sub('cud_lang/mute_confirm_title', $handle),
+              'mute_action' => qa_lang_html('cud_lang/mute_label'),
             ));
             $this->output(
               '<SCRIPT TYPE="text/javascript">',
@@ -45,6 +52,7 @@ class qa_html_theme_layer extends qa_html_theme_base
               '</SCRIPT>'
             );
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-favorite.js"></SCRIPT>');
+            $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-mute.js"></SCRIPT>');
             $this->output('<SCRIPT TYPE="text/javascript" SRC="'. QA_HTML_THEME_LAYER_URLTOROOT.'js/cud-tab.js"></SCRIPT>');
         }
     }

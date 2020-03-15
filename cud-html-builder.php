@@ -119,6 +119,13 @@ EOS2;
       $html = file_get_contents($template_path);
       return $html;
     }
+
+    public static function create_mute_confirm_dialog()
+    {
+      $template_path = CUD_DIR . '/html/mute_confirm_dialog.html';
+      $html = file_get_contents($template_path);
+      return $html;
+    }
     
     private static function create_no_item_list_mine($list_type)
     {
