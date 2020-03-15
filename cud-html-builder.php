@@ -53,10 +53,31 @@ class cud_html_builder
       return strtr($template, $params);
     }
 
-    public static function crate_tab_header($active_tab, $postcounts)
+    public static function create_tab_header($active_tab, $postcounts)
     {
         $template_path = CUD_DIR . '/html/main_tab_header.html';
         $template = file_get_contents($template_path);
+        if(qa_opt('cud_opt_hide_blog')) {
+          $blogs_tab = '';
+          $blog_favorite_tab = '';
+        } else {
+          $blogs_active = $active_tab['blogs'];
+          $blogs_count = $postcounts['blogs'];
+          $blogs_label = qa_lang_html('cud_lang/blogs');
+          $blogs_tab =<<<EOS
+    <a class="mdl-tabs__tab $blogs_active" href="#blogs"  id="tab-blogs">
+        <span class="mdl-badge" data-badge="$blogs_count">$blogs_label</span>
+    </a>
+EOS;
+          $blog_favorites_active = $active_tab['blog-favorites'];
+          $blog_favorites_count = $postcounts['blog_favorites'];
+          $blog_favorites_label = qa_lang('cud_lang/blog_favorites_label');
+          $blog_favorites_tab =<<<EOS2
+    <a class="mdl-tabs__tab $blog_favorites_active" href="#blog-favorites" id="tab-blog-favorites">
+        <span class="mdl-badge" data-badge="$blog_favorites_count">$blog_favorites_label</span>
+    </a>
+EOS2;
+        }
         $params = array(
           '^questions_active' => $active_tab['questions'],
           '^questions_count' => $postcounts['questions'],
@@ -64,15 +85,11 @@ class cud_html_builder
           '^answers_active' => $active_tab['answers'],
           '^answers_count' => $postcounts['answers'],
           '^answers_label' => qa_lang_html('cud_lang/answers'),
-          '^blogs_active' => $active_tab['blogs'],
-          '^blogs_count' => $postcounts['blogs'],
-          '^blogs_label' => qa_lang_html('cud_lang/blogs'),
           '^favorites_active' => $active_tab['favorites'],
           '^favorites_count' => $postcounts['favorites'],
           '^favorites_label' => qa_lang('cud_lang/favorites_label'),
-          '^blog_favorites_active' => $active_tab['blog-favorites'],
-          '^blog_favorites_count' => $postcounts['blog_favorites'],
-          '^blog_favorites_label' => qa_lang('cud_lang/blog_favorites_label'),
+          '^blogs_tab' => $blogs_tab,
+          '^blog_favorites_tab' => $blog_favorites_tab,
         );
 
         return strtr($template, $params);

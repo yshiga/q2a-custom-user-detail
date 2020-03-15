@@ -512,8 +512,11 @@
     $tmp = array();
     $newprofile = array();
     $about = array();
+    $about_post = '';
     foreach ($userfields as $field) {
-        if ($field['title'] !== 'about') {
+        if ($field['title'] === 'about_post') {
+            $about_post = @$userprofile[$field['title']];
+        } elseif ($field['title'] !== 'about') {
             $tmp = array(
                 'key' => $field['title'],
                 'label' => qa_user_userfield_label($field),
@@ -532,6 +535,7 @@
         $qa_content['raw']['profile'] = $userprofile;
         $qa_content['raw']['newprofile'] = $newprofile;
         $qa_content['raw']['userabout'] = $about;
+        $qa_content['raw']['about_post'] = $about_post;
         $qa_content['raw']['userid'] = $useraccount['userid'];
         $qa_content['raw']['points'] = $userpoints;
         $qa_content['raw']['rank'] = $userrank;

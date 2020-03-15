@@ -25,6 +25,7 @@ return array(
     'unfollow' => 'フォローをやめる',
     'send_message' => 'メッセージ送信',
     'no_posts' => '^がありません。',
+    'view_detail_profile' => '詳しいプロフィールを読む',
 
     'follow_count' => 'フォロー',
     'follower_count' => 'フォロワー',
@@ -70,6 +71,9 @@ return array(
     'no_post_blog-favorites' => '日誌のブックマーク0件の場合のHTML：',
 
     'no_post_others_image' => '他ユーザーの投稿が0件の場合の画像(URL)：',
+
+    'hide_blog' => '日誌を表示しない',
+
 
     /* 登録経路 */
     'account'           => '^アカウント',

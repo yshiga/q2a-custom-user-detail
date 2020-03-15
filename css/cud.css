@@ -83,6 +83,11 @@ div.mdl-card.no-follows {
 #mute-button-container {
   position: relative;
 }
+
 #mute-button-container .mdl-menu__container {
   position: absolute;
+}
+
+p.user-detail-about {
+  word-break: break-word;
 }
