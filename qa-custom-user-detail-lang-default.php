@@ -38,9 +38,9 @@ return array(
     'following_label' => 'フォロー中',
     'unfollow_label' => 'フォロー解除',
     'follow_confirm_title' => '^さんをフォローしますか？',
-    'follow_confirm_content' => 'フォローすると^さんの新しい投稿のお知らせが届きます。',
+    'follow_confirm_content' => 'フォローすると^さんの投稿がチェックしやすくなります',
     'unfollow_confirm_title' => '^さんのフォローをやめますか？',
-    'unfollow_confirm_content' => '^さんの新しい投稿のお知らせを受け取れなくなります。',
+    'unfollow_confirm_content' => 'フォローをやめた後に、再度フォローすることもできます',
 
     /* 0件表示 */
     'no_item_list_mine_title_questions' => '分からないことがあれば、なんでも聞いてみよう。',
