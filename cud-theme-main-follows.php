@@ -21,10 +21,10 @@ class cud_theme_main_follows
       $page_links =<<<EOF
       <div class="qa-page-links margin--top-16px">
         <nav class="qa-page-links-list">
-          <a class="qa-page-selected is-activemdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised  mdl-button--colored mdl-color-text--white" data-upgraded=",MaterialButton">1</a>
-          <a href="./tags?start=30" class="qa-page-link mdl-js-ripple-effect mdl-button mdl-js-button" data-upgraded=",MaterialButton,MaterialRipple">2<span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
+          <a class="qa-page-selected mdl-button mdl-js-button mdl-button--raised  mdl-button--colored mdl-color-text--white" data-upgraded=",MaterialButton">1</a>
+          <a href="./tags?start=30" class="qa-page-link mdl-button mdl-js-button" data-upgraded=",MaterialButton,MaterialRipple">2<span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
       
-          <a href="./tags?start=30" class="qa-page-next mdl-js-ripple-effect mdl-button mdl-js-button" data-upgraded=",MaterialButton,MaterialRipple"><i class="material-icons">chevron_right</i><span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
+          <a href="./tags?start=30" class="qa-page-next mdl-button mdl-js-button" data-upgraded=",MaterialButton,MaterialRipple"><i class="material-icons">chevron_right</i><span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></a>
         </nav>
         <div class="qa-page-links-clear">
         </div>

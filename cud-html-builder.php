@@ -11,7 +11,7 @@ class cud_html_builder
 
     public static function create_favorite_button($label, $tags, $is_follow){
 
-      $html = '<a class="mdl-button mdl-js-button mdl-js-ripple-effect border';
+      $html = '<a class="mdl-button mdl-js-button border';
       if($is_follow) {
         $class = " mdl-button--colored";
         $button_label = qa_lang_html('cud_lang/following_label');
