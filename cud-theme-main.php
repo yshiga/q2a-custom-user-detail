@@ -97,6 +97,8 @@ EOS;
         } else {
             $follow_message = qa_lang_html('cud_lang/follow');
         }
+        $muting_users = $theme_obj->muting_users;
+        $muting_users = qa_db_user_get_userid_handles($theme_obj->muting_users);
         $editurl = qa_path(qa_request(), array('state' => 'edit'), qa_opt('site_url'));
         include $path;
     }

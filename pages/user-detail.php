@@ -276,6 +276,7 @@
             qa_lang_sub($favorite ? 'main/remove_x_favorites' : 'users/add_user_x_favorites', $handle));
 
         $mutemap = cud_get_mute_map();
+
         $mute = @$mutemap[$useraccount['userid']];
         $qa_content['mute'] = cud_muteuser_form(QA_ENTITY_MUTE, $useraccount['userid'], $mute, 
             qa_lang($mute ? 'cud_lang/unmute_label' : 'cud_lang/mute_label'));
