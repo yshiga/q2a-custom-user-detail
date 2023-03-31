@@ -2,24 +2,9 @@
 <div class="mdl-components__info mdl-cell--12-col mdl-cell flex mdl-color--red-100 items-center p2 mb2">
   <i class="material-icons mdl-color-text--red-600 mr1">info</i>
   <span>
-  このユーザーはミュートされています
+  このユーザーはブロックされています
   </span>
 </div>
-<?php else: ?>
-
-<?php if(count($muting_users) > 0): ?>
-<div class="mdl-components__info mdl-cell--12-col mdl-cell flex mdl-color--red-100 items-center p2 mb2">
-  <i class="material-icons mdl-color-text--red-600 mr1">info</i>
-  <span>
-    4月1日にミュート機能がブロック機能に変更となります。あなたがミュートしているユーザーは、
-<?php foreach($muting_users as $muting_user) : ?>
-<span> <a href="/user/<?php echo $muting_user; ?>" ><?php echo $muting_user; ?></a> </span>
-<?php endforeach; ?>
-です。自動的にブロック機能に移行しますので、必要ない場合は3月31日までにミュートの解除を行なってください。詳しくは<a href="https://38qa.net/blog/339595" >こちら</a>
-  </span>
-</div>
-<?php endif; ?>
-
 <?php endif; ?>
 
 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col user">
