@@ -53,6 +53,7 @@ class cud_theme_main
     private static function output_user_detail($theme_obj) {
         $path = CUD_DIR . '/html/main_user_detail.html';
 
+
                 // 非公開日誌を表示する
                 if(self::is_my_profile($theme_obj->content)) {
                     $loginuserid = qa_get_logged_in_userid();
@@ -74,6 +75,7 @@ class cud_theme_main
                     }
         
                }
+
 
         $content = $theme_obj->content;
         $raw = $content['raw'];
