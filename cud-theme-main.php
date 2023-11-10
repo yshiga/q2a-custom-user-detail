@@ -115,6 +115,28 @@ EOS;
     private static function output_user_detail($theme_obj) {
         $path = CUD_DIR . '/html/main_user_detail.html';
 
+         // 非公開日誌を表示する
+                if(self::is_my_profile($theme_obj->content)) {
+                    $loginuserid = qa_get_logged_in_userid();
+                    $blogs_sel = qas_blog_db_posts_basic_selectspec( $loginuserid );
+
+                    $blogs_sel['source'] .= " WHERE ^blogs.userid=" . $loginuserid;
+                    $type = "type = 'D'";
+                    $blogs_sel['source'] .= " AND ".$type;
+
+                    $blogs = qa_db_select_with_pending($blogs_sel);
+
+                    if(count($blogs) > 0) {
+
+                        $theme_obj->output('<br/>以下の日誌は非公開となっています。サイト上に残す場合は公開に変更してください。非公開のままにする場合、24年1月以降に閲覧できなくなりますので、必要なものはWordなどにコピーしてください。<br>');
+                        foreach($blogs as $blog) {
+                            $theme_obj->output('・<a href="/blog/' .$blog["postid"] .  '">' . $blog["title"] . '</a><br>');
+                        }
+
+                    }
+
+               }
+
         $content = $theme_obj->content;
         $raw = $content['raw'];
         $points = $raw['points']['points'];
