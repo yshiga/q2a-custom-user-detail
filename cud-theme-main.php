@@ -28,11 +28,73 @@ class cud_theme_main
         $handle = isset($request[1]) ? $request[1] : '';
         self::output_user_detail($theme_obj);
 
+	// フォロー、フォロワーなどを表示
         $html = cud_html_builder::create_second_section($theme_obj->content, $handle);
         $theme_obj->output($html);
 
-        self::output_q_list_tab_header($theme_obj);
-        self::output_q_list_panels($theme_obj);
+	// 投稿リスト
+//        self::output_q_list_tab_header($theme_obj);
+//        self::output_q_list_panels($theme_obj);
+
+
+	$listUrl = 'https://preview.38qa.net/user/' . $handle  . '/posts';
+	$params = $_GET;
+	$query = http_build_query($params); 
+	$iframeHtml =<<<EOS
+<iframe
+id="parentframe"
+    width="100%"
+    height="1000px"
+    scrolling="yes"
+    src="{$listUrl}?{$query}">
+</iframe>
+<script>
+function setIFrameHeight(newHeight) {
+var iframe = document.getElementById("parentframe");
+iframe.style.height = newHeight + "px";
+}
+  window.addEventListener(
+    "message",
+    function (event) {
+      var height = event.data.height;
+      var url = event.data.url;
+      var scroll = event.data.scroll;
+      console.log("message received:" + height + " url:" + url);
+      if(height){
+      	setIFrameHeight(height + 300);
+      }
+      if (scroll) {
+        window.scroll({
+          top: 100,
+          left: 0,
+          behavior: "smooth",
+        });
+      }
+      if(url){
+        let pathname = window.location.pathname.replace('/posts', '');
+	url = url.replace('/posts', '')
+
+	let path = url.split("?")[0];  
+	path = path.replace('/posts', ''); // preview.38qa.net側ではpostsが付いているので削除
+
+
+// 	console.log('pathname' + pathname + ', request path ' + path);
+
+	if(path == pathname){
+		history.pushState({}, null, url);
+		history.replaceState({}, null, url);
+	}else{
+		window.location.href = url;
+	}
+      }
+    },
+    false
+  );
+</script>
+EOS;
+	$theme_obj->output($iframeHtml);
+
+
         $theme_obj->output('</div>');
 
         $theme_obj->widgets('main', 'high');
