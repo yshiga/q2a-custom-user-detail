@@ -137,6 +137,7 @@ EOS;
 
                }
 
+
         $content = $theme_obj->content;
         $raw = $content['raw'];
         $points = $raw['points']['points'];
