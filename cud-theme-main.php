@@ -28,11 +28,73 @@ class cud_theme_main
         $handle = isset($request[1]) ? $request[1] : '';
         self::output_user_detail($theme_obj);
 
+	// フォロー、フォロワーなどを表示
         $html = cud_html_builder::create_second_section($theme_obj->content, $handle);
         $theme_obj->output($html);
 
-        self::output_q_list_tab_header($theme_obj);
-        self::output_q_list_panels($theme_obj);
+	// 投稿リスト
+//        self::output_q_list_tab_header($theme_obj);
+//        self::output_q_list_panels($theme_obj);
+
+
+	$listUrl = 'https://preview.38qa.net/user/' . $handle  . '/posts';
+	$params = $_GET;
+	$query = http_build_query($params); 
+	$iframeHtml =<<<EOS
+<iframe
+id="parentframe"
+    width="100%"
+    height="1000px"
+    scrolling="yes"
+    src="{$listUrl}?{$query}">
+</iframe>
+<script>
+function setIFrameHeight(newHeight) {
+var iframe = document.getElementById("parentframe");
+iframe.style.height = newHeight + "px";
+}
+  window.addEventListener(
+    "message",
+    function (event) {
+      var height = event.data.height;
+      var url = event.data.url;
+      var scroll = event.data.scroll;
+      console.log("message received:" + height + " url:" + url);
+      if(height){
+      	setIFrameHeight(height + 300);
+      }
+      if (scroll) {
+        window.scroll({
+          top: 100,
+          left: 0,
+          behavior: "smooth",
+        });
+      }
+      if(url){
+        let pathname = window.location.pathname.replace('/posts', '');
+	url = url.replace('/posts', '')
+
+	let path = url.split("?")[0];  
+	path = path.replace('/posts', ''); // preview.38qa.net側ではpostsが付いているので削除
+
+
+// 	console.log('pathname' + pathname + ', request path ' + path);
+
+	if(path == pathname){
+		history.pushState({}, null, url);
+		history.replaceState({}, null, url);
+	}else{
+		window.location.href = url;
+	}
+      }
+    },
+    false
+  );
+</script>
+EOS;
+	$theme_obj->output($iframeHtml);
+
+
         $theme_obj->output('</div>');
 
         $theme_obj->widgets('main', 'high');
@@ -53,27 +115,26 @@ class cud_theme_main
     private static function output_user_detail($theme_obj) {
         $path = CUD_DIR . '/html/main_user_detail.html';
 
-
-                // 非公開日誌を表示する
+         // 非公開日誌を表示する
                 if(self::is_my_profile($theme_obj->content)) {
                     $loginuserid = qa_get_logged_in_userid();
                     $blogs_sel = qas_blog_db_posts_basic_selectspec( $loginuserid );
-        
+
                     $blogs_sel['source'] .= " WHERE ^blogs.userid=" . $loginuserid;
                     $type = "type = 'D'";
                     $blogs_sel['source'] .= " AND ".$type;
-        
+
                     $blogs = qa_db_select_with_pending($blogs_sel);
-                    
+
                     if(count($blogs) > 0) {
-        
-                        $theme_obj->output('<br/>非公開日誌は8月末に廃止されます。以下の日誌は非公開となっています。サイト上に残す場合は公開に変更してください。非公開のままにする場合、閲覧できなくなりますので、必要なものはWordなどにコピーしてください。<br>');
+
+                        $theme_obj->output('<br/>以下の日誌は非公開となっています。サイト上に残す場合は公開に変更してください。非公開のままにする場合、24年1月以降に閲覧できなくなりますので、必要なものはWordなどにコピーしてください。<br>');
                         foreach($blogs as $blog) {
                             $theme_obj->output('・<a href="/blog/' .$blog["postid"] .  '">' . $blog["title"] . '</a><br>');
                         }
-         
+
                     }
-        
+
                }
 
 
